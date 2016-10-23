@@ -1,37 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct node *nodePtr;
+
 typedef struct node {
     int data;
     struct node *left;
     struct node *right;
 } node_t;
 
-node_t* 
-insert(node_t *tree, int n) 
-{
-    node_t *temp;
+nodePtr findMinTree (nodePtr root);
+nodePtr findMaxTree (nodePtr root);
 
-    if (tree == NULL) {
-	   temp = (node_t *)malloc(sizeof(node_t));
+void
+insert(nodePtr *tree, int n) 
+{
+    nodePtr temp;
+
+    if (*tree == NULL) {
+	   temp = (nodePtr )malloc(sizeof(node_t));
 	   temp->data = n;
 	   temp->left = NULL;
 	   temp->right = NULL;
-       return temp; //Base case
+       *tree = temp;
     } else {
-		if(n < tree->data) {
-			tree->left = insert(tree->left, n);
-        } else {
-			tree->right = insert(tree->right, n);
-        }
+		if(n < (*tree)->data) 
+			insert(&(*tree)->left, n);
+        else 
+			insert(&(*tree)->right, n);
     }
-
-    return tree;
 }
 
-node_t*
-findMinTree (node_t *root) {
-   node_t *minNode = root;
+void
+delete(nodePtr *root, int n)
+{
+    nodePtr temp;
+
+    if (root == NULL)
+        printf("Data not found\n");
+    else if (n < (*root)->data)
+        delete(&((*root)->left), n);
+    else if (n > (*root)->data)
+        delete((&(*root)->right), n);
+    else {
+        if ((*root)->left && (*root)->right) {
+            temp = findMaxTree((*root)->left);
+            (*root)->data = temp->data;
+            delete((&(*root)->left), (*root)->data);
+        } else {
+            temp = *root;
+            if ((*root)->left == NULL)
+                *root = (*root)->right;
+            else if ((*root)->right == NULL);
+                *root = (*root)->left;
+            free(temp);
+        }
+    }
+}
+
+nodePtr
+findMinTree (nodePtr root) 
+{
+   nodePtr minNode = root;
 
    while (root) {
       if ((root->data) < (minNode->data)) {
@@ -42,9 +72,10 @@ findMinTree (node_t *root) {
    return minNode;
 }
 
-node_t*
-findMaxTree (node_t *root) {
-   node_t *maxNode = root;
+nodePtr
+findMaxTree (nodePtr root) 
+{
+   nodePtr maxNode = root;
 
    while (root) {
       if ((root->data) > (maxNode->data)) {
@@ -55,36 +86,8 @@ findMaxTree (node_t *root) {
    return maxNode;
 }
 
-node_t*
-delete(node_t *root, int n)
-{
-    node_t *temp;
-
-    if (root == NULL)
-        printf("Data not found\n");
-    else if (n < root->data)
-        root->left = delete(root->left, n);
-    else if (n > root->data)
-        root->right = delete(root->right, n);
-    else {
-        if (root->left && root->right) {
-            temp = findMaxTree(root->left);
-            root->data = temp->data;
-            root->left = delete(root->left, root->data);
-        } else {
-            temp = root;
-            if (root->left == NULL)
-                root = root->right;
-            else if (root->right == NULL);
-                root = root->left;
-            free(temp);
-        }
-    }
-    return root;
-}
-
 void 
-inorder(node_t *tree) 
+inorder(nodePtr tree) 
 {
    if (NULL == tree) 
        return;        // Base case
@@ -101,7 +104,7 @@ inorder(node_t *tree)
 }
 
 void 
-postorder(node_t *tree) 
+postorder(nodePtr tree) 
 {
     if (NULL == tree) 
         return; //basecase
@@ -116,7 +119,7 @@ postorder(node_t *tree)
 }
 
 void
-preorder(node_t *tree) 
+preorder(nodePtr tree) 
 {
     if (NULL == tree)
        return;  //basecase
@@ -155,18 +158,18 @@ void inorder_iterative(BinaryTree *root) {
 
 int main() 
 {
-    node_t *tree = NULL;
-    node_t *node;
+    nodePtr tree = NULL;
+    nodePtr node;
     int n;
 
-    tree = insert(tree, 10);
-    tree = insert(tree, 20);
-    tree = insert(tree, 5);
-    tree = insert(tree, 13);
-    tree = insert(tree, 3);
-    tree = insert(tree, 5);
-    tree = insert(tree, 113);
-    tree = insert(tree, 13);
+    insert(&tree, 10);
+    insert(&tree, 20);
+    insert(&tree, 5);
+    insert(&tree, 13);
+    insert(&tree, 3);
+    insert(&tree, 5);
+    insert(&tree, 113);
+    insert(&tree, 13);
 
     node = findMaxTree(tree);
     printf("Max number %d\n", node->data);
@@ -179,7 +182,7 @@ int main()
  
     n = 20;
     printf("Delete %d from tree\n", n);
-    tree = delete(tree, n);
+    delete(&tree, n);
 
     printf("inorder\n");
     inorder(tree);
