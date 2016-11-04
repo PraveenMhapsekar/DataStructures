@@ -1,0 +1,339 @@
+__fbufsize (3)       - interfaces to stdio FILE structure
+__flbf (3)           - interfaces to stdio FILE structure
+__fpending (3)       - interfaces to stdio FILE structure
+__fpurge (3)         - purge a stream
+__freadable (3)      - interfaces to stdio FILE structure
+__freading (3)       - interfaces to stdio FILE structure
+__fsetlocking (3)    - interfaces to stdio FILE structure
+__fwritable (3)      - interfaces to stdio FILE structure
+__fwriting (3)       - interfaces to stdio FILE structure
+_flushlbf (3)        - interfaces to stdio FILE structure
+AptPkg::System (3pm) - APT system abstraction class
+argz_stringify (3)   - functions to handle an argz list
+asprintf (3)         - print to allocated string
+atof (3)             - convert a string to a double
+atoi (3)             - convert a string to an integer
+atol (3)             - convert a string to an integer
+atoll (3)            - convert a string to an integer
+atoq (3)             - convert a string to an integer
+auth_destroy (3)     - library routines for remote procedure calls
+basename (1)         - strip directory and suffix from filenames
+bdftopcf (1)         - convert X font from Bitmap Distribution Format to Portable Compiled Format
+bstring (3)          - byte string operations
+c2ph (1)             - Dump C structures as generated from "cc - g - S" stabs
+cacheflush (2)       - flush contents of instruction and/or data cache
+clearerr (3)         - check and reset stream status
+clnt_destroy (3)     - library routines for remote procedure calls
+confstr (3)          - get configuration dependent string variables
+cpan2dist (1)        - The CPANPLUS distribution creator
+crl2pkcs7 (1ssl)     - Create a PKCS#7 structure from a CRL and certificates.
+Date::Parse (3pm)    - Parse date strings into time values
+dirfd (3)            - get directory stream file descriptor
+dirname (1)          - strip last component from file name
+Dpkg::Substvars (3)  - handle variable substitution in strings
+drand48 (3)          - generate uniformly distributed pseudo-random numbers
+drand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+ecvt (3)             - convert a floating-point number to a string
+ecvt_r (3)           - convert a floating-point number to a string
+envsubst (1)         - substitutes environment variables in shell format strings
+envz (3)             - environment string support
+envz_add (3)         - environment string support
+envz_entry (3)       - environment string support
+envz_get (3)         - environment string support
+envz_merge (3)       - environment string support
+envz_remove (3)      - environment string support
+envz_strip (3)       - environment string support
+erand48 (3)          - generate uniformly distributed pseudo-random numbers
+erand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+errstr (1ssl)        - lookup error codes
+fclose (3)           - close a stream
+fcloseall (3)        - close all open streams
+fcvt (3)             - convert a floating-point number to a string
+fcvt_r (3)           - convert a floating-point number to a string
+fdopen (3)           - stream open functions
+feof (3)             - check and reset stream status
+ferror (3)           - check and reset stream status
+fflush (3)           - flush a stream
+fgetc (3)            - input of characters and strings
+fgetpos (3)          - reposition a stream
+fgets (3)            - input of characters and strings
+fgetwc (3)           - read a wide character from a FILE stream
+fgetws (3)           - read a wide-character string from a FILE stream
+fileno (3)           - check and reset stream status
+fmemopen (3)         - open memory as stream
+foo2hbpl2 (1)        - Convert Ghostscript pbmraw or bitcmyk format into a ZJS printer stream
+foo2hbpl2-wrapper (1) - Convert Postscript into a ZJS printer stream
+foo2hiperc (1)       - Convert Ghostscript pbmraw or bitcmyk format into a HIPERC printer stream
+foo2hiperc-wrapper (1) - Convert Postscript into a HIPERC printer stream
+foo2hp (1)           - Convert Ghostscript pbmraw or bitcmyk format into a ZJS printer stream
+foo2hp2600-wrapper (1) - Convert Postscript into a ZJS printer stream
+foo2lava (1)         - Convert Ghostscript pbmraw or bitcmyk format into a LAVAFLOW or a OPL printer stream
+foo2lava-wrapper (1) - Convert Postscript into a LAVAFLOW or OPL printer stream
+foo2oak (1)          - Convert Ghostscript pbmraw, pgmraw or bitcmyk format into an OAKT printer stream
+foo2oak-wrapper (1)  - Convert Postscript into an OAKT printer stream
+foo2qpdl (1)         - Convert Ghostscript pbmraw or bitcmyk format into a QPDL printer stream
+foo2qpdl-wrapper (1) - Convert Postscript into a QPDL printer stream
+foo2slx (1)          - Convert Ghostscript pbmraw or bitcmyk format into a SLX printer stream
+foo2slx-wrapper (1)  - Convert Postscript into a SLX printer stream
+foo2xqx (1)          - Convert Ghostscript pbmraw into a XQX printer stream
+foo2xqx-wrapper (1)  - Convert Postscript into a XQX printer stream
+foo2zjs (1)          - Convert Ghostscript pbmraw or bitcmyk format into a ZJS printer stream
+foo2zjs-wrapper (1)  - Convert Postscript into a ZJS printer stream
+fopen (3)            - stream open functions
+fopencookie (3)      - opening a custom stream
+fpurge (3)           - purge a stream
+fputc (3)            - output of characters and strings
+fputs (3)            - output of characters and strings
+fputwc (3)           - write a wide character to a FILE stream
+fputws (3)           - write a wide-character string to a FILE stream
+fread (3)            - binary stream input/output
+freopen (3)          - stream open functions
+fseek (3)            - reposition a stream
+fsetpos (3)          - reposition a stream
+fstrim (8)           - discard unused blocks on a mounted filesystem
+fstrim-all (8)       - call fstrim on all mounted file systems which support it
+ftell (3)            - reposition a stream
+fwide (3)            - set and determine the orientation of a FILE stream
+fwrite (3)           - binary stream input/output
+gai_strerror (3)     - network address and service translation
+gcvt (3)             - convert a floating-point number to a string
+getc (3)             - input of characters and strings
+getchar (3)          - input of characters and strings
+getdate (3)          - convert a date-plus-time string to broken-down time
+getdate_err (3)      - convert a date-plus-time string to broken-down time
+getdate_r (3)        - convert a date-plus-time string to broken-down time
+getdelim (3)         - delimited string input
+getline (3)          - delimited string input
+getpw (3)            - reconstruct password line entry
+gets (3)             - input of characters and strings
+getsubopt (3)        - parse suboption arguments from a string
+gettextize (1)       - install or upgrade gettext infrastructure
+getutmp (3)          - copy utmp structure to utmpx, and vice versa
+getutmpx (3)         - copy utmp structure to utmpx, and vice versa
+getwc (3)            - read a wide character from a FILE stream
+gipddecode (1)       - Decode a GIPD stream into human readable form.
+git-cherry (1)       - Find commits yet to be applied to upstream
+git-rebase (1)       - Forward-port local commits to the updated upstream head
+git-remote-fd (1)    - Reflect smart transport stream back to caller
+git-shell (1)        - Restricted login shell for Git-only SSH access
+git-stripspace (1)   - Remove unnecessary whitespace
+gst-discoverer-1.0 (1) - Display file metadata and stream information
+gst-feedback-0.10 (1) - generate debug info for GStreamer bug reports
+gst-inspect-0.10 (1) - print info about a GStreamer plugin or element
+gst-inspect-1.0 (1)  - print info about a GStreamer plugin or element
+gst-install (1)      - installs missing GStreamer plugins
+gst-launch-0.10 (1)  - build and run a GStreamer pipeline
+gst-launch-1.0 (1)   - build and run a GStreamer pipeline
+gst-visualise-0.10 (1) - Run a GStreamer pipeline to display an audio visualisation
+gst-xmlinspect-0.10 (1) - print info about a GStreamer plugin or element
+gst-xmllaunch-0.10 (1) - build and run a GStreamer pipeline from an XML serialization
+gtk-query-immodules-2.0 (1) - Input method module registration utility
+gtk-query-immodules-3.0 (1) - Input method module registration utility
+hbpldecode (1)       - Decode a HBPL stream into human readable form.
+hdestroy (3)         - hash table management
+hdestroy_r (3)       - hash table management
+hipercdecode (1)     - Decode a HIPERC stream into human readable form.
+hstrerror (3)        - get network host entry
+index (3)            - locate character in string
+intro (8)            - introduction to administration and privileged commands
+IO::String (3pm)     - Emulate file interface for in-core strings
+io_destroy (2)       - destroy an asynchronous I/O context
+ip6tables (8)        - administration tool for IPv4/IPv6 packet filtering and NAT
+iptables (8)         - administration tool for IPv4/IPv6 packet filtering and NAT
+iptables-extensions (8) - list of extensions in the standard iptables distribution
+irqbalance (1)       - distribute hardware interrupts across processors on a multiprocessor system
+iruserok (3)         - routines for returning a stream to a remote command
+iruserok_af (3)      - routines for returning a stream to a remote command
+isastream (2)        - unimplemented system calls
+jrand48 (3)          - generate uniformly distributed pseudo-random numbers
+jrand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+lavadecode (1)       - Decode a LAVAFLOW stream into human readable form.
+lcong48 (3)          - generate uniformly distributed pseudo-random numbers
+lcong48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+librsync (3)         - library for delta compression of streams
+listres (1)          - list resources in widgets
+look (1)             - display lines beginning with a given string
+lrand48 (3)          - generate uniformly distributed pseudo-random numbers
+lrand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+lsb_release (1)      - print distribution-specific information
+malloc_info (3)      - export malloc state to a stream
+mbsnrtowcs (3)       - convert a multibyte string to a wide-character string
+mbsrtowcs (3)        - convert a multibyte string to a wide-character string
+mbstowcs (3)         - convert a multibyte string to a wide-character string
+memmem (3)           - locate a substring
+min12xxw (1)         - Convert pbmraw streams to Minolta PagePro 12xxW languages
+mrand48 (3)          - generate uniformly distributed pseudo-random numbers
+mrand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+net (8)              - Tool for administration of Samba and remote CIFS servers.
+nrand48 (3)          - generate uniformly distributed pseudo-random numbers
+nrand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+ntfscat (8)          - print NTFS files and streams on the standard output
+numfmt (1)           - Convert numbers from/to human-readable strings
+oakdecode (1)        - Decode an OAKT printer stream into human readable form.
+offsetof (3)         - offset of a structure member
+open_memstream (3)   - open memory as stream
+open_wmemstream (3)  - open memory as stream
+opldecode (1)        - Decode a Raster Object (opl) stream into human readable form.
+pacat (1)            - Play back or record raw or encoded audio streams on a PulseAudio sound server
+pamon (1)            - Play back or record raw or encoded audio streams on a PulseAudio sound server
+parec (1)            - Play back or record raw or encoded audio streams on a PulseAudio sound server
+parecord (1)         - Play back or record raw or encoded audio streams on a PulseAudio sound server
+pclose (3)           - pipe stream to or from a process
+popen (3)            - pipe stream to or from a process
+psed (1)             - a stream editor
+psfstriptable (1)    - remove the embedded Unicode character table from a console font
+pstree (1)           - display a tree of processes
+pstree.x11 (1)       - display a tree of processes
+pstruct (1)          - Dump C structures as generated from "cc - g - S" stabs
+pthread_attr_destroy (3) - initialize and destroy thread attributes object
+pthread_attr_init (3) - initialize and destroy thread attributes object
+putc (3)             - output of characters and strings
+putchar (3)          - output of characters and strings
+puts (3)             - output of characters and strings
+putwc (3)            - write a wide character to a FILE stream
+qecvt (3)            - convert a floating-point number to a string
+qecvt_r (3)          - convert a floating-point number to a string
+qfcvt (3)            - convert a floating-point number to a string
+qfcvt_r (3)          - convert a floating-point number to a string
+qgcvt (3)            - convert a floating-point number to a string
+qpdldecode (1)       - Decode a QPDL stream into human readable form.
+rbash (1)            - restricted bash, see bash(1)
+rcmd (3)             - routines for returning a stream to a remote command
+rcmd_af (3)          - routines for returning a stream to a remote command
+rewind (3)           - reposition a stream
+rewinddir (3)        - reset directory stream
+rexec (3)            - return stream to a remote command
+rexec_af (3)         - return stream to a remote command
+rindex (3)           - locate character in string
+rnano (1)            - Restricted mode for Nano's ANOther editor, an enhanced free Pico clone
+rresvport (3)        - routines for returning a stream to a remote command
+rresvport_af (3)     - routines for returning a stream to a remote command
+ruserok (3)          - routines for returning a stream to a remote command
+ruserok_af (3)       - routines for returning a stream to a remote command
+s2p (1)              - a stream editor
+s390_runtime_instr (2) - enable/disable s390 CPU run-time instrumentation
+samba-regedit (8)    - ncurses based tool to manage the Samba registry
+samba-tool (8)       - Main Samba administration tool.
+sane-umax1220u (5)   - SANE backend for the UMAX Astra 1220U and similar scanners
+sane-umax_pp (5)     - SANE backend for Umax Astra parallel port flatbed scanners
+sed (1)              - stream editor for filtering and transforming text
+seed48 (3)           - generate uniformly distributed pseudo-random numbers
+seed48_r (3)         - generate uniformly distributed pseudo-random numbers reentrantly
+seekdir (3)          - set the position of the next readdir() call in the directory stream.
+sem_destroy (3)      - destroy an unnamed semaphore
+setbuf (3)           - stream buffering operations
+setbuffer (3)        - stream buffering operations
+setlinebuf (3)       - stream buffering operations
+setvbuf (3)          - stream buffering operations
+sh.distrib (1)       - command interpreter (shell)
+sigevent (7)         - structure for notification from asynchronous routines
+slxdecode (1)        - Decode a SLX stream into human readable form.
+Socket6 (3pm)        - IPv6 related part of the C socket.h defines and structure manipulators
+srand48 (3)          - generate uniformly distributed pseudo-random numbers
+srand48_r (3)        - generate uniformly distributed pseudo-random numbers reentrantly
+stdbuf (1)           - Run COMMAND, with modified buffering operations for its standard streams.
+stderr (3)           - standard I/O streams
+stdin (3)            - standard I/O streams
+stdio_ext (3)        - interfaces to stdio FILE structure
+stdout (3)           - standard I/O streams
+stpcpy (3)           - copy a string returning a pointer to its end
+stpncpy (3)          - copy a fixed-size string, returning a pointer to its end
+strace (1)           - trace system calls and signals
+strcasecmp (3)       - compare two strings ignoring case
+strcasestr (3)       - locate a substring
+strcat (3)           - concatenate two strings
+strchr (3)           - locate character in string
+strchrnul (3)        - locate character in string
+strcmp (3)           - compare two strings
+strcoll (3)          - compare two strings using the current locale
+strcpy (3)           - copy a string
+strcspn (3)          - search a string for a set of bytes
+strdup (3)           - duplicate a string
+strdupa (3)          - duplicate a string
+strerror (3)         - return string describing error number
+strerror_r (3)       - return string describing error number
+strfmon (3)          - convert monetary value to a string
+strfry (3)           - randomize a string
+strftime (3)         - format date and time
+string (3)           - string operations
+strings (1)          - print the strings of printable characters in files.
+strip (1)            - Discard symbols from object files.
+strlen (3)           - calculate the length of a string
+strncasecmp (3)      - compare two strings ignoring case
+strncat (3)          - concatenate two strings
+strncmp (3)          - compare two strings
+strncpy (3)          - copy a string
+strndup (3)          - duplicate a string
+strndupa (3)         - duplicate a string
+strnlen (3)          - determine the length of a fixed-size string
+strpbrk (3)          - search a string for any of a set of bytes
+strptime (3)         - convert a string representation of time to a time tm structure
+strrchr (3)          - locate character in string
+strsep (3)           - extract token from string
+strsignal (3)        - return string describing signal
+strspn (3)           - search a string for a set of bytes
+strstr (3)           - locate a substring
+strtod (3)           - convert ASCII string to floating-point number
+strtof (3)           - convert ASCII string to floating-point number
+strtoimax (3)        - convert string to integer
+strtok (3)           - extract tokens from strings
+strtok_r (3)         - extract tokens from strings
+strtol (3)           - convert a string to a long integer
+strtold (3)          - convert ASCII string to floating-point number
+strtoll (3)          - convert a string to a long integer
+strtoq (3)           - convert a string to a long integer
+strtoul (3)          - convert a string to an unsigned long integer
+strtoull (3)         - convert a string to an unsigned long integer
+strtoumax (3)        - convert string to integer
+strtouq (3)          - convert a string to an unsigned long integer
+strverscmp (3)       - compare two version strings
+strxfrm (3)          - string transformation
+sudo_root (8)        - How to run administrative commands
+svc_destroy (3)      - library routines for remote procedure calls
+tdestroy (3)         - manage a binary tree
+telldir (3)          - return current location in directory stream
+testrb (1)           - Automatic runnter for Test::Unit of Ruby
+testrb1.9.1 (1)      - Automatic runnter for Test::Unit of Ruby
+Text::CharWidth (3pm) - Get number of occupied columns of a string on terminal
+ucfr (1)             - Update Configuration File Registry: associate packages with configuration files
+ungetc (3)           - input of characters and strings
+ungetwc (3)          - push back a wide character onto a FILE stream
+URI::_punycode (3pm) - encodes Unicode string in Punycode
+URI::Split (3pm)     - Parse and compose URI strings
+vasprintf (3)        - print to allocated string
+vpddecode (8)        - VPD structure decoder
+wcpcpy (3)           - copy a wide-character string, returning a pointer to its end
+wcpncpy (3)          - copy a fixed-size string of wide characters, returning a pointer to its end
+wcscasecmp (3)       - compare two wide-character strings, ignoring case
+wcscat (3)           - concatenate two wide-character strings
+wcschr (3)           - search a wide character in a wide-character string
+wcscmp (3)           - compare two wide-character strings
+wcscpy (3)           - copy a wide-character string
+wcscspn (3)          - search a wide-character string for any of a set of wide characters
+wcsdup (3)           - duplicate a wide-character string
+wcslen (3)           - determine the length of a wide-character string
+wcsncasecmp (3)      - compare two fixed-size wide-character strings, ignoring case
+wcsncat (3)          - concatenate two wide-character strings
+wcsncmp (3)          - compare two fixed-size wide-character strings
+wcsncpy (3)          - copy a fixed-size string of wide characters
+wcsnlen (3)          - determine the length of a fixed-size wide-character string
+wcsnrtombs (3)       - convert a wide-character string to a multibyte string
+wcspbrk (3)          - search a wide-character string for any of a set of wide characters
+wcsrchr (3)          - search a wide character in a wide-character string
+wcsrtombs (3)        - convert a wide-character string to a multibyte string
+wcsspn (3)           - advance in a wide-character string, skipping any of a set of wide characters
+wcsstr (3)           - locate a substring in a wide-character string
+wcstoimax (3)        - convert wide-character string to integer
+wcstok (3)           - split wide-character string into tokens
+wcstombs (3)         - convert a wide-character string to a multibyte string
+wcstoumax (3)        - convert wide-character string to integer
+wcswidth (3)         - determine columns needed for a fixed-size wide-character string
+x86_64-linux-gnu-strings (1) - print the strings of printable characters in files.
+x86_64-linux-gnu-strip (1) - Discard symbols from object files.
+xdr_destroy (3)      - library routines for external data representation
+xdr_string (3)       - library routines for external data representation
+xdr_wrapstring (3)   - library routines for external data representation
+xgettext (1)         - extract gettext strings from source
+xqxdecode (1)        - Decode a XQX stream into human readable form.
+yes (1)              - output a string repeatedly until killed
+zipdetails (1)       - display the internal structure of zip files
