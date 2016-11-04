@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+<<<<<<< HEAD
 #define SIZE 5
 int A[SIZE][SIZE];
 int N = SIZE;
@@ -43,20 +44,35 @@ printArray(int rowSumFlag, int colSumFlag)
     printf("\n");
 }
 
+=======
+#define SIZE 3
+int A[SIZE][SIZE];
+int N = SIZE;
+
+>>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 int
 main(void)
 {
     int i, j, row, col;
     int count = 0;
 
+<<<<<<< HEAD
         i = 0;
+=======
+    i = 0;
+>>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     j = (N - 1)/2;
 
     A[i][j] = 1;   // start with first row and mid column
 
     for (count = 2; count <= N*N; count++) {
+<<<<<<< HEAD
        row = (i - 1) < 0 ? N - 1 : i - 1;  // Decrease row
        col = (j - 1) < 0 ? N - 1 : j - 1;  // decrease column
+=======
+        row = (i - 1) < 0 ? N - 1 : i - 1;  // Decrease row
+        col = (j - 1) < 0 ? N - 1 : j - 1;  // decrease column
+>>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 
         if (A[row][col]) {   // If it is already occupied
             i = (++i) % N;   // Move to next down row
@@ -64,6 +80,7 @@ main(void)
             i = row;
             j = col;
         }
+<<<<<<< HEAD
             A[i][j] = count;   // Store count
     }
 
@@ -71,3 +88,22 @@ main(void)
 
     return 0;
 }
+=======
+
+        A[i][j] = count;   // Store count
+    }
+
+
+    for (i = 0; i < N; i++) { // Print an array
+        for(j = 0; j < N; j++) {
+            printf("%3d ", A[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+                 
+            
+
+>>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
