@@ -6,7 +6,6 @@
 //int AA[N] = {7, 6,5,3,3,2,1,0};
 int A[N];
 int testArray[N] = {0,1,2,3,3,5,6,7};
-<<<<<<< HEAD
 int AA[N] = {17, 36, 225, 23,123,2,1,0};
 
 char
@@ -40,40 +39,6 @@ sortMenu {
             heapsort,
             sortListEnd,
           } sortMenu_t;
-=======
-
-int AA[N] = {17, 36, 225, 23,123,2,1,0};
-
-char *menu [] = {
-                "",
-                "Bubble Sort", 
-                "Selection Sort",
-                "Insertion Sort",
-                "Shell Sort",
-                "Counting Sort",
-                "Bucket sort",
-                "Radix Sort",
-                "Quick Sort",
-                "Merge Sort",
-                "Heap Sort"
-                ""    
-                };
-
-typedef enum sortMenu {
-                sortlistStart,
-                bubblesort,
-                selectionsort,
-                insertionsort,
-                shellsort,
-                countingsort,
-                bucketsort,
-                radixsort,
-                quicksort,
-                mergesort,
-                heapsort,
-                sortListEnd,
-} sortMenu_t;
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 
 void
 copyArry()
@@ -103,10 +68,6 @@ printArray()
     for (i = 0; i < N; i++) {
         printf("%d ", A[i]);
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     printf("\n"); 
 }
 
@@ -122,21 +83,12 @@ swap (int *a, int *b)
     *a = *a ^ *b;
 }
 
-<<<<<<< HEAD
 /* 1. Bubble Sort ************************************************************************************************************/
 void
 bubbleSort() 
 {
     int i, j; // Pass
     for (i = 0; i < N - 1;  i++) {
-=======
-void
-bubbleSort() 
-{
-    int i; // Pass
-    int j;
-    for (i = 0; i < N-1;  i++) {
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
         for (j = 0; j < (N - i - 1); j++) {
             if (A[j] > A[j+1]) {
                 swap(&A[j], &A[j+1]);
@@ -146,7 +98,6 @@ bubbleSort()
     }
 }
 
-<<<<<<< HEAD
 /* 2. Selection Sort **********************************************************************************************************/
 void
 selectionSort() 
@@ -162,23 +113,6 @@ selectionSort()
         }
         swap(&A[i], &A[key]);
         printArray();
-=======
-void
-selectionSort() 
-{
-    int i;
-    int j;
-    int key = 0;
-    for (i = 0; i < N-1; i++) {
-       key = i; 
-       for (j=i; j<N; j++) {
-           if (A[j] < A[i]) {
-               key = j;
-           }
-       }
-       swap(&A[i], &A[key]);
-       printArray();
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     }
 }
 
@@ -196,29 +130,17 @@ selectionSort()
 }
 #endif
 
-<<<<<<< HEAD
 /* 3. Insertion Sort **********************************************************************************************************/
-=======
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 void
 insertionSort()
 {
     int i, j, temp;
     for (i = 1; i < N; i++) {
-<<<<<<< HEAD
          for (j = i - 1; j >= 0; j--) {
-=======
-         temp = A[i];
-         for (j = i-1; j >= 0; j--) {
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
             if (A[j] > A[j+1]) {
                 swap (&A[j], &A[j+1]);
             }
         }
-<<<<<<< HEAD
-=======
-        A[j] = temp; 
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
         printArray();
     }
 }
@@ -241,38 +163,10 @@ insertionSort()
     }
 }
 #endif
-<<<<<<< HEAD
 
 /* 4. Quick Sort ************************************************************************************************************/
 int
 partition (int left, int right)
-=======
-#define BUCKET 10 // Asuming that all the elements are in the range (0 - (BUCKET - 1))
-void
-bucketSort()
-{
-    int i = BUCKET;
-    int k = 0;
-    int BA[BUCKET];
-
-    for (i = 0; i < BUCKET; i++) {
-        BA[i] = 0;
-    }
-
-    for (i = 0; i < N; i++) {
-        BA[A[i]]++;
-    }
-        
-    for (i = 0; i < BUCKET; i++) {
-        while (BA[i]) {
-            A[k++] = i;
-            BA[i]--;
-        }
-    }
-}
-
-int partition (int left, int right)
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 {
     int pivot = A[left];
     int L = left;
@@ -288,11 +182,7 @@ int partition (int left, int right)
             swap(&A[L], &A[R]); // swap R and L and iterate again.
     }
 
-<<<<<<< HEAD
     swap (&A[R], &A[left]); //Swap Pivot with smallest element 
-=======
-    swap (&A[R], &A[left]); //SWap Pivot with smallest element 
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     printArray();
     return R; // Return new Pivot;
 }
@@ -309,10 +199,7 @@ quickSort (int left, int right)
     }
 }
 
-<<<<<<< HEAD
 /* 5. Merge Sort ************************************************************************************************************/
-=======
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 void
 merge(int l, int m, int r) 
 {
@@ -323,10 +210,6 @@ merge(int l, int m, int r)
     int n2 = r - m;
     int L[n1], R[n2];
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     for(i = 0; i < n1; i++) {
         L[i] = A[l+i];
     }
@@ -381,20 +264,13 @@ mergeSort(int start, int end)
    return;
 }
 
-<<<<<<< HEAD
 /* 6. Heap Sort ************************************************************************************************************/
-=======
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 /*
  * n -> heap size
  * i -> index
  */
-<<<<<<< HEAD
 void 
 heapify (int n, int i) 
-=======
-void heapify (int n, int i) 
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 {
    int largest = i;    /* Root        */
    int lc = i * 2 + 1; /* Left child  */
@@ -431,7 +307,6 @@ heapSort()
     } /* Reduce array size (i--) */
 }
 
-<<<<<<< HEAD
 /* 7. Bucket Sort ***********************************************************************************************************/
 #define BUCKET 10 // Asuming that all the elements are in the range (0 - (BUCKET - 1))
 void
@@ -465,17 +340,6 @@ countingSort()
     int count[COUNT];
 
     for (i=0; i < COUNT; i++) {
-=======
-void
-countingSort(int exp) 
-{
-    int k = 1000;
-    int count[k];
-    int p = 0;
-    int i = 0;
-
-    for (i=0; i < k; i++) {
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
         count[i] = 0;
     }
 
@@ -484,20 +348,13 @@ countingSort(int exp)
     }
 
     for (i=0; i < k; i++) {
-<<<<<<< HEAD
         while (count[i]) {
             A[k++] = i;
             count[i]--;
-=======
-        while (count[i] > 0) {
-            A[p++] = i;
-            count[i] = count[i] - 1;
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
         }
     }
 }
 
-<<<<<<< HEAD
 /* 9. Radix Sort ************************************************************************************************************/
 void
 radixSort()
@@ -505,16 +362,6 @@ radixSort()
     int max, i, k;
     int m = 0;
     int digits = 0;
-=======
-void
-radixSort()
-{
-    int max;
-    int m = 0;
-    int digits = 0;
-    int i;
-    int k;
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 
     for (i = 0; i < N; i++) {
         if (A[i] > A[m]) {
@@ -557,13 +404,8 @@ printMenu ()
 int
 getChoice(sortMenu_t *cc) 
 {
-<<<<<<< HEAD
     int n, c;
 
-=======
-    int n;
-    int c;
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     if (((n = scanf("%d", &c)) != 1) || (c > sortListEnd) || (c < bubblesort)) {
         printf ("\nWrong input!!!\nPlease get familiar with menu options to run this program\nGood Bye for now!!!\n");
         return 0;        
@@ -629,11 +471,7 @@ main (void)
                 printMenu();
                 continue;
         }
-<<<<<<< HEAD
 #ifdef TEST_YOUR_WORK
-=======
-#ifdef TESTYOURWORK
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
         // Test sorted array aginst expected results
         if (!testSortArray()) {
              printf("\n\n\b\b Error sorting failed\n");
