@@ -4,7 +4,7 @@
 //int A[SIZE][SIZE];
 int N = SIZE;
 
-priintArray(int A[SIZE][SIZE], int rowSumFlag, int colSumFlag, int d)
+printArray(int A[SIZE][SIZE], int rowSumFlag, int colSumFlag, int d)
 {
     int sumRow = 0;
     int sumCol[SIZE] = {0};
