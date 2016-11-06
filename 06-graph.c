@@ -36,18 +36,20 @@ int visited[MAX_VERT];
 int C[MAX_VERT][MAX_VERT];
 
 /* A structure to represent an adjacency list node */
+typedef struct node *nodePtr;
+
 typedef struct node {
     int vtx;
-    struct node *nxt;
+    nodePtr nxt;
 } node_t;
 
-typedef struct aList {
-    node_t *head;
-} aList_t;
+typedef struct vertexList {
+    nodePtr head;
+} vertexList_t;
 
 typedef struct graph {
-    int V;
-    aList_t *array;
+    int numVtx;
+    vertexList_t *vList;
 } graph_t;
 
 void
@@ -118,12 +120,12 @@ graph_t *
 createGraph(int V) 
 {
     graph_t *graph = (graph_t *) malloc(sizeof(graph_t));
-    graph->V = V;
-    graph->array = (aList_t *) malloc(V * sizeof(aList_t));
+    graph->numVtx = V;
+    graph->vList = (vertexList_t *) malloc(V * sizeof(vertexList_t));
       
     int i;
     for (i = 0; i < V; ++i)
-        graph->array[i].head = NULL;
+        graph->vList[i].head = NULL;
 
     return graph;
 }
@@ -132,31 +134,35 @@ graph_t *
 insertVertex(graph_t *G)
 {
     int i;
-    /* Copy Current aList into temp */
-    aList_t *tAdjList = G->array;
 
-    /* Allocate new aList */
-    G->array  = (aList_t *)malloc((G->V + 1) * sizeof(aList_t));
+    /* Copy Current vertexList into temp */
+    vertexList_t *tAdjList = G->vList;
 
-    /* Copy over previous vertices to new aList */
-    for (i = 0; i < G->V; i++) {
-        G->array[i] = tAdjList[i];
+    /* Allocate new vertexList */
+    G->vList  = (vertexList_t *)malloc((G->numVtx + 1) * sizeof(vertexList_t));
+
+    /* Copy over previous vertices to new vertexList */
+    if (tAdjList) {
+        for (i = 0; i < G->numVtx; i++) {
+            G->vList[i] = tAdjList[i];
+        }
     }
 
-    G->V++;
-    G->array[G->V].head = NULL;
+    G->numVtx++;
+    G->vList[G->numVtx].head = NULL;
 
-    /* Free old aList */
-    free(tAdjList);
+    /* Free old vertexList */
+    if (tAdjList)
+        free(tAdjList);
 }
 
 void 
 insertEdge(graph_t *G, int src, int vtx)
 {
-    if ((src >= G->V) || (vtx >= G->V))
+    if ((src >= G->numVtx) || (vtx >= G->numVtx))
         return;
 
-    node_t *T = G->array[src].head;
+    node_t *T = G->vList[src].head;
     node_t *N;
     while (T) {
          if (T->vtx == vtx)
@@ -165,10 +171,10 @@ insertEdge(graph_t *G, int src, int vtx)
     } 
 
     N = newAdjListNode(vtx);
-    N->nxt = G->array[src].head;
-    G->array[src].head = N;
+    N->nxt = G->vList[src].head;
+    G->vList[src].head = N;
 
-    insertEdge(G, vtx, src);
+   // insertEdge(G, vtx, src);
 }
 
 void
@@ -203,21 +209,21 @@ deleteEdge(graph_t *G, int src, int vtx)
     node_t *L;    
     node_t *tNode;    
     
-    if ((src >= G->V) || (vtx >= G->V))
+    if ((src >= G->numVtx) || (vtx >= G->numVtx))
         return;
 
-    deletEdgeNode(&(G->array[src].head), vtx);
-    deletEdgeNode(&(G->array[vtx].head), src);
+    deletEdgeNode(&(G->vList[src].head), vtx);
+    deletEdgeNode(&(G->vList[vtx].head), src);
 }
 
 void
-deleteVertix(graph_t *G, int V) 
+deleteVertex(graph_t *G, int V) 
 {
-    if (V >= G->V)
+    if (V >= G->numVtx)
         return;
 
-    while (G->array[V].head) {
-        deleteEdge(G, V, G->array[V].head->vtx);
+    while (G->vList[V].head) {
+        deleteEdge(G, V, G->vList[V].head->vtx);
     }
 }
 
@@ -227,8 +233,8 @@ printGraph(graph_t *G)
 {
     int v;
 
-    for (v = 0; v < G->V; ++v) {
-        node_t *p = G->array[v].head;
+    for (v = 0; v < G->numVtx; ++v) {
+        node_t *p = G->vList[v].head;
         printf("vertex[%d]", v);
         while (p) {
             printf(" -> %d", p->vtx);
@@ -254,7 +260,7 @@ DFSHelper(node_t *L, int *visited)
 void
 DFSrecursive (graph_t *G, int V, int *visited)
 {
-    node_t *T = G->array[V].head;
+    node_t *T = G->vList[V].head;
 
     while (T) {
         V = T->vtx;
@@ -284,12 +290,35 @@ DFS(graph_t *G, int V)
     node_t *w;
     visited[V] = 1;
     printf("->%2d", V);
-    for (w = G->array[V].head; w; w = w->nxt) {
+    for (w = G->vList[V].head; w; w = w->nxt) {
         if (!visited[w->vtx]) {
             DFS(G, w->vtx);
         }
     }
 }
+
+#ifdef BFS_Q
+void
+BFS(graph_t *G, int v)
+{
+    node_t *w;
+    int front = rear = NULL;
+    printf("->%2d", v);
+    visited[v] = 1;
+    addq(v);
+
+    while(front) {
+        v = deleteQ()
+        for (w = G->vList[v].head; w; w = w->nxt) {
+            if (!visited[w->vtx]) {
+                printf("->%2d", w->vtx);
+                addq(w->vtx);
+                visited[w->vtx] = 1;
+            }
+        }
+    }
+}
+#endif
 
 #define TRUE  1
 #define FALSE 0
@@ -312,7 +341,7 @@ int
 choose (int *distance, int n, int *found)
 {
     int i, min, minpos;
-    min = 120000;
+    min = 9999;
     minpos = -1;
 
     for (i = 0; i < MAX_VERT; i++) {
@@ -321,14 +350,19 @@ choose (int *distance, int n, int *found)
             minpos = i;
         }
     }
+
+    found[minpos] = TRUE;
+    printf("[%d]   ", minpos);  /* Print u */
     return minpos;
 }
 
+/* Dikjastra's */
 void
-shortestPath(int v, int cost[MAX_VERT][MAX_VERT], int *distance, int n, int *found)
+shortestPath(int v, int cost[MAX_VERT][MAX_VERT], int *distance, int *found)
 {
     int i, u, w;
-    
+    int n  = MAX_VERT; 
+
     for (i =0; i < n; i++) {
         found[i] = FALSE;
         distance[i] = cost[v][i];
@@ -342,32 +376,34 @@ shortestPath(int v, int cost[MAX_VERT][MAX_VERT], int *distance, int n, int *fou
 
     for (i = 0; i < n - 2; i++) {
         u = choose(distance, n, found);
-        found[u] = TRUE;
         for (w = 0; w < n; w++) {
             if (!found[w]) {
-                if ((distance[u] + cost[u][w]) < distance[w]) {
-                    distance[w] = distance[u] + cost[u][w];
+                if ((distance[u] + cost[u][w]) < distance[w]) { /* If cost of reaching w from u is less than known cost of reaching w , update new cost to reach w */
+                    distance[w] = distance[u] + cost[u][w];  
                 }
             }
-        }
-
-        printf("[%d]   ", u);
+        } /* End of w-loop */
         printDistance();
-    }
+    } /* End of i-loop */
 }
 
 int
 main (void)
 {
-    int V = 4;
+    int V = 8;
     graph_t *G = createGraph(V);
 
-    insertEdge(G, 0, 1);
-    insertEdge(G, 0, 2);
-    insertEdge(G, 1, 2);
+    insertEdge(G, 1, 0);
     insertEdge(G, 2, 0);
-    insertEdge(G, 2, 3);
-    insertEdge(G, 3, 3);
+    insertEdge(G, 2, 1);
+    insertEdge(G, 3, 2);
+    insertEdge(G, 4, 3);
+    insertEdge(G, 4, 5);
+    insertEdge(G, 5, 3);
+    insertEdge(G, 5, 6);
+    insertEdge(G, 5, 7);
+    insertEdge(G, 6, 7);
+    insertEdge(G, 7, 0);
 
     /* print the adjacency list representation of the above graph */
     printGraph(G);
@@ -378,10 +414,10 @@ main (void)
 //    deleteEdge(G, 1, 2);
 //    printGraph(G);
 //    printf("deleting Vertix 2\n");
-//    deleteVertix(G, 2);
+//    deleteVertex(G, 2);
 //    printGraph(G);
     printf ("\nDFS[0]");
-    DFS(G, 0);
+    DFS(G, 4);
 
     initCost();
     setCost(1, 0, 300);
@@ -399,6 +435,6 @@ main (void)
 //shortestPath(int v, int **cost, int *distance, int n, int *found)
     V = 4;
     printHeader(V);
-    shortestPath(V, C, distance, MAX_VERT, found);
+    shortestPath(V, C, distance, found);
     return 0;
 }

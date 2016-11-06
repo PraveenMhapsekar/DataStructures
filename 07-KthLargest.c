@@ -17,15 +17,17 @@ int A[MAX] = {5, 3, 9, 1};
 printArray () 
 {
     int i;
-    for (i = 0; i < MAX; i++) {
+    for (i = 0; i < MAX; i++) 
         printf ("%3d ", A[i]); 
-    }
     printf("\n");
 }
 
 void 
 swap (int *a, int *b)
 {
+    if (a == b)
+        return;
+
     *a = *a ^ *b;
     *b = *a ^ *b;
     *a = *a ^ *b;
@@ -33,15 +35,11 @@ swap (int *a, int *b)
 
 void sort()
 {
-    int i;
-    int j;
-    for (i = 0; i < MAX; i++) {
-        for (j = i+1; j < MAX; j++) {
-            if (A[i] < A[j]) {
-                swap(&A[i], &A[j]);
-            }
-        }
-    }
+    int i, j;
+    for (i = 1; i < MAX - 1; i++)
+        for (j = i; j >= 0; j--)
+            if (A[j] > A[j + 1]) 
+                swap(&A[j], &A[j + 1]);
 }
 
 int
@@ -49,15 +47,16 @@ kthLargestNumber(int K)
 {
     sort();      
     printArray();
-    if (K < MAX) {
-        printf("\n %dth largest number is %d\n", K, A[K]);
-    }
+    if (K < MAX)
+        printf("largest(%d) number is %d\n", K, A[K]);
 }
 
 int
 main()
 {
-    kthLargestNumber(3);
+    int i;
+    for (i = 0; i < MAX; i++) 
+        kthLargestNumber(i);
     return 0;
 }
 
