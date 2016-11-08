@@ -136,9 +136,9 @@ insertionSort()
 {
     int i, j, temp;
     for (i = 1; i < N; i++) {
-         for (j = i - 1; j >= 0; j--) {
-            if (A[j] > A[j+1]) {
-                swap (&A[j], &A[j+1]);
+         for (j = i; j > 0; j--) {
+            if (A[j] < A[j-1]) {
+                swap (&A[j], &A[j-1]);
             }
         }
         printArray();
