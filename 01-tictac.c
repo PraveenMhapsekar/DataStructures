@@ -1,12 +1,10 @@
 #include <stdio.h>
 
-<<<<<<< HEAD
-#define N 4
-char A[N][N] = {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'};
-=======
 #define N 3
-
+#define PLAYER (player == 0 ? 'X' : 'O')
+#define DASH '-'
 char A[N][N];
+
 
 void 
 clear ()
@@ -15,22 +13,16 @@ clear ()
 
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
-            A[i][j] = '0';
+            A[i][j] = '-';
         }
     }
 }
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 
 void 
 display ()
 {
-<<<<<<< HEAD
-    int i;
-    int j;
-=======
     int i, j;
 
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
             printf ("%c ", A[i][j]);
@@ -38,39 +30,23 @@ display ()
         printf("\n");
     }
 
-<<<<<<< HEAD
-        printf("\n");
-=======
     printf("\n");
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 }
 
 int
-checkValid (int row, int column) {
-<<<<<<< HEAD
+checkValid (int row, int column) 
+{
     if ((row > N-1) || (column > N-1)) {
         return 0;
     }
     if ((row < 0) || (column < 0)) {
         return 0;
     }
-    if (A[row][column] == '0') {
+    if (A[row][column] == '-') {
         return 1;
     } else {
         return 0;
     }
-=======
-    if ((row > N-1) || (column > N-1)) 
-        return 0;
-    
-    if ((row < 0) || (column < 0)) 
-        return 0;
-    
-    if (A[row][column] == '0') 
-        return 1;
-    else 
-        return 0;
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 }
 
 int checkReverseDiag()
@@ -79,7 +55,7 @@ int checkReverseDiag()
     int j;
     char key = A[0][N-1];
 
-    if (key == '0') {
+    if (key == '-') {
         return 0;
     }
 
@@ -101,7 +77,7 @@ int checkDiag()
     int j;
     char key = A[0][0];
 
-    if (key == '0') {
+    if (key == '-') {
         return 0;
     }
 
@@ -126,7 +102,7 @@ checkWinner()
     // Check rows
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
-            if (A[i][j] == '0') {
+            if (A[i][j] == '-') {
                 break;
              } else {
                  if (A[i][j] != A[i][(j+1)%(N-1)]) {
@@ -144,7 +120,7 @@ checkWinner()
     // Check Column
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
-            if (A[i][j] == '0') {
+            if (A[i][j] == '-') {
                 break;
             } else {
                 if (A[i][j] != A[(i+1)%(N-1)][j]) {
@@ -170,10 +146,7 @@ checkWinner()
         display();
         return 1;
     }
-<<<<<<< HEAD
     printf ("No winner yet, keep playing\n");
-=======
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
     return 0;
 }
 int
@@ -184,26 +157,21 @@ isFull()
 
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
-            if (A[i][j] == '0') {
+            if (A[i][j] == '-') {
                 return 0;
             }
         }
     }
     return 1;
 }
-<<<<<<< HEAD
-#define PLAYER (player == 0 ? 'A' : 'B')
-=======
 
-#define PLAYER (player == 0 ? 'X' : 'Y')
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
 int
 main(void) 
 {  
     int player = 0;
     int r, c;
 
-<<<<<<< HEAD
+#if 0    
     display();
 
     while (1) {
@@ -234,7 +202,7 @@ main(void)
            printf ("Game draw\n");
            break;
        }
-=======
+#endif       
     clear();
     display();
     printf("Please enter value for row and column in the range of 0 - %d\n", N - 1);
@@ -275,7 +243,6 @@ main(void)
             printf ("Game draw\n");
             break;
         }
->>>>>>> 7afd4cae90cfc1e317f6f260a9f4a587bad3ec3c
    }
    return 0;
 }
