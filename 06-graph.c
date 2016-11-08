@@ -32,46 +32,61 @@
 
 #define MAX_VERT 8
 #define MAX_COST 9999
+#define TRUE  1
+#define FALSE 0
 int visited[MAX_VERT];
-int C[MAX_VERT][MAX_VERT];
+//int C[MAX_VERT][MAX_VERT];
 
 /* A structure to represent an adjacency list node */
-typedef struct node *nodePtr;
+typedef struct edgeNode *edgePtr;
 
-typedef struct node {
+typedef struct edgeNode {
     int vtx;
-    nodePtr nxt;
-} node_t;
-
+    int weight;
+    edgePtr nxt;
+} edgeNode_t;
+#if 0
 typedef struct vertexList {
     nodePtr head;
 } vertexList_t;
-
+#endif
 typedef struct graph {
-    int numVtx;
-    vertexList_t *vList;
+    int degree[MAX_VERT];
+    int nvertices;
+    int nedges;
+    int directed;
+    edgePtr edges[MAX_VERT];
 } graph_t;
 
-void
-initCost() 
+int
+getCost(graph_t *G, int src, int dst)
 {
-    int i = 0;
-    int j = 0;
-    for (i = 0; i < MAX_VERT; i++) {
-        for (j = 0; j < MAX_VERT; j++) {
-            if (i == j) {
-                C[i][j] = 0;
-            } else {
-                C[i][j] = MAX_COST;
-            }
+    edgePtr t = G->edges[src];
+
+    while (t) {
+        if (t->vtx == dst) {
+           return (t->weight);
         }
+        t = t->nxt;
     }
+//    fprintf(stderr, "No edge <%d, %d> found\n", src, dst);
+    return MAX_COST;
 }
 
 void
-setCost(int i, int j, int c)
+setCost(graph_t *G, int src, int dst, int cost)
 {
-    C[i][j] = c;
+   // C[i][j] = c;
+    edgePtr t = G->edges[src];
+
+    while (t) {
+        if (t->vtx == dst) {
+           t->weight = cost;
+           return;
+        }
+        t = t->nxt;
+    }
+    fprintf(stderr, "No edge <%d, %d> found\n", src, dst);
 }
 
 void
@@ -85,7 +100,7 @@ printHeader(int v)
 }
 
 void
-printCost() 
+printCost(graph_t *G) 
 {
     int i, j;
     printf("\n------------------Cost Matrix---------------------\n%5c", ' ');
@@ -96,10 +111,10 @@ printCost()
     for (i = 0; i < MAX_VERT; i++) {
         printf("[%d] ", i);
         for (j = 0; j < MAX_VERT; j++) {
-            if (C[i][j] == MAX_COST) {
+            if (getCost(G, i, j) == MAX_COST) {
                 printf("%5c", '*');
             } else {
-                printf("%5d", C[i][j]);
+                printf("%5d", getCost(G, i, j));
             }
         }
         printf("\n");
@@ -107,81 +122,48 @@ printCost()
     printf("---------------------------------------------------\n");
 }
 
-node_t * 
-newAdjListNode(int vtx)
-{
-    node_t *newNode = (node_t *) malloc(sizeof(node_t));
-    newNode->vtx = vtx;
-    newNode->nxt = NULL;
-    return newNode;
-}
-
 graph_t *
-createGraph(int V) 
+createGraph(int V, int directed) 
 {
     graph_t *graph = (graph_t *) malloc(sizeof(graph_t));
-    graph->numVtx = V;
-    graph->vList = (vertexList_t *) malloc(V * sizeof(vertexList_t));
+    graph->nvertices = V;
+    graph->directed  = directed;
+    //graph->edges = (edgeNode_t *) malloc(V * sizeof(edgeNode_t));
       
     int i;
-    for (i = 0; i < V; ++i)
-        graph->vList[i].head = NULL;
+    for (i = 0; i < MAX_VERT; ++i)
+       graph->degree[i]= 0;
 
     return graph;
 }
 
-graph_t *
-insertVertex(graph_t *G)
-{
-    int i;
-
-    /* Copy Current vertexList into temp */
-    vertexList_t *tAdjList = G->vList;
-
-    /* Allocate new vertexList */
-    G->vList  = (vertexList_t *)malloc((G->numVtx + 1) * sizeof(vertexList_t));
-
-    /* Copy over previous vertices to new vertexList */
-    if (tAdjList) {
-        for (i = 0; i < G->numVtx; i++) {
-            G->vList[i] = tAdjList[i];
-        }
-    }
-
-    G->numVtx++;
-    G->vList[G->numVtx].head = NULL;
-
-    /* Free old vertexList */
-    if (tAdjList)
-        free(tAdjList);
-}
-
 void 
-insertEdge(graph_t *G, int src, int vtx)
+insertEdge(graph_t *G, int src, int dst, int directed)
 {
-    if ((src >= G->numVtx) || (vtx >= G->numVtx))
+    if ((src >= G->nvertices) || (dst >= G->nvertices))
         return;
 
-    node_t *T = G->vList[src].head;
-    node_t *N;
-    while (T) {
-         if (T->vtx == vtx)
-            return;
-         T = T->nxt;
-    } 
+    edgeNode_t *T = malloc(sizeof(edgeNode_t));
+    T->weight = 0;
+    T->vtx = dst;
+    T->nxt = G->edges[src];
 
-    N = newAdjListNode(vtx);
-    N->nxt = G->vList[src].head;
-    G->vList[src].head = N;
+    G->edges[src] = T;
+    G->degree[src]++;
 
-   // insertEdge(G, vtx, src);
+    if (directed) {
+        insertEdge(G, dst, src, TRUE);
+    } else {
+        G->nedges++;
+    }
 }
 
 void
-deletEdgeNode(node_t **L, int n)
+deletEdgeNode(edgeNode_t **L, int n)
 {
-    node_t *tL;
-    node_t *tNode; 
+#if 0
+    edgeNode_t *tL;
+    edgeNode_t *tNode; 
 
     while (*L && (*L)->vtx == n) {
         tNode = *L;
@@ -201,30 +183,35 @@ deletEdgeNode(node_t **L, int n)
             tL = tL->nxt;
         }
     } 
+#endif    
 }
 
 void
 deleteEdge(graph_t *G, int src, int vtx)
 {
-    node_t *L;    
-    node_t *tNode;    
+#if 0
+    edgeNode_t *L;    
+    edgeNode_t *tNode;    
     
-    if ((src >= G->numVtx) || (vtx >= G->numVtx))
+    if ((src >= G->nvertices) || (vtx >= G->nvertices))
         return;
 
-    deletEdgeNode(&(G->vList[src].head), vtx);
-    deletEdgeNode(&(G->vList[vtx].head), src);
+    deletEdgeNode(&(G->edges[src].head), vtx);
+    deletEdgeNode(&(G->edges[vtx].head), src);
+#endif    
 }
 
 void
 deleteVertex(graph_t *G, int V) 
 {
-    if (V >= G->numVtx)
+#if 0    
+    if (V >= G->nvertices)
         return;
 
-    while (G->vList[V].head) {
-        deleteEdge(G, V, G->vList[V].head->vtx);
+    while (G->edges[V].head) {
+        deleteEdge(G, V, G->edges[V].head->vtx);
     }
+#endif   
 }
 
 /* A utility function to print the adjacenncy list representation of graph */
@@ -233,8 +220,8 @@ printGraph(graph_t *G)
 {
     int v;
 
-    for (v = 0; v < G->numVtx; ++v) {
-        node_t *p = G->vList[v].head;
+    for (v = 0; v < G->nvertices; ++v) {
+        edgeNode_t *p = G->edges[v];
         printf("vertex[%d]", v);
         while (p) {
             printf(" -> %d", p->vtx);
@@ -245,7 +232,7 @@ printGraph(graph_t *G)
 }
 #if 0
 void
-DFSHelper(node_t *L, int *visited)
+DFSHelper(edgeNode_t *L, int *visited)
 {
     while (L} {
         if (!visited[L->vtx] {    
@@ -260,7 +247,7 @@ DFSHelper(node_t *L, int *visited)
 void
 DFSrecursive (graph_t *G, int V, int *visited)
 {
-    node_t *T = G->vList[V].head;
+    edgeNode_t *T = G->edges[V].head;
 
     while (T) {
         V = T->vtx;
@@ -287,10 +274,10 @@ DFS (graph_t *G, int V)
 void
 DFS(graph_t *G, int V) 
 {
-    node_t *w;
+    edgeNode_t *w;
     visited[V] = 1;
     printf("->%2d", V);
-    for (w = G->vList[V].head; w; w = w->nxt) {
+    for (w = G->edges[V]; w; w = w->nxt) {
         if (!visited[w->vtx]) {
             DFS(G, w->vtx);
         }
@@ -301,7 +288,7 @@ DFS(graph_t *G, int V)
 void
 BFS(graph_t *G, int v)
 {
-    node_t *w;
+    edgeNode_t *w;
     int front = rear = NULL;
     printf("->%2d", v);
     visited[v] = 1;
@@ -309,7 +296,7 @@ BFS(graph_t *G, int v)
 
     while(front) {
         v = deleteQ()
-        for (w = G->vList[v].head; w; w = w->nxt) {
+        for (w = G->edges[v].head; w; w = w->nxt) {
             if (!visited[w->vtx]) {
                 printf("->%2d", w->vtx);
                 addq(w->vtx);
@@ -328,12 +315,13 @@ void
 printDistance() 
 {
     int i;
-    for (i = 0; i < MAX_VERT; i++)
+    for (i = 0; i < MAX_VERT; i++) {
         if (distance[i] == MAX_COST) {
             printf("%5c", '*');
         } else {
             printf("%5d", distance[i]);
         }
+    }
     printf("\n");
 }
 
@@ -358,14 +346,14 @@ choose (int *distance, int n, int *found)
 
 /* Dikjastra's */
 void
-shortestPath(int v, int cost[MAX_VERT][MAX_VERT], int *distance, int *found)
+shortestPath(graph_t *G, int v, int *distance, int *found)
 {
     int i, u, w;
     int n  = MAX_VERT; 
 
     for (i =0; i < n; i++) {
         found[i] = FALSE;
-        distance[i] = cost[v][i];
+        distance[i] = getCost(G, v, i);
     }
 
     found[v] = TRUE;
@@ -378,8 +366,8 @@ shortestPath(int v, int cost[MAX_VERT][MAX_VERT], int *distance, int *found)
         u = choose(distance, n, found);
         for (w = 0; w < n; w++) {
             if (!found[w]) {
-                if ((distance[u] + cost[u][w]) < distance[w]) { /* If cost of reaching w from u is less than known cost of reaching w , update new cost to reach w */
-                    distance[w] = distance[u] + cost[u][w];  
+                if ((distance[u] + getCost(G, u, w)) < distance[w]) { /* If cost of reaching w from u is less than known cost of reaching w , update new cost to reach w */
+                    distance[w] = distance[u] + getCost(G, u, w);  
                 }
             }
         } /* End of w-loop */
@@ -391,50 +379,42 @@ int
 main (void)
 {
     int V = 8;
-    graph_t *G = createGraph(V);
+    graph_t *G = createGraph(V, FALSE);
 
-    insertEdge(G, 1, 0);
-    insertEdge(G, 2, 0);
-    insertEdge(G, 2, 1);
-    insertEdge(G, 3, 2);
-    insertEdge(G, 4, 3);
-    insertEdge(G, 4, 5);
-    insertEdge(G, 5, 3);
-    insertEdge(G, 5, 6);
-    insertEdge(G, 5, 7);
-    insertEdge(G, 6, 7);
-    insertEdge(G, 7, 0);
+    insertEdge(G, 1, 0, 0);
+    insertEdge(G, 2, 0, 0);
+    insertEdge(G, 2, 1, 0);
+    insertEdge(G, 3, 2, 0);
+    insertEdge(G, 4, 3, 0);
+    insertEdge(G, 4, 5, 0);
+    insertEdge(G, 5, 3, 0);
+    insertEdge(G, 5, 6, 0);
+    insertEdge(G, 5, 7, 0);
+    insertEdge(G, 6, 7, 0);
+    insertEdge(G, 7, 0, 0);
 
     /* print the adjacency list representation of the above graph */
     printGraph(G);
-    //insertVertex(G);
 
-   // printGraph(G);
-//    printf("deleting Edge 1 and 2 \n");
-//    deleteEdge(G, 1, 2);
-//    printGraph(G);
-//    printf("deleting Vertix 2\n");
-//    deleteVertex(G, 2);
-//    printGraph(G);
     printf ("\nDFS[0]");
     DFS(G, 4);
 
-    initCost();
-    setCost(1, 0, 300);
-    setCost(2, 0, 1000);
-    setCost(2, 1, 800);
-    setCost(3, 2, 1200);
-    setCost(4, 3, 1500);
-    setCost(4, 5, 250);
-    setCost(5, 3, 1000);
-    setCost(5, 6, 900);
-    setCost(5, 7, 1400);
-    setCost(6, 7, 1000);
-    setCost(7, 0, 1700);
-    printCost();
-//shortestPath(int v, int **cost, int *distance, int n, int *found)
+    setCost(G, 1, 0, 300);
+    setCost(G, 2, 0, 1000);
+    setCost(G, 2, 1, 800);
+    setCost(G, 3, 2, 1200);
+    setCost(G, 4, 3, 1500);
+    setCost(G, 4, 5, 250);
+    setCost(G, 5, 3, 1000);
+    setCost(G, 5, 6, 900);
+    setCost(G, 5, 7, 1400);
+    setCost(G, 6, 7, 1000);
+    setCost(G, 7, 0, 1700);
+    printCost(G);
+
+    /* Shortest path */
     V = 4;
     printHeader(V);
-    shortestPath(V, C, distance, found);
+    shortestPath(G, V, distance, found);
     return 0;
 }
