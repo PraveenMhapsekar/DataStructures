@@ -1,19 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "03-Queue.h"
 
-typedef struct queue {
-    int front;
-    int rear;
-    int capacity;
-    int *data;
- } queue_t;
-
-queue_t *createQ(int);
-void enQueue(queue_t *q, int data);
-int deQueue(queue_t *q);
-int front(queue_t *q);
-int isFull(queue_t *q);
-int isEmpty(queue_t *q);
 
 queue_t *
 createQ(int capacity)
@@ -37,7 +25,7 @@ isFull(queue_t *q)
 int
 isEmpty(queue_t *q)
 {
-    if (q->rear == q->front)
+    if (q->front == -1)
         return 1;
     return 0;
 }
@@ -52,8 +40,8 @@ enQueue(queue_t *q, int data)
     
     q->rear = (q->rear + 1) % q->capacity;
     q->data[q->rear] = data;
-    if (q->front == -1) {
-         q->front = q->rear;
+    if (q->front == -1) { /* First entry */
+        q->front = q->rear;
     }
 }
 
@@ -62,12 +50,16 @@ deQueue(queue_t *q)
 {
     int data;
     if (isEmpty(q)) {
-        fprintf(stderr, "Q -> full\n");
-        return;
+        fprintf(stderr, "Q -> empty\n");
+        return -1;
     }
 
     data = q->data[q->front];
-    q->front = (q->front + 1) % q->capacity;
+    if (q->front ==  q->rear)
+        q->front = -1;
+    else
+        q->front = (q->front + 1) % q->capacity;
+
     return data;
 }
 
@@ -77,6 +69,9 @@ print(queue_t *q)
     int front;
 
     if (!q)
+        return;
+
+    if (isEmpty(q))
         return;
 
     printf("Q -> ");
@@ -89,29 +84,47 @@ print(queue_t *q)
 
     printf("%02d\n", q->data[front]);
 }
-
+//#define QTEST
+#ifdef QTEST
 int
 main(int argc, char **argv, char **envp)
 {
     queue_t *q;
     int  e;
 
-    q = createQ(4);
+    q = createQ(8);
 
+    enQueue(q, 10);
     enQueue(q, 11);
     enQueue(q, 12);
     enQueue(q, 13);
     enQueue(q, 14);
     print(q);
 
-    printf("deQueued A %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
     print(q);
 
     enQueue(q, 15);
     enQueue(q, 16);
     enQueue(q, 17);
     print(q);
+    enQueue(q, 22);
+    print(q);
+    enQueue(q, 23);
+    print(q);
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
+    printf("deQueued  %d\n", deQueue(q));
 
+    print(q);
+    printf("deQueued  %d\n", deQueue(q));
+
+    print(q);
     return 0;
 }
-
+#endif

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "03-Queue.h"
 
 /*
 1. Graph
@@ -34,8 +35,12 @@
 #define MAX_COST 9999
 #define TRUE  1
 #define FALSE 0
+
+int discovered[MAX_VERT];
 int visited[MAX_VERT];
-//int C[MAX_VERT][MAX_VERT];
+int distance[MAX_VERT];
+int found[MAX_VERT];
+int parent[MAX_VERT];
 
 /* A structure to represent an adjacency list node */
 typedef struct edgeNode *edgePtr;
@@ -45,11 +50,7 @@ typedef struct edgeNode {
     int weight;
     edgePtr nxt;
 } edgeNode_t;
-#if 0
-typedef struct vertexList {
-    nodePtr head;
-} vertexList_t;
-#endif
+
 typedef struct graph {
     int degree[MAX_VERT];
     int nvertices;
@@ -57,6 +58,16 @@ typedef struct graph {
     int directed;
     edgePtr edges[MAX_VERT];
 } graph_t;
+
+void
+printParent() 
+{
+    int i;
+    for (i = 0; i < MAX_VERT; i++) {
+            printf("parent of %d -> %2d\n", i, parent[i]);
+    }
+    printf("\n");
+}
 
 int
 getCost(graph_t *G, int src, int dst)
@@ -69,14 +80,12 @@ getCost(graph_t *G, int src, int dst)
         }
         t = t->nxt;
     }
-//    fprintf(stderr, "No edge <%d, %d> found\n", src, dst);
     return MAX_COST;
 }
 
 void
 setCost(graph_t *G, int src, int dst, int cost)
 {
-   // C[i][j] = c;
     edgePtr t = G->edges[src];
 
     while (t) {
@@ -230,51 +239,24 @@ printGraph(graph_t *G)
         printf("\n");
     }
 }
-#if 0
-void
-DFSHelper(edgeNode_t *L, int *visited)
-{
-    while (L} {
-        if (!visited[L->vtx] {    
-            visited[L->vtx] = 1;
-            printf(" %2d ", L->vtx);
-        }
-        DFSHelper(L->nxt, L->vtx; &visited);
-    }  
-}
-#endif
-#if 0
-void
-DFSrecursive (graph_t *G, int V, int *visited)
-{
-    edgeNode_t *T = G->edges[V].head;
 
-    while (T) {
-        V = T->vtx;
-        if (!visited[V]) {
-            visited[V] = 1;
-            printf("->%2d", V);
-            DFSrecursive(G, V, visited);
-        } else {
-            T = T->nxt;
-        }
+void
+clearSearch()
+{
+    int i;
+
+    for (i = 0; i < MAX_VERT; i++) {
+        visited[i]    = FALSE;
+        discovered[i] = FALSE;
+        parent[i]     = -1;
     }
 }
-
-void 
-DFS (graph_t *G, int V) 
-{
-    int visited[10] = {0};
-    visited[V] = 1;
-    printf("->%2d", V);
-    DFSrecursive(G, V, visited);
-}
-#endif
 
 void
 DFS(graph_t *G, int V) 
 {
     edgeNode_t *w;
+    printf ("\nBFS[4]");
     visited[V] = 1;
     printf("->%2d", V);
     for (w = G->edges[V]; w; w = w->nxt) {
@@ -284,33 +266,57 @@ DFS(graph_t *G, int V)
     }
 }
 
-#ifdef BFS_Q
 void
 BFS(graph_t *G, int v)
 {
     edgeNode_t *w;
-    int front = rear = NULL;
-    printf("->%2d", v);
-    visited[v] = 1;
-    addq(v);
+    clearSearch();
+    printf ("\nBFS[4]");
+    queue_t *Q = createQ(MAX_VERT);
+    enQueue(Q, v);
+    discovered[v] = TRUE;
 
-    while(front) {
-        v = deleteQ()
-        for (w = G->edges[v].head; w; w = w->nxt) {
-            if (!visited[w->vtx]) {
-                printf("->%2d", w->vtx);
-                addq(w->vtx);
-                visited[w->vtx] = 1;
+    while (isEmpty(Q) == 0) {
+        v = deQueue(Q);
+        printf("->%2d", v);
+        visited[v] = TRUE;
+
+        for (w = G->edges[v]; w; w = w->nxt) {
+      //      if (visited[w->vtx] == FALSE) {
+      //          printf("->%2d", w->vtx);
+      //      }
+            if (discovered[w->vtx] == FALSE) {
+                enQueue(Q, w->vtx);
+                discovered[w->vtx] = TRUE;
+                parent[w->vtx] = v;
             }
         }
     }
+    printf("\n");
 }
-#endif
 
-#define TRUE  1
-#define FALSE 0
-int distance[8];
-int found[8];
+void
+find_path(int start, int end)
+{
+    if ((start == end) || (end == -1)) {
+        printf("->%2d", start);
+    } else {
+        find_path(start, parent[end]);
+        printf("->%2d", end);
+    }
+}
+
+void
+path(graph_t *G, int s, int e)
+{
+    clearSearch();
+    BFS(G, s);
+    printf("path between %d and %d is : ", s, e);
+    find_path(s, e);
+    printf("\n");
+}
+
+
 void
 printDistance() 
 {
@@ -396,8 +402,10 @@ main (void)
     /* print the adjacency list representation of the above graph */
     printGraph(G);
 
-    printf ("\nDFS[0]");
     DFS(G, 4);
+    BFS(G, 4);
+    printf("\n");
+    printParent();
 
     setCost(G, 1, 0, 300);
     setCost(G, 2, 0, 1000);
@@ -416,5 +424,7 @@ main (void)
     V = 4;
     printHeader(V);
     shortestPath(G, V, distance, found);
+
+    path(G, 4, 0);
     return 0;
 }

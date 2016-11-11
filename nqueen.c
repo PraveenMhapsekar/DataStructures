@@ -25,9 +25,11 @@ void
 clearBoard()
 {
     int i, j;
-    for (i = 0; i < N; i++)
-        for (j = 0; j < N; j++) 
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) { 
             B[i][j] = 0;
+        }
+    }
 }
 
 int
@@ -49,6 +51,35 @@ checkRow(int r)
 int
 checkDiagonal(int r, int c)
 {
+    int rr;
+    int cc;
+
+    //    fprintf(stderr, "%s r = %d, c = %d\n", __func__, r, c); 
+    rr = r;
+    cc = c;
+
+    if (B[r][c]) {
+        return 1;
+    }
+
+    while ((rr >= 0) && (cc >= 0)) {
+        if(B[rr][cc]) {
+            return 1;
+        }
+        rr--;
+        cc--;
+    }
+
+    rr = r;
+    cc = c;
+    while ((rr < N) && (cc >= 0)) {
+        if(B[rr][cc]) {
+            return 1;
+        }
+        rr++;
+        cc--;
+    }
+
 #if 0    
     int i, j;
     for (i = 0; i < N; i++) {
@@ -74,6 +105,8 @@ placeQueens(int r, int c)
         return;
     } else {
         B[r][c] = 1;
+        fprintf(stderr, "r = %d, c = %d\n", r, c); 
+        printBoard();
         qCount++;
         c = (c + 1) % N;
     }
@@ -84,6 +117,8 @@ placeQueens(int r, int c)
             continue;
         } else {
             B[r][c] = 1;
+            fprintf(stderr, "r = %d, c = %d\n", r, c); 
+            printBoard();
             qCount++;
             c = (c + 1) % N;
         }
