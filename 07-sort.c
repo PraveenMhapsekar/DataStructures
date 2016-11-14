@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define N 8
 
@@ -308,7 +309,7 @@ heapSort()
 }
 
 /* 7. Bucket Sort ***********************************************************************************************************/
-#define BUCKET 10 // Asuming that all the elements are in the range (0 - (BUCKET - 1))
+#define BUCKET 256 // Asuming that all the elements are in the range (0 - (BUCKET - 1))
 void
 bucketSort()
 {
@@ -331,27 +332,42 @@ bucketSort()
 }
 
 /* 8. Counting Sort ************************************************************************************************************/
-#define COUNT 1000
 void
-countingSort() 
+countingSort(int n, int exp) 
 {
     int i;
     int k = 0;
-    int count[COUNT];
 
-    for (i=0; i < COUNT; i++) {
+#define COUNT 10
+#define IDX (A[i]/exp)%10
+    int count[COUNT] = {0};
+    int output[n];
+
+    /* Clear count array */
+    for (i = 0; i < COUNT; i++) {
         count[i] = 0;
     }
 
-    for (i=0; i < N; i++) {
-        count[A[i]]++;
+    /* Count & store the number of numbers matching 'divide by exp' */
+    for (i = 0; i < n; i++) {
+        count[IDX]++;
     }
 
-    for (i=0; i < k; i++) {
-        while (count[i]) {
-            A[k++] = i;
-            count[i]--;
-        }
+    /* Get cumulative count */
+    for (i = 1; i < 10; i++) {
+        count[i]+= count[i - 1];
+    }
+
+    /* build array by placing numbers from the end */
+    for (i = (n - 1); i >= 0; i--) {
+        output[count[IDX] - 1] = A[i]; /*These two line are important to understand the logic */
+        count[IDX]--;
+    }
+
+    // Copy the output array to arr[], so that arr[] now
+    // contains sorted numbers according to current digit
+    for (i = 0; i < n; i++) {
+        A[i] = output[i];
     }
 }
 
@@ -359,30 +375,17 @@ countingSort()
 void
 radixSort()
 {
-    int max, i, k;
-    int m = 0;
-    int digits = 0;
+    int i, exp;
+    int max = INT_MIN;
 
     for (i = 0; i < N; i++) {
-        if (A[i] > A[m]) {
-            m = i;
+        if (A[i] > max) {
+            max= A[i];
         }
     }
 
-    max = A[m];
-
-    if (max > 0) {
-        digits++;
-        while (max / 10) {
-            digits++;
-            max = max / 10;
-        }
-    }
-
-    k = 10;
-    for (i = 0; i < digits; i++) {
-       countingSort(k);
-       k = k * 10;
+    for (exp = 1; (max/exp) > 0; exp = (exp * 10)) {
+        countingSort(N, exp);
     }
 }
 
@@ -459,7 +462,7 @@ main (void)
                 printArray();
                 break;
             case countingsort:
-                countingSort(1);
+                countingSort(N, 1);
                 printArray();
                 break;
             case radixsort:

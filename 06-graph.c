@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "03-Queue.h"
 
 /*
@@ -32,7 +33,7 @@
 */
 
 #define MAX_VERT 8
-#define MAX_COST 9999
+#define MAX_COST INT_MAX 
 #define TRUE  1
 #define FALSE 0
 
@@ -496,7 +497,7 @@ printDistance()
 {
     int i;
     for (i = 0; i < MAX_VERT; i++) {
-        if (distance[i] == MAX_COST) {
+        if (distance[i] < 0) {
             printf("%5c", '*');
         } else {
             printf("%5d", distance[i]);
@@ -509,7 +510,7 @@ int
 choose (int *distance, int n, int *found)
 {
     int i, min, minpos;
-    min = 9999;
+    min = INT_MAX;
     minpos = -1;
 
     for (i = 0; i < MAX_VERT; i++) {
@@ -559,7 +560,7 @@ shortestPath(graph_t *G, int v, int *distance, int *found)
 
 /** Floyd's All Pairs Shortest Path for weighted graph Algorithm ***********************************************************/
 
-int W[MAX_VERT][MAX_VERT] = {99};
+unsigned int W[MAX_VERT][MAX_VERT] = {INT_MAX};
 
 getWeightMatrixFrmG(graph_t *G)
 {
@@ -569,29 +570,29 @@ getWeightMatrixFrmG(graph_t *G)
 
     for (i = 0; i < MAX_VERT;  i++) {
         for (j = 0; j < MAX_VERT;  j++) {
-            W[i][j] = 99;
+            W[i][j] = INT_MAX;
         }
     }
 
     for (i = 0; i < G->nEdges;  i++) {
          if (E[i].weight == 0) {
-             W[E[i].x][E[i].y] = 99;
+             W[E[i].x][E[i].y] = INT_MAX;
          } else {
              W[E[i].x][E[i].y] = E[i].weight;
          }
     }
 }
 
-printWeightArray(graph_t *G, int W[MAX_VERT][MAX_VERT])
+printWeightArray(graph_t *G, unsigned int W[MAX_VERT][MAX_VERT])
 {
     int i, j;
 
     for (i = 0; i < G->nvertices;  i++) {
         for (j = 0; j < G->nvertices;  j++) {
-            if (W[i][j] == 99) {
-                printf("%3c", '*');
+            if (W[i][j] == INT_MAX) {
+                printf("%5c", '*');
             } else {    
-                printf("%3d", (W[i][j]));
+                printf("%5u", (W[i][j]));
             }
         }
         printf ("\n");
@@ -674,11 +675,12 @@ main (void)
     kruskal(G);
     fprintf(stderr, "END\n");
 
-    getWeightMatrixFrmG(G1);
-
+    getWeightMatrixFrmG(G);
     printf("Flyod's all path cost\n");
-    printWeightArray(G1, W);
+    printf("Cost matrix:\n");
+    printWeightArray(G, W);
     flyod();
-    printWeightArray(G1, W);
+    printf("Allpath cost matrix:\n");
+    printWeightArray(G, W);
     return 0;
 }
