@@ -6,21 +6,21 @@
 
 typedef struct {
     int key;
-} element;
+} element_t;
 
-typedef struct treeNode *treePointer;
+typedef struct treeNode *treePointer_t;
 
 struct treeNode {
-    element     data;
-    treePointer left;
-    treePointer right;
-    short       bf;
-} treeNode;
+    element_t     data;
+    treePointer_t left;
+    treePointer_t right;
+    short         bf;
+} treeNode_t;
 
 void 
-leftRotation(treePointer *parent, int *unbalanced)
+leftRotation(treePointer_t *parent, int *unbalanced)
 {
-    treePointer grandChild, child;
+    treePointer_t grandChild, child;
     child = (*parent)->left;
 
     if (!child)
@@ -31,16 +31,21 @@ leftRotation(treePointer *parent, int *unbalanced)
         (*parent)->left = child->right;
         child->right    = *parent;
         (*parent)->bf   =  0;
-        (*parent)       = child;
+        *parent         = child;
     } else {
         /* LR rotation */
+        /* Right subtree of children is grandChild */
         grandChild = child->right;
         if (!grandChild)
             return;
-        child->right = grandChild->left;
-        grandChild->left = child;
-        (*parent)->left = grandChild->right;
+        /* Child right is now grandChild left */
+        child->right      = grandChild->left;
+        (*parent)->left   = grandChild->right;
+        grandChild->left  = child;
         grandChild->right = *parent;
+        /* Adjust grandchild balance factor */
+        /* Now grandChild being new root/parent,
+           maintan the fornula bf(Parent) = bf(leftChild) - bf(rightChild) */
         switch (grandChild->bf) {
             case 1: 
                   (*parent)->bf = -1;
@@ -61,9 +66,10 @@ leftRotation(treePointer *parent, int *unbalanced)
     *unbalanced   = FALSE;
 }
 
-void rightRotation(treePointer *parent, int *unbalanced) 
+void 
+rightRotation(treePointer_t *parent, int *unbalanced) 
 {
-    treePointer grandChild, child;
+    treePointer_t grandChild, child;
     child = (*parent)->right;
 
     if (!child)
@@ -80,13 +86,14 @@ void rightRotation(treePointer *parent, int *unbalanced)
         grandChild = child->left;
         if (!grandChild)
             return;
-        child->left = grandChild->right;
+        child->left       = grandChild->right;
+        (*parent)->right  = grandChild->left;
         grandChild->right = child;
-        (*parent)->right = grandChild->left;
-        grandChild->left = *parent;
+        grandChild->left  = *parent;
+        /* Now grandChild being new root/parent, maintan the fornula bf(Parent) = bf(leftChild) - bf(rightChild) */
         switch (grandChild->bf) {
             case 1: 
-                  (*parent)->bf = -1;
+                  (*parent)->bf = 1;
                   child->bf = 0;
                   break;
             case 0:
@@ -104,35 +111,40 @@ void rightRotation(treePointer *parent, int *unbalanced)
     *unbalanced   = FALSE;
 }
 
+/*
+   Insert key in the AVL tree and  balance tree accordingly.
+*/
 void
-avlInsert(treePointer *parent, element x, int *unbalanced)
+avlInsert(treePointer_t *parent, element_t x, int *unbalanced)
 {
-    if (!*parent) { /*insert element into null tree */
+    if (!*parent) { /* Insert element_t into null tree */
         *unbalanced = TRUE;
-        *parent = malloc(sizeof(treeNode));
+        *parent = malloc(sizeof(treeNode_t));
         (*parent)->left = (*parent)->right = NULL;
         (*parent)->bf   = 0;
         (*parent)->data = x;
     } else if (x.key < (*parent)->data.key) {
+        /* Insert new node in left subtree */
         avlInsert(&(*parent)->left, x, unbalanced);
         if (*unbalanced) {
-            /* left branch is grown higer */
+            /* left subtree is grown bigger, adjust balance */
             switch ((*parent)->bf) {
                 case -1 :
                           (*parent)->bf = 0;
                           *unbalanced = FALSE;
                           break;
-                 case 0 :
+                case  0 :
                           (*parent)->bf = 1;
                           break;
-                 case 1 :
+                case  1 :
                           leftRotation(parent, unbalanced);
             }
         }
     } else if (x.key > (*parent)->data.key) {
+        /* insert new node in right subtree */
         avlInsert(&(*parent)->right, x, unbalanced);
         if (*unbalanced) {
-            /* right branch is grown higer */
+            /* right branch may have grown bigger, adjust balance */
             switch ((*parent)->bf) {
                 case -1 :
                           (*parent)->bf = 0;
@@ -146,34 +158,35 @@ avlInsert(treePointer *parent, element x, int *unbalanced)
             }
         }
     } else {
+        /* Key is present in the tree */
         *unbalanced = FALSE;
         printf("The key is already in the tree\n");
     }
 }
 
 void 
-inorder(treePointer tree) 
+inorder(treePointer_t tree) 
 {
-   if (NULL == tree) 
-       return;        // Base case
+    if (NULL == tree) 
+       return; // Base case
 
-   if (tree->left)
-       inorder(tree->left);    // Visit left subtree
+    if (tree->left)
+       inorder(tree->left); // Visit left subtree
 
-   printf("%d\n", tree->data.key);  // Visit node
+    printf("%d ", tree->data.key); // Visit node
 
-   if (tree->right)
-       inorder(tree->right);    // Visit right subtree
+    if (tree->right)
+       inorder(tree->right); // Visit right subtree
 
-   return; 
+    return; 
 }
 
 int
 main (void) 
 {
     int ub = 0; /* Unbalanced Factor */
-    element data;
-    treePointer tree = NULL;
+    element_t data;
+    treePointer_t tree = NULL;
 
     data.key = 1;
     avlInsert(&tree, data, &ub);
@@ -192,8 +205,9 @@ main (void)
     data.key = 5;
     avlInsert(&tree, data, &ub);
 
-    printf("inorder\n");
+    printf("Inorder\n");
     inorder(tree);
+    printf("\n");
  
     return 0;
 }

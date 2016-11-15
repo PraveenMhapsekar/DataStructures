@@ -33,9 +33,9 @@
 */
 
 #define MAX_VERT 8
-#define MAX_COST INT_MAX 
-#define TRUE  1
-#define FALSE 0
+#define MAX_COST 1 << 30
+#define TRUE     1
+#define FALSE    0
 
 int discovered[MAX_VERT];
 int visited[MAX_VERT];
@@ -44,13 +44,13 @@ int found[MAX_VERT];
 int parent[MAX_VERT];
 
 /* A structure to represent an adjacency list node */
-typedef struct edgeNode *edgePtr;
+typedef struct edge *edgePtr;
 
-typedef struct edgeNode {
+typedef struct edge {
     int vtx;
     int weight;
     edgePtr nxt;
-} edgeNode_t;
+} edge_t;
 
 typedef struct graph {
     int degree[MAX_VERT];
@@ -81,6 +81,7 @@ getCost(graph_t *G, int src, int dst)
         }
         t = t->nxt;
     }
+
     return MAX_COST;
 }
 
@@ -124,7 +125,7 @@ printGraph(graph_t *G)
     int v;
 
     for (v = 0; v < G->nvertices; ++v) {
-        edgeNode_t *p = G->edges[v];
+        edge_t *p = G->edges[v];
         printf("vertex[%d]", v);
         while (p) {
             printf(" -> %d", p->vtx);
@@ -137,15 +138,16 @@ printGraph(graph_t *G)
 graph_t *
 createGraph(int V, int directed) 
 {
-    graph_t *graph = (graph_t *) malloc(sizeof(graph_t));
-    graph->nvertices = V;
-    graph->nEdges = 0;
-    graph->directed  = directed;
-    //graph->edges = (edgeNode_t *) malloc(V * sizeof(edgeNode_t));
-      
     int i;
-    for (i = 0; i < MAX_VERT; ++i)
-       graph->degree[i]= 0;
+    graph_t *graph   = (graph_t *) malloc(sizeof(graph_t));
+    graph->nvertices = V;
+    graph->nEdges    = 0;
+    graph->directed  = directed;
+      
+    for (i = 0; i < MAX_VERT; ++i) {
+         graph->degree[i] = 0;
+//         graph->edges[i]  = NULL;
+    }
 
     return graph;
 }
@@ -153,14 +155,18 @@ createGraph(int V, int directed)
 void 
 insertEdge(graph_t *G, int src, int dst, int cost, int directed)
 {
-    if ((src >= G->nvertices) || (dst >= G->nvertices))
+    if ((src >= G->nvertices) || (dst >= G->nvertices)) {
         return;
+    }
 
-    edgeNode_t *T = malloc(sizeof(edgeNode_t));
+    if ((src < 0) || (dst < 0)) {
+        return;
+    }
+
+    edge_t *T = malloc(sizeof(edge_t));
     T->weight = cost;
-    T->vtx = dst;
-    T->nxt = G->edges[src];
-
+    T->vtx    = dst;
+    T->nxt    = G->edges[src];
     G->edges[src] = T;
     G->degree[src]++;
 
@@ -172,11 +178,11 @@ insertEdge(graph_t *G, int src, int dst, int cost, int directed)
 }
 
 void
-deletEdgeNode(edgeNode_t **L, int n)
+deletEdgeNode(edge_t **L, int n)
 {
 #if 0
-    edgeNode_t *tL;
-    edgeNode_t *tNode; 
+    edge_t *tL;
+    edge_t *tNode; 
 
     while (*L && (*L)->vtx == n) {
         tNode = *L;
@@ -203,8 +209,8 @@ void
 deleteEdge(graph_t *G, int src, int vtx)
 {
 #if 0
-    edgeNode_t *L;    
-    edgeNode_t *tNode;    
+    edge_t *L;    
+    edge_t *tNode;    
     
     if ((src >= G->nvertices) || (vtx >= G->nvertices))
         return;
@@ -243,7 +249,7 @@ clearSearch()
 void
 BFS(graph_t *G, int v)
 {
-    edgeNode_t *w;
+    edge_t *w;
     clearSearch();
     printf ("\nBFS[%d]", v);
     queue_t *Q = createQ(MAX_VERT);
@@ -273,7 +279,7 @@ BFS(graph_t *G, int v)
 void
 DFS(graph_t *G, int V) 
 {
-    edgeNode_t *w;
+    edge_t *w;
     visited[V] = 1;
     printf("->%2d", V);
     for (w = G->edges[V]; w; w = w->nxt) {
@@ -299,7 +305,7 @@ void
 findPath(graph_t *G, int s, int e)
 {
     clearSearch();
-    BFS(G, s);
+    BFS(G, s);  /* Build Parent Array */
     printf("path between %d and %d is : ", s, e);
     _findPath(s, e);
     printf("\n");
@@ -460,7 +466,7 @@ swap (edgePair_t *E, int a, int b)
 }
 
 void
-Sort(graph_t *G, edgePair_t *A) 
+sortEdges(graph_t *G, edgePair_t *A) 
 {
     int i, j; // Pass
     for (i = 0; i < (G->nEdges - 1);  i++) {
@@ -482,7 +488,7 @@ kruskal(graph_t *G)
     setUnionInit(&s, G->nvertices);
 
     getEdgeArray(G, e);
-    Sort(G, e);
+    sortEdges(G, e);
     for (i = 0; i < G->nEdges; i++) {
         if (!sameComponent(&s, e[i].x, e[i].y)) {
             printf("edge (%d, %d) in MST\n", e[i].x, e[i].y);
@@ -497,7 +503,7 @@ printDistance()
 {
     int i;
     for (i = 0; i < MAX_VERT; i++) {
-        if (distance[i] < 0) {
+        if (distance[i] >= MAX_COST) {
             printf("%5c", '*');
         } else {
             printf("%5d", distance[i]);
@@ -532,13 +538,13 @@ shortestPath(graph_t *G, int v, int *distance, int *found)
     int i, u, w;
     int n  = MAX_VERT; 
 
-    for (i =0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         found[i] = FALSE;
         distance[i] = getCost(G, v, i);
     }
 
     found[v] = TRUE;
-    distance[v] = 0;
+    distance[v] = INT_MAX;
 
     printf("[%c]   ", '*');
     printDistance();
@@ -614,6 +620,13 @@ flyod()
     }
 }
 
+/** Topological Sort **************************************************************************************************
+  1. Search DFS, store Vertices in T[1..N]
+  2. Print T[1...N] in reverse order.
+*/
+
+
+/**********************************************************************************************************************/
 int
 main (void)
 {
@@ -635,11 +648,14 @@ main (void)
     insertEdge(G, 6, 7, 1000, 0);
     insertEdge(G, 7, 0, 1700, 0);
 
-    /* print the adjacency list representation of the above graph */
+    /* Print the adjacency list representation of the above graph */
     printGraph(G);
 
+    /* Print DFS search */
     printf ("\nDFS[4]");
     DFS(G, 4);
+
+    /* Print BFS search */
     BFS(G, 4);
     printf("\n");
     printParent();
@@ -648,14 +664,14 @@ main (void)
     /* Shortest path */
     V = 4;
     printHeader(V);
-    shortestPath(G, V, distance, found);
+    shortestPath(G, V, distance, found); /* Dikjastra's Algorithm */
 
-    findPath(G, 4, 0);
-    connectedComponent(G);
+    findPath(G, 4, 0);     /* Find path bewteen vertex 4 and  0 */
+    connectedComponent(G); /* Find connected components of graph G */
 
+    /* Create graph G1 */
     V = 7;
     G1 = createGraph(V, FALSE);
-   
     insertEdge(G1, 0, 1, 28, 0);
     insertEdge(G1, 0, 5, 10, 0);
     insertEdge(G1, 1, 2, 16, 0);
@@ -669,18 +685,19 @@ main (void)
     printGraph(G1);
     printCost(G1);
 
-    kruskal(G1);
+    kruskal(G1); /* Kruskal minimum spanning tree */
 
     printf("\nKruskal on G\n");
     kruskal(G);
-    fprintf(stderr, "END\n");
+    fprintf(stderr, "Kruskal Done\n");
 
-    getWeightMatrixFrmG(G);
     printf("Flyod's all path cost\n");
     printf("Cost matrix:\n");
+    getWeightMatrixFrmG(G);
     printWeightArray(G, W);
-    flyod();
+    flyod();   /* Flyod's all pair shaortest path */
     printf("Allpath cost matrix:\n");
     printWeightArray(G, W);
+
     return 0;
 }
