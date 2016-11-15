@@ -40,7 +40,6 @@
 int discovered[MAX_VERT];
 int visited[MAX_VERT];
 int distance[MAX_VERT];
-int found[MAX_VERT];
 int parent[MAX_VERT];
 
 /* A structure to represent an adjacency list node */
@@ -54,7 +53,7 @@ typedef struct edge {
 
 typedef struct graph {
     int degree[MAX_VERT];
-    int nvertices;
+    int nVertices;
     int nEdges;
     int directed;
     edgePtr edges[MAX_VERT];
@@ -100,13 +99,13 @@ printCost(graph_t *G)
 {
     int i, j;
     printf("\n------------------Cost Matrix---------------------\n%5c", ' ');
-    for (j = 0; j < G->nvertices; j++) 
+    for (j = 0; j < G->nVertices; j++) 
         printf("  [%d]", j);
     printf("\n");
 
-    for (i = 0; i < G->nvertices; i++) {
+    for (i = 0; i < G->nVertices; i++) {
         printf("[%d] ", i);
-        for (j = 0; j < G->nvertices; j++) {
+        for (j = 0; j < G->nVertices; j++) {
             if (getCost(G, i, j) == MAX_COST) {
                 printf("%5c", '*');
             } else {
@@ -124,7 +123,7 @@ printGraph(graph_t *G)
 {
     int v;
 
-    for (v = 0; v < G->nvertices; ++v) {
+    for (v = 0; v < G->nVertices; ++v) {
         edge_t *p = G->edges[v];
         printf("vertex[%d]", v);
         while (p) {
@@ -140,13 +139,13 @@ createGraph(int V, int directed)
 {
     int i;
     graph_t *graph   = (graph_t *) malloc(sizeof(graph_t));
-    graph->nvertices = V;
+    graph->nVertices = V;
     graph->nEdges    = 0;
     graph->directed  = directed;
       
     for (i = 0; i < MAX_VERT; ++i) {
          graph->degree[i] = 0;
-//         graph->edges[i]  = NULL;
+         graph->edges[i]  = NULL;
     }
 
     return graph;
@@ -155,23 +154,22 @@ createGraph(int V, int directed)
 void 
 insertEdge(graph_t *G, int src, int dst, int cost, int directed)
 {
-    if ((src >= G->nvertices) || (dst >= G->nvertices)) {
+    edge_t *T;
+
+    if (((src >= G->nVertices) || (dst >= G->nVertices)) &&
+        ((src < 0) || (dst < 0))) {
         return;
     }
 
-    if ((src < 0) || (dst < 0)) {
-        return;
-    }
-
-    edge_t *T = malloc(sizeof(edge_t));
-    T->weight = cost;
-    T->vtx    = dst;
-    T->nxt    = G->edges[src];
+    T             = malloc(sizeof(edge_t));
+    T->weight     = cost;
+    T->vtx        = dst;
+    T->nxt        = G->edges[src];
     G->edges[src] = T;
     G->degree[src]++;
 
     if (directed) {
-        insertEdge(G, dst, src, cost, TRUE);
+        insertEdge(G, dst, src, cost, FALSE);
     } else {
         G->nEdges++;
     }
@@ -212,7 +210,7 @@ deleteEdge(graph_t *G, int src, int vtx)
     edge_t *L;    
     edge_t *tNode;    
     
-    if ((src >= G->nvertices) || (vtx >= G->nvertices))
+    if ((src >= G->nVertices) || (vtx >= G->nvertices))
         return;
 
     deletEdgeNode(&(G->edges[src].head), vtx);
@@ -224,7 +222,7 @@ void
 deleteVertex(graph_t *G, int V) 
 {
 #if 0    
-    if (V >= G->nvertices)
+    if (V >= G->nVertices)
         return;
 
     while (G->edges[V].head) {
@@ -302,12 +300,12 @@ _findPath(int start, int end)
 }
 
 void
-findPath(graph_t *G, int s, int e)
+findPath(graph_t *G, int start, int end)
 {
     clearSearch();
-    BFS(G, s);  /* Build Parent Array */
-    printf("path between %d and %d is : ", s, e);
-    _findPath(s, e);
+    BFS(G, start);  /* Build Parent Array */
+    printf("path between %d and %d is : ", start, end);
+    _findPath(start, end);
     printf("\n");
 }
 
@@ -332,7 +330,7 @@ connectedComponent(graph_t *G)
 
 /** Spanning Tree ******************************************************************************************************
     Spanning Tree of a graph G = (V, E) is a subset of edges from E forming a tree connecting all vertices of V.
-    Spanning tree can be found using DFS or BFS search.
+    Spanning tree can be visited using DFS or BFS search.
     Minimum Spanning Tree
         A minimum spanning tree minimize the total length over all possible spanning trees.
         There can be more than one minimum spanning trees in a graph.
@@ -404,6 +402,7 @@ unionSets(setUnion_t *s, int s1, int s2)
         s->size[r2] = s->size[r1] + s->size[r2];
         s->p[r1] = r2;
     }
+
 }
 
 int
@@ -433,7 +432,7 @@ getEdgeArray(graph_t *G, edgePair_t *e)
 
      initEdgeArray(G, e);
 
-     for (i = 0; i < G->nvertices; i++) {
+     for (i = 0; i < G->nVertices; i++) {
          edge = G->edges[i];
          while(edge) {
               e[k].x = i;
@@ -458,11 +457,11 @@ printEdgeArray(graph_t *G, edgePair_t *e)
 void 
 swap (edgePair_t *E, int a, int b)
 {
-    edgePair_t t;
+    edgePair_t temp;
 
-    t = E[a];
+    temp = E[a];
     E[a] = E[b];
-    E[b] = t;
+    E[b] = temp;
 }
 
 void
@@ -483,9 +482,8 @@ kruskal(graph_t *G)
     int i;
     setUnion_t s;
     edgePair_t e[MAX_VERT*MAX_VERT];
-    int weightComapare();
 
-    setUnionInit(&s, G->nvertices);
+    setUnionInit(&s, G->nVertices);
 
     getEdgeArray(G, e);
     sortEdges(G, e);
@@ -513,46 +511,49 @@ printDistance()
 }
 
 int
-choose (int *distance, int n, int *found)
+choose (int *distance, int n, int *visited)
 {
     int i, min, minpos;
     min = INT_MAX;
     minpos = -1;
 
-    for (i = 0; i < MAX_VERT; i++) {
-        if (distance[i] < min && !found[i]) {
+    for (i = 0; i < n; i++) {
+        if (distance[i] < min && !visited[i]) {
             min = distance[i];
             minpos = i;
         }
     }
 
-    found[minpos] = TRUE;
+    visited[minpos] = TRUE;
     printf("[%d]   ", minpos);  /* Print u */
     return minpos;
 }
 
 /* Dikjastra's algorithm */
 void
-shortestPath(graph_t *G, int v, int *distance, int *found)
+dikjastra(graph_t *G, int v, int *distance, int *visited)
 {
     int i, u, w;
-    int n  = MAX_VERT; 
+    int n = G->nVertices; 
 
     for (i = 0; i < n; i++) {
-        found[i] = FALSE;
+        /* Clear visited array */
+        visited[i] = FALSE;
+        /* Get cost of vertext V to all other vertices */
         distance[i] = getCost(G, v, i);
     }
 
-    found[v] = TRUE;
+    visited[v] = TRUE;
     distance[v] = INT_MAX;
 
     printf("[%c]   ", '*');
     printDistance();
 
     for (i = 0; i < (n - 2); i++) {
-        u = choose(distance, n, found);
+        /* Chose minimum unvisited vertext from distance[] */
+        u = choose(distance, n, visited);
         for (w = 0; w < n; w++) {
-            if (!found[w]) {
+            if (!visited[w]) {
                  /* If cost of reaching vertext w from u is less than known cost of reaching w , 
                     update distance[w] with new cost to reach w */
                 if ((distance[u] + getCost(G, u, w)) < distance[w]) {
@@ -565,7 +566,6 @@ shortestPath(graph_t *G, int v, int *distance, int *found)
 }
 
 /** Floyd's All Pairs Shortest Path for weighted graph Algorithm ***********************************************************/
-
 unsigned int W[MAX_VERT][MAX_VERT] = {INT_MAX};
 
 getWeightMatrixFrmG(graph_t *G)
@@ -593,8 +593,8 @@ printWeightArray(graph_t *G, unsigned int W[MAX_VERT][MAX_VERT])
 {
     int i, j;
 
-    for (i = 0; i < G->nvertices;  i++) {
-        for (j = 0; j < G->nvertices;  j++) {
+    for (i = 0; i < G->nVertices;  i++) {
+        for (j = 0; j < G->nVertices;  j++) {
             if (W[i][j] == INT_MAX) {
                 printf("%5c", '*');
             } else {    
@@ -651,24 +651,24 @@ main (void)
     /* Print the adjacency list representation of the above graph */
     printGraph(G);
 
-    /* Print DFS search */
     printf ("\nDFS[4]");
-    DFS(G, 4);
+    DFS(G, 4);             /* Print DFS search */
 
-    /* Print BFS search */
-    BFS(G, 4);
+    BFS(G, 4);             /* Print BFS search */
     printf("\n");
-    printParent();
-    printCost(G);
+
+    printParent();         /* Print Parent array from BFS */
+    findPath(G, 4, 0);     /* Find path bewteen vertex 4 and  0 */
+    connectedComponent(G); /* Find connected components of graph G */
+
+    printCost(G);          /* Print cost matrix */
 
     /* Shortest path */
     V = 4;
     printHeader(V);
-    shortestPath(G, V, distance, found); /* Dikjastra's Algorithm */
+    dikjastra(G, V, distance, visited); /* Dikjastra's Algorithm */
 
-    findPath(G, 4, 0);     /* Find path bewteen vertex 4 and  0 */
-    connectedComponent(G); /* Find connected components of graph G */
-
+#if 0
     /* Create graph G1 */
     V = 7;
     G1 = createGraph(V, FALSE);
@@ -685,18 +685,21 @@ main (void)
     printGraph(G1);
     printCost(G1);
 
+    printf("\nKruskal min spanning tree on G1\n");
     kruskal(G1); /* Kruskal minimum spanning tree */
+    fprintf(stderr, "Kruskal Done\n\n");
+#endif
 
-    printf("\nKruskal on G\n");
+    printf("\nKruskal's minimum spanning tree on G\n");
     kruskal(G);
-    fprintf(stderr, "Kruskal Done\n");
+    fprintf(stderr, "Kruskal Done\n\n");
 
-    printf("Flyod's all path cost\n");
+    printf("Flyod's all pair minimum cost\n");
     printf("Cost matrix:\n");
     getWeightMatrixFrmG(G);
     printWeightArray(G, W);
     flyod();   /* Flyod's all pair shaortest path */
-    printf("Allpath cost matrix:\n");
+    printf("Allpair minimum cost matrix:\n");
     printWeightArray(G, W);
 
     return 0;
