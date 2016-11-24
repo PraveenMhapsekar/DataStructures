@@ -5,16 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct patriciaTree *patricia;
+typedef struct patriciaTree *patriciaPtr;
 
 typedef struct patriciaTree {
     int bitNumber;
     int data;
-    patricia left;
-    patricia right;
+    patriciaPtr left;
+    patriciaPtr right;
 } patricia_t;
-
-patricia root;
 
 /* return true if bitNumber is not set */
 int
@@ -23,16 +21,17 @@ bit (unsigned int k, int bitNumber)
     return ((k & (1 << bitNumber)) ? 0 : 1);
 }
 
-/* Search the patricia tree t; return the last node encountered;
+/* Search the patriciaPtr tree t; return the last node encountered;
   if k is the key in this last node, the search sucessful */
-patricia 
-search(patricia t, unsigned int k)
+patriciaPtr 
+search(patriciaPtr t, unsigned int k)
 {
-   patricia nxt;
-   patricia cur;
+    patriciaPtr nxt;
+    patriciaPtr cur;
 
-    if (!t) 
+    if (!t) {
         return NULL;
+    }
 
     cur = t;
     
@@ -43,22 +42,23 @@ search(patricia t, unsigned int k)
         /* if bitNumber differ move right or move left */
         nxt = bit(k, nxt->bitNumber) ? nxt->right : nxt->left;
     }
+
     return nxt;
 }
 
 void 
-insert(patricia *t, int element) 
+insert(patriciaPtr *t, int element) 
 {
-    patricia current, parent, last, newNode;
+    patriciaPtr current, parent, last, newNode;
     int i;
 
     if (!(*t)) { /* empty tree */
-       *t = malloc(sizeof(patricia_t));
-       (*t)->bitNumber = 0;
-       (*t)->data = element;
-       (*t)->left = *t;
-       (*t)->right = NULL;
-       return;
+        *t = malloc(sizeof(patricia_t));
+        (*t)->bitNumber = 0;
+        (*t)->data = element;
+        (*t)->left = *t;
+        (*t)->right = NULL;
+        return;
     }
 
     last = search (*t, element);
@@ -97,7 +97,7 @@ insert(patricia *t, int element)
 int
 main(void) {
     int n;
-    patricia tree = NULL, tree1;
+    patriciaPtr tree = NULL, tree1;
     insert(&tree, 8);
     insert(&tree, 2);
     insert(&tree, 9);
@@ -106,7 +106,7 @@ main(void) {
     insert(&tree, 23);
     insert(&tree, 30);
 #endif
-    n = 3;
+    n = 12;
 
     tree1 = search(tree, n);
     if (!tree1) {
@@ -115,7 +115,7 @@ main(void) {
     }
 
     if (tree1->data == n)
-        printf("suceess\n");
+        printf("succeess\n");
     else
         printf("failed\n");
 
