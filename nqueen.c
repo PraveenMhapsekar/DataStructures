@@ -1,138 +1,77 @@
-#include <stdio.h>
+#include<stdio.h>
+#include <stdlib.h>
+#include<math.h>
+ 
+int column[20];
+int cnt;
 
-
-#define TRUE  1
-#define FALSE 0
-
-#define N     8
-
-int B[N][N]; /* board */
-
-void
-printBoard()
+void 
+print(int n)
 {
-    int i, j;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            fprintf(stderr, "%d ", B[i][j]);
-        }
-        printf("\n");
+    int i,j;
+    printf("Solution %d:\n", cnt++);
+
+    printf("%c ", '*');
+    for (i = 0; i < n; ++i) {
+        printf("%d ",i);
     }
-    printf("\n");
+
+    for (i = 0; i < n; ++i) {
+        printf("\n%d ",i);
+        for(j = 0; j < n; ++j) {
+            if(column[i] == j)
+                printf("Q "); 
+            else
+                printf(". "); 
+        }
+    }
+    printf("\n\n");
 }
 
-void
-clearBoard()
+int 
+validate(int R, int C)
 {
-    int i, j;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) { 
-            B[i][j] = 0;
-        }
-    }
-}
+    int i;
 
-int
-checkRow(int r)
-{
-    int i, j;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            if (i == r) {
-                if (B[i][j]) {
-                    return 1;
-                }
-            }
-        }
-    }
-    return 0;
-}
-
-int
-checkDiagonal(int r, int c)
-{
-    int rr;
-    int cc;
-
-    //    fprintf(stderr, "%s r = %d, c = %d\n", __func__, r, c); 
-    rr = r;
-    cc = c;
-
-    if (B[r][c]) {
-        return 1;
-    }
-
-    while ((rr >= 0) && (cc >= 0)) {
-        if(B[rr][cc]) {
-            return 1;
-        }
-        rr--;
-        cc--;
-    }
-
-    rr = r;
-    cc = c;
-    while ((rr < N) && (cc >= 0)) {
-        if(B[rr][cc]) {
-            return 1;
-        }
-        rr++;
-        cc--;
-    }
-
-#if 0    
-    int i, j;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            if (i == r) {
-                if (B[i][j]) {
-                    return 1;
-
-                }
-            }
-        }
-    }
-#endif
-    return 0;
-}
-
-void
-placeQueens(int r, int c) 
-{
-    int qCount = 0;
-
-    if (B[r][c]) {
-        return;
-    } else {
-        B[r][c] = 1;
-        fprintf(stderr, "r = %d, c = %d\n", r, c); 
-        printBoard();
-        qCount++;
-        c = (c + 1) % N;
-    }
-
-    while (qCount < N) {
-        if (checkRow(r) || checkDiagonal(r, c)) {
-            r = (r + 1) % N;
-            continue;
+    for (i = 0; i < R; i++) {
+        if (column[i] == C) {
+            return 0;
         } else {
-            B[r][c] = 1;
-            fprintf(stderr, "r = %d, c = %d\n", r, c); 
-            printBoard();
-            qCount++;
-            c = (c + 1) % N;
+            if (abs(column[i] - C) == abs(i - R)) {
+                return 0;
+            }
+        }
+    }
+
+    return 1; 
+}
+
+void 
+placeQueen(int R, int n)
+{
+    int col;
+    for (col = 0; col < n; col++) {
+        if (validate(R, col)) {
+            column[R] = col; 
+            if (R == n - 1) {
+                print(n); 
+                exit(0); /* Commenting out exit will print all solutions */
+            } else {            
+                placeQueen(R + 1, n);
+            }
         }
     }
 }
 
-
-int
-main(void)
+int 
+main()
 {
-    clearBoard();
-    printBoard();
-    placeQueens(3, 0);
-    printBoard();
+    int n, i, j;
+
+//    printf(" - N Queens Problem Using Backtracking -");
+//    printf("\n\nEnter number of Queens:");
+//    scanf("%d",&n);
+    n = 8;
+    placeQueen(1, n);
     return 0;
 }
-
