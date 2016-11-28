@@ -483,10 +483,13 @@ kruskal(graph_t *G)
     setUnion_t s;
     edgePair_t e[MAX_VERT*MAX_VERT];
 
+    /* Init union */
     setUnionInit(&s, G->nVertices);
-
+    /* Read eges into edge array e */
     getEdgeArray(G, e);
+    /* Sort Edges */
     sortEdges(G, e);
+
     for (i = 0; i < G->nEdges; i++) {
         if (!sameComponent(&s, e[i].x, e[i].y)) {
             printf("edge (%d, %d) in MST\n", e[i].x, e[i].y);

@@ -1,5 +1,3 @@
-
-
 /* Patricia -> Practical Algorithm To Retieve Information Coded In Aplhanemeric */
 
 #include <stdio.h>
@@ -61,7 +59,7 @@ insert(patriciaPtr *t, int element)
         return;
     }
 
-    last = search (*t, element);
+    last = search(*t, element);
 
     if ((element == last->data)) {
         fprintf(stderr, "The key is in the tree. Iteration failed.\n");
