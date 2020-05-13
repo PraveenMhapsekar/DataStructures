@@ -1,4 +1,5 @@
 /*
+ *
  * Given an array of positive integers and a target total of X, find if there exists a contiguous subarray with sum = X 
  *
  * [1, 3, 5, 18]
