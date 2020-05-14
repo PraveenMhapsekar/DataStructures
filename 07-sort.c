@@ -44,225 +44,218 @@ sortMenu {
 void
 copyArry()
 {
-    int i;
-    for (i = 0; i < N; i++) {
-        A[i] = AA[i];
-    }
+  int i;
+
+  for (i = 0; i < N; i++) {
+    A[i] = AA[i];
+  }
 }
 
 int
 testSortArray() 
 {
-    int i;
-    for (i = 0; i < N; i++) {
-        if (A[i] != testArray[i]) {
-            return 0;
-        }
+  int i;
+  for (i = 0; i < N; i++) {
+    if (A[i] != testArray[i]) {
+      return 0;
     }
-    return 1;
+  }
+  return 1;
 }
 
 void
 printArray()
 {
-    int i;
-    for (i = 0; i < N; i++) {
-        printf("%d ", A[i]);
-    }
-    printf("\n"); 
+  int i;
+  for (i = 0; i < N; i++) {
+    printf("%d ", A[i]);
+  }
+  printf("\n"); 
 }
 
 void 
 swap (int *a, int *b)
 {
-    if (a == b) {
-        return;
-    }
+  if (a == b) {
+    return;
+  }
 
-    *a = *a ^ *b;
-    *b = *a ^ *b;
-    *a = *a ^ *b;
+  *a = *a ^ *b;
+  *b = *a ^ *b;
+  *a = *a ^ *b;
 }
 
 /* 1. Bubble Sort ************************************************************************************************************/
 void
 bubbleSort() 
 {
-    int i, j; // Pass
-    for (i = 0; i < N - 1;  i++) {
-        for (j = 0; j < (N - i - 1); j++) {
-            if (A[j] > A[j+1]) {
-                swap(&A[j], &A[j+1]);
-            }
-        }
-        printArray();
+  int i, j; // Pass
+  for (i = 0; i <= N - 1;  i++) {
+    for (j = 0; j <= (N - i - 2); j++) {
+      if (A[j] > A[j + 1]) {
+        swap(&A[j], &A[j + 1]);
+      }
     }
+    printArray();
+  }
 }
 
-/* 2. Selection Sort **********************************************************************************************************/
+/* 2. Selection Sort **********************************************************************************************************
+ *    Scan through the unsorted data looking for the smallest remaining element, then swap it into the position immediately 
+ *    following the sorted data. Repeat until finished. 
+ *    If sorting a list, you don't need to swap the smallest element into position, you could instead remove the list node from 
+ *    its old position and insert it at the new.
+ */
 void
-selectionSort() 
-{
-    int i, j;
-    int key = 0;
-    for (i = 0; i < N - 1; i++) {
-        key = i; 
-        for (j = i; j < N; j++) {
-            if (A[j] < A[key]) {
-                key = j;
-            }
-        }
-        swap(&A[i], &A[key]);
-        printArray();
+selectionSort() {
+  int i, j, min;
+  for (i = 0; i < N; i++) {
+    min = i; 
+    /* Find index of smallest element from unsorted array */
+    for (j = i; j < N; j++) {
+      if (A[j] < A[min]) {
+        min = j;
+      }
     }
+    /* Swap smallest element from unsorted array with position immediately following sorted data */
+    swap(&A[i], &A[min]);
+    printArray();
+  }
 }
 
 #if 0
-    int i;
-    int j;
-    for (i = 0; i < N; i++) {
-        for (j = i+1; j < N; j++) {
-            if (A[j] < A[i]) {
-                swap(&A[j], &A[i]);
-            }
-       }
-       printArray();
-    }
+  int i;
+  int j;
+  for (i = 0; i < N; i++) {
+    for (j = i+1; j < N; j++) {
+      if (A[j] < A[i]) {
+        swap(&A[j], &A[i]);
+      }
+     }
+     printArray();
+  }
 }
 #endif
 
-/* 3. Insertion Sort **********************************************************************************************************/
+/* 3. Insertion Sort *********************************************************************************************************
+ *    Take the element immediately following the sorted data, scan through the sorted data to find the place to put it. 
+ *    Repeat until finished.
+ */
 void
-insertionSort()
-{
-    int i, j, temp;
-    for (i = 1; i < N; i++) {
-         for (j = i; j > 0; j--) {
-            if (A[j] < A[j-1]) {
-                swap (&A[j], &A[j-1]);
-            }
-        }
-        printArray();
+insertionSort() {
+  int i, j;
+  for (i = 1; i < N; i++) {
+    /* Scan through sorted data (i through 0) */
+    for (j = i; j > 0; j--) {
+      if (A[j] < A[j-1]) {
+        /* If first is smaller than previous element swap it */
+        swap (&A[j], &A[j-1]);
+      }
     }
+    printArray();
+  }
 }
-#if 0
-void
-insertionSort()
-{
-    int i;
-    int j;
-    int key = 0;
-    for (i = 0; i < N-1; i++) {
-       key = i; 
-       for (j=i; j<N; j++) {
-           if (A[j] < A[i]) {
-               key = j;
-           }
-       }
-       swap(&A[i], &A[key]);
-       printArray();
-    }
-}
-#endif
 
 /* 4. Quick Sort ************************************************************************************************************/
 int
-partition (int left, int right)
-{
-    int pivot = A[left];
-    int L = left;
-    int R = right;
+partition (int left, int right) {
+  int pivot = A[left];
+  int L = left;
+  int R = right;
 
-    while (L < R)
-    {
-        while ((pivot >= A[L]) && (L < right))
-            L++; // All the elements to the left of L are equal to or smaller than pivot.
-        while (A[R] > pivot)
-            R--; // All the elements to the right of R are greater than pivot, R is now pointing at element smaller than pivot, which is suppse to be left of pivot as per above comment
-        if (L < R)
-            swap(&A[L], &A[R]); // swap R and L and iterate again.
+  while (L < R) {
+    while ((pivot >= A[L]) && (L < right)) {
+      L++; // All the elements to the left of L are equal to or smaller than pivot.
     }
 
-    swap (&A[R], &A[left]); //Swap Pivot with smallest element 
-    printArray();
-    return R; // Return new Pivot;
+    while (A[R] > pivot) {
+      R--; // All the elements to the right of R are greater than pivot, 
+           // R is now pointing at element smaller than pivot, which is suppse to be left of pivot as per above comment
+    }
+
+    if (L < R) {
+      swap(&A[L], &A[R]); // swap R and L and iterate again.
+    }
+  }
+
+  swap (&A[R], &A[left]); //Swap Pivot with smallest element 
+  printArray();
+
+  return R; // Return new Pivot index;
 }
 
 int
-quickSort (int left, int right)
-{
-    int pivot;
+quickSort (int left, int right) {
 
-    if (left < right) {
-        pivot = partition(left, right);
-        quickSort(left, pivot - 1);
-        quickSort(pivot + 1, right); 
-    }
+  int pivotIdx;
+
+  if (left < right) {
+    pivotIdx = partition(left, right);
+    printf("Pivot A[%d] = %d\n\n", pivotIdx, A[pivotIdx]);
+    quickSort(left, pivotIdx - 1);
+    quickSort(pivotIdx + 1, right); 
+  }
 }
 
-/* 5. Merge Sort ************************************************************************************************************/
+/* 5. Merge Sort ************************************************************************************************************
+   -  Divide the unsorted list into n sublists, each comprising 1 element (a list of 1 element is supposed sorted).
+   -  Repeatedly merge sublists to produce newly sorted sublists until there is only 1 sublist remaining. This will be the sorted list.
+*/
 void
-merge(int l, int m, int r) 
-{
-    int i = 0;
-    int j = 0;
-    int k = 0;
-    int n1 = m - l + 1;
-    int n2 = r - m;
-    int L[n1], R[n2];
+merge(int l, int m, int r) {
+  int i = 0;
+  int j = 0;
+  int k = 0;
+  int lLen = m + 1 - l; // left  length
+  int rLen = r - m;     // Right length
+  int L[lLen], R[rLen];
 
-    for(i = 0; i < n1; i++) {
-        L[i] = A[l+i];
-    }
+  // Copy left array
+  for (i = 0; i < lLen; i++) {
+    L[i] = A[l+i];
+  }
 
-    for(j = 0; j < n2; j++) {
-        R[j] = A[m+1+j];
-    }
+  // Copy right array
+  for(j = 0; j < rLen; j++) {
+    R[j] = A[m+1+j];
+  }
 
-    i = 0;
-    j = 0;
-    k = l;
+  i = 0;
+  j = 0;
+  k = l;
 
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            A[k] = L[i];
-            i++;    
-        } else {
-            A[k] = R[j];
-            j++;
-        }
-        k++;
+  // Merge left and right
+  while (i < lLen && j < rLen) {
+    if (L[i] <= R[j]) {
+      A[k++] = L[i++];
+    } else {
+      A[k++] = R[j++];
     }
+  }
 
-    while (i < n1) {
-        A[k] = L[i];
-        i++;
-        k++;
-    }
-      
-    while (j < n2) {
-        A[k] = R[j];
-        j++;
-        k++;
-    }
+  // Merge remaining: left
+  while (i < lLen) {
+    A[k++] = L[i++];
+  }
+    
+  // Merge remaining: right
+  while (j < rLen) {
+    A[k++] = R[j++];
+  }
 }
 
 void 
-mergeSort(int start, int end) 
-{
-   int mid;
+mergeSort(int start, int end) {
+  int mid;
 
-   if (start >= end) {
-       return;
-   }
+  if (start < end) {
+    mid = ((start + (end - 1)) / 2);
+    mergeSort(start, mid);
+    mergeSort(mid + 1, end);
+    merge(start, mid, end);
+  }
 
-   mid = (start + (end - 1))/2;
-
-   mergeSort(start, mid);
-   mergeSort(mid + 1, end);
-   merge(start, mid, end);
-
-   return;
+  return;
 }
 
 /* 6. Heap Sort ************************************************************************************************************/
@@ -271,41 +264,39 @@ mergeSort(int start, int end)
  * i -> index
  */
 void 
-heapify (int n, int i) 
-{
-   int largest = i;    /* Root        */
-   int lc = i * 2 + 1; /* Left child  */
-   int rc = i * 2 + 2; /* Right child */
-  
-   if ((A[largest] < A[lc]) && (lc < n)) {
-        largest = lc;
-   }
+heapify (int n, int i) {
+	int largest = i;    /* Root    */
+	int lc = i * 2 + 1; /* Left child  */
+	int rc = i * 2 + 2; /* Right child */
 
-   if ((A[largest] < A[rc]) && (rc < n)) {
-        largest = rc;
-   }
+	if ((A[largest] < A[lc]) && (lc < n)) {
+		largest = lc;
+	}
 
-   if (i != largest) {
-       swap (&A[i], &A[largest]); /* New root          */
-       heapify(n, largest);       /* Heapify new child */
-   }
+	if ((A[largest] < A[rc]) && (rc < n)) {
+		largest = rc;
+	}
+
+	if (i != largest) {
+		swap (&A[i], &A[largest]); /* New root      */
+		heapify(n, largest);       /* Heapify new child */
+	}
 }
 
 void
-heapSort()
-{
-    int i;
+heapSort() {
+  int i;
   
-    /* Build heap from initial array */ 
-    for (i = (N/2) - 1; i >= 0; i--) {
-        heapify(N, i);
-    }
+  /* Build heap from initial array */ 
+  for (i = (N/2) - 1; i >= 0; i--) {
+    heapify(N, i);
+  }
 
-    /* Extract elements from the heap in sorted manner */
-    for (i = N - 1; i >= 0; i--) {
-        swap (&A[i], &A[0]); /* Extract heighest element and swap/store at the end of the array */
-        heapify(i, 0);       /* Heapify new root */
-    } /* Reduce array size (i--) */
+  /* Extract elements from the heap in sorted manner */
+  for (i = N - 1; i >= 0; i--) {
+    swap (&A[i], &A[0]); /* Extract heighest element and swap/store at the end of the array */
+    heapify(i, 0);     /* Heapify new root */
+  } /* Reduce array size (i--) */
 }
 
 /* 7. Bucket Sort ***********************************************************************************************************/
@@ -313,176 +304,178 @@ heapSort()
 void
 bucketSort()
 {
-    int i;
-    int k = 0;
-    int BA[BUCKET];
+  int i;
+  int k = 0;
+  int BA[BUCKET];
 
-    for (i = 0; i < BUCKET; i++) 
-        BA[i] = 0;
+  // Intialize buckets
+  for (i = 0; i < BUCKET; i++) 
+    BA[i] = 0;
 
-    for (i = 0; i < N; i++) 
-        BA[A[i]]++;
-        
-    for (i = 0; i < BUCKET; i++) {
-        while (BA[i]) {
-            A[k++] = i;
-            BA[i]--;
-        }
+  // Fill buckets
+  for (i = 0; i < N; i++) 
+    BA[A[i]]++;
+    
+   // Retrieve elements from the buckets
+  for (i = 0; i < BUCKET; i++) {
+    while (BA[i]) {
+      A[k++] = i;
+      BA[i]--;
     }
+  }
 }
 
 /* 8. Counting Sort ************************************************************************************************************/
 void
-countingSort(int n, int exp) 
-{
-    int i;
-    int k = 0;
+countingSort(int n, int exp) {
+  int i;
+  int k = 0;
 
 #define COUNT 10
 #define IDX (A[i]/exp)%10
-    int count[COUNT] = {0};
-    int output[n];
+  int count[COUNT] = {0};
+  int output[n];
 
-    /* Clear count array */
-    for (i = 0; i < COUNT; i++) {
-        count[i] = 0;
-    }
+  /* Clear count array */
+  for (i = 0; i < COUNT; i++) {
+    count[i] = 0;
+  }
 
-    /* Count & store the number of numbers matching 'divide by exp' */
-    for (i = 0; i < n; i++) {
-        count[IDX]++;
-    }
+  /* Count & store the number of numbers matching 'divide by exp' */
+  for (i = 0; i < n; i++) {
+    count[IDX]++;
+  }
 
-    /* Get cumulative count */
-    for (i = 1; i < 10; i++) {
-        count[i]+= count[i - 1];
-    }
+  /* Get cumulative count */
+  for (i = 1; i < 10; i++) {
+    count[i]+= count[i - 1];
+  }
 
-    /* build array by placing numbers from the end */
-    for (i = (n - 1); i >= 0; i--) {
-        output[count[IDX] - 1] = A[i]; /*These two line are important to understand the logic */
-        count[IDX]--;
-    }
+  /* build array by placing numbers from the end */
+  for (i = (n - 1); i >= 0; i--) {
+    output[count[IDX] - 1] = A[i]; /*These two line are important to understand the logic */
+    count[IDX]--;
+  }
 
-    // Copy the output array to arr[], so that arr[] now
-    // contains sorted numbers according to current digit
-    for (i = 0; i < n; i++) {
-        A[i] = output[i];
-    }
+  // Copy the output array to arr[], so that arr[] now
+  // contains sorted numbers according to current digit
+  for (i = 0; i < n; i++) {
+    A[i] = output[i];
+  }
 }
 
 /* 9. Radix Sort ************************************************************************************************************/
 void
 radixSort()
 {
-    int i, exp;
-    int max = INT_MIN;
+  int i, exp;
+  int max = INT_MIN;
 
-    for (i = 0; i < N; i++) {
-        if (A[i] > max) {
-            max= A[i];
-        }
+  for (i = 0; i < N; i++) {
+    if (A[i] > max) {
+      max= A[i];
     }
+  }
 
-    for (exp = 1; (max/exp) > 0; exp = (exp * 10)) {
-        countingSort(N, exp);
-    }
+  for (exp = 1; (max/exp) > 0; exp = (exp * 10)) {
+    countingSort(N, exp);
+  }
 }
 
 /***************************************************************************************************************************/
 void
 printMenu ()
 {
-    sortMenu_t i;
-    printf("\n\nMenu:\n");
-    for (i = sortlistStart + 1; i < sortListEnd; i++) {
-          printf("%2d. %-15s", i, menu[i]);
-          if (((i % 5) == 0) || (i == sortListEnd - 1)) { /* Print 5 menu items per line */
-              printf ("\n");
-          }
-    }
-    printf ("Enter your choice :\n");
+  sortMenu_t i;
+  printf("\n\nMenu:\n");
+  for (i = sortlistStart + 1; i < sortListEnd; i++) {
+      printf("%2d. %-15s", i, menu[i]);
+      if (((i % 5) == 0) || (i == sortListEnd - 1)) { /* Print 5 menu items per line */
+        printf ("\n");
+      }
+  }
+  printf ("Enter your choice :\n");
 }
 
 int
 getChoice(sortMenu_t *cc) 
 {
-    int n, c;
+  int n, c;
 
-    if (((n = scanf("%d", &c)) != 1) || (c > sortListEnd) || (c < bubblesort)) {
-        printf ("\nWrong input!!!\nPlease get familiar with menu options to run this program\nGood Bye for now!!!\n");
-        return 0;        
-    }
+  if (((n = scanf("%d", &c)) != 1) || (c > sortListEnd) || (c < bubblesort)) {
+    printf ("\nWrong input!!!\nPlease get familiar with menu options to run this program\nGood Bye for now!!!\n");
+    return 0;    
+  }
 
-    *cc = c;
-    return 1;
+  *cc = c;
+  return 1;
 }
 
 int
 main (void)
 {
-    sortMenu_t c;
+  sortMenu_t c;
 
-    printMenu();
+  printMenu();
 
-    while (1) {
-        if (getChoice(&c) == 0) {
-            return 0; 
-        }        
+  while (1) {
+    if (getChoice(&c) == 0) {
+      return 0; 
+    }    
 
-        copyArry();  // Read unsorted array into to be sorted array A[]
-        printf("Your want to use %s\nArray to be sorted is...\n", menu[c]);
+    copyArry();  // Read unsorted array into to be sorted array A[]
+    printf("Your want to use %s\nArray to be sorted is...\n", menu[c]);
+    printArray();
+    printf("%s...\n", menu[c]);
+
+    switch (c) {
+      case bubblesort:
+        bubbleSort();
+        break;
+      case selectionsort:
+        selectionSort();
+        break;
+      case insertionsort:
+        insertionSort();
+        break;
+      case mergesort:  
+        mergeSort(0, (N-1));
         printArray();
-        printf("%s...\n", menu[c]);
-
-        switch (c) {
-            case bubblesort:
-                bubbleSort();
-                break;
-            case selectionsort:
-                selectionSort();
-                break;
-            case insertionsort:
-                insertionSort();
-                break;
-            case mergesort:    
-                mergeSort(0, (N-1));
-                printArray();
-                break;
-            case bucketsort:
-                bucketSort();
-                printArray();
-                break;
-            case quicksort:
-                quickSort(0, N-1);
-                printArray();
-                break;
-            case heapsort:
-                heapSort();
-                printArray();
-                break;
-            case countingsort:
-                countingSort(N, 1);
-                printArray();
-                break;
-            case radixsort:
-                radixSort();
-                printArray();
-                break;
-            default:
-                printf ("\bYour choice %s not yet implemeneted\n", menu[c]);   
-                printMenu();
-                continue;
-        }
-#ifdef TEST_YOUR_WORK
-        // Test sorted array aginst expected results
-        if (!testSortArray()) {
-             printf("\n\n\b\b Error sorting failed\n");
-        }
-#endif
-        // Print menu for next execution option
-        printMenu(); 
+        break;
+      case bucketsort:
+        bucketSort();
+        printArray();
+        break;
+      case quicksort:
+        quickSort(0, N-1);
+        printArray();
+        break;
+      case heapsort:
+        heapSort();
+        printArray();
+        break;
+      case countingsort:
+        countingSort(N, 1);
+        printArray();
+        break;
+      case radixsort:
+        radixSort();
+        printArray();
+        break;
+      default:
+        printf ("\bYour choice %s not yet implemeneted\n", menu[c]);   
+        printMenu();
+        continue;
     }
+#ifdef TEST_YOUR_WORK
+    // Test sorted array aginst expected results
+    if (!testSortArray()) {
+       printf("\n\n\b\b Error sorting failed\n");
+    }
+#endif
+    // Print menu for next execution option
+    printMenu(); 
+  }
 
-    return 0;
+  return 0;
 }
