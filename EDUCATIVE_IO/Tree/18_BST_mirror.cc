@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <climits>
 
 using namespace std;
 
@@ -148,7 +149,7 @@ inorder(nodePtr tree) {
 	if (tree->left)
 		inorder(tree->left);    // Visit left subtree
 
-	printf("%3d ", tree->data);  // Visit node
+	printf("%d ", tree->data);  // Visit node
 
 	if (tree->right)
 		inorder(tree->right);    // Visit right subtree
@@ -212,22 +213,37 @@ tree_identical(node_t *r1, node_t *r2) {
 void
 bfs(node_t* tree) {
   queue<node *> q;  // create q for node pointer
+  int lsum = 0;
+  int lnum = 0;
   if (!tree) return; // if null , return
 
   q.push(tree);  // push root
   q.push(NULL);  // push level marker
-
+ // cout << tree->data << endl;
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
-		cout << tmp->data << " ";
-		if (tmp->left) q.push(tmp->left);  // push left child
-		if (tmp->right) q.push(tmp->right); // push right child
+	 //	cout << tmp->data << " ";
 
+		lsum += tmp->data;
+    lnum++;
+		if (tmp->left) { 
+      q.push(tmp->left);  // push left child
+    }
+
+		if (tmp->right) {
+      q.push(tmp->right); // push right child
+    }
+
+		  cout << (lsum/lnum) << endl; // print new line indicating new level
+      lsum = 0;
+      lnum = 0;
 		// Level marker processing
 		tmp = q.front(); 
 		if (tmp == NULL) { // if level marker
 		  q.pop(); // pop level marker (NULL ptr)
-		  cout << endl; // print new line indicating new level
+      
+      lsum = 0;
+      lnum = 0;
 		  if (!q.empty()) {
 			  q.push(NULL); // push new marker
 		  }
@@ -236,17 +252,46 @@ bfs(node_t* tree) {
   cout << endl;
 }
 
-int main() {
+void
+tree_mirror(node_t *tree) {
+
+  if (!tree) return;
+  
+  if (tree->left) tree_mirror(tree->left);
+  if (tree->right) tree_mirror(tree->right);
+
+  node_t *tmp;
+  tmp = tree->left;
+  tree->left = tree->right;
+  tree->right = tmp;
+  return;
+}
+
+int 
+main() {
 	nodePtr tree1 = NULL;
+  node_t *llptr = NULL;
+  node_t *mptr = NULL;
+	insert(&tree1, 12);
+	insert(&tree1, 7);
+	insert(&tree1, 1);
+	insert(&tree1, 9);
+	insert(&tree1, 2);
+	insert(&tree1, 10);
+	insert(&tree1, 5);
+  
+  printf("inorder recursive:\n"); 
+  inorder(tree1);
+  printf("\n");
 
-	insert(&tree1, 100);
-	insert(&tree1, 50);
-	insert(&tree1, 200);
-	insert(&tree1, 25);
-	insert(&tree1, 75);
-	insert(&tree1, 350);
+  tree_mirror(tree1);
 
-  printf("\nTree BFS:\n");
-  bfs(tree1);
+  printf("inorder recursive after mirror:\n"); 
+  inorder(tree1);
+  printf("\n");
+  tree_mirror(tree1);
+  printf("inorder recursive:\n"); 
+  inorder(tree1);
+  printf("\n");
   return 0;
 }

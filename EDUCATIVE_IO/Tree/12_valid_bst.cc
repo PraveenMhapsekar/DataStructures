@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <climits>
 
 using namespace std;
 
@@ -212,22 +213,37 @@ tree_identical(node_t *r1, node_t *r2) {
 void
 bfs(node_t* tree) {
   queue<node *> q;  // create q for node pointer
+  int lsum = 0;
+  int lnum = 0;
   if (!tree) return; // if null , return
 
   q.push(tree);  // push root
   q.push(NULL);  // push level marker
-
+ // cout << tree->data << endl;
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
-		cout << tmp->data << " ";
-		if (tmp->left) q.push(tmp->left);  // push left child
-		if (tmp->right) q.push(tmp->right); // push right child
+	 //	cout << tmp->data << " ";
 
+		lsum += tmp->data;
+    lnum++;
+		if (tmp->left) { 
+      q.push(tmp->left);  // push left child
+    }
+
+		if (tmp->right) {
+      q.push(tmp->right); // push right child
+    }
+
+		  cout << (lsum/lnum) << endl; // print new line indicating new level
+      lsum = 0;
+      lnum = 0;
 		// Level marker processing
 		tmp = q.front(); 
 		if (tmp == NULL) { // if level marker
 		  q.pop(); // pop level marker (NULL ptr)
-		  cout << endl; // print new line indicating new level
+      
+      lsum = 0;
+      lnum = 0;
 		  if (!q.empty()) {
 			  q.push(NULL); // push new marker
 		  }
@@ -236,17 +252,69 @@ bfs(node_t* tree) {
   cout << endl;
 }
 
-int main() {
+int getMin(node_t* root) {
+  int lmin;
+  int rmin;
+  int res; 
+  if (!root) return INT_MAX;
+  
+  lmin = (getMin(root->left));
+  rmin = (getMin(root->right));
+  res = root->data; 
+  if (lmin < res) 
+     res = lmin;
+  if (rmin < res)
+     res = rmin;
+  
+  return res;
+}
+
+int 
+getMax(node_t* root) {
+  int lmax;
+  int rmax;
+  int res;
+  if (!root) return INT_MIN;
+  
+  lmax = (getMax(root->left));
+  rmax = (getMax(root->right));
+  res = root->data; 
+  if (lmax > res) 
+     res = lmax;
+  if (rmax > res)
+     res = rmax;
+  
+  return res;
+}
+
+bool 
+isValidBST(node_t* root){
+  if (!root) return true;
+  
+  if (((root->left) && (root->data <= getMax(root->left))) ||
+     ((root->right) &&  (root->data >= getMin(root->right)))) {
+    return false;
+  }
+    
+  if (!isValidBST(root->right) || !isValidBST(root->left)) {
+    return false;
+  }
+  
+  return true;
+}
+
+int 
+main() {
 	nodePtr tree1 = NULL;
 
-	insert(&tree1, 100);
-	insert(&tree1, 50);
-	insert(&tree1, 200);
-	insert(&tree1, 25);
-	insert(&tree1, 75);
-	insert(&tree1, 350);
+	insert(&tree1, 12);
+	insert(&tree1, 7);
+	insert(&tree1, 1);
+	insert(&tree1, 9);
+	insert(&tree1, 2);
+	insert(&tree1, 10);
+	insert(&tree1, 5);
 
-  printf("\nTree BFS:\n");
-  bfs(tree1);
+  printf("\nTree is %s BST\n", isValidBST(tree1) == true ? "valid" : "invalid");
   return 0;
 }

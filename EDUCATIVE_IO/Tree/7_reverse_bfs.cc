@@ -210,8 +210,9 @@ tree_identical(node_t *r1, node_t *r2) {
 }
 
 void
-bfs(node_t* tree) {
+bfs_reverse(node_t* tree) {
   queue<node *> q;  // create q for node pointer
+  stack<int>s;
   if (!tree) return; // if null , return
 
   q.push(tree);  // push root
@@ -219,7 +220,8 @@ bfs(node_t* tree) {
 
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
-		cout << tmp->data << " ";
+    s.push(tmp->data);
+		//cout << tmp->data << " ";
 		if (tmp->left) q.push(tmp->left);  // push left child
 		if (tmp->right) q.push(tmp->right); // push right child
 
@@ -227,11 +229,21 @@ bfs(node_t* tree) {
 		tmp = q.front(); 
 		if (tmp == NULL) { // if level marker
 		  q.pop(); // pop level marker (NULL ptr)
-		  cout << endl; // print new line indicating new level
+		  //cout << endl; // print new line indicating new level
+      s.push(-1);
 		  if (!q.empty()) {
 			  q.push(NULL); // push new marker
 		  }
 		}
+  }
+
+  while(!s.empty()) {
+     int data = s.top(); s.pop();
+     if (data != -1) {
+       cout << data << " ";
+     } else {
+		   cout << endl; // print new line indicating new level
+     }
   }
   cout << endl;
 }
@@ -247,6 +259,6 @@ int main() {
 	insert(&tree1, 350);
 
   printf("\nTree BFS:\n");
-  bfs(tree1);
+  bfs_reverse(tree1);
   return 0;
 }
