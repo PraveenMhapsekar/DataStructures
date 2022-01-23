@@ -106,14 +106,15 @@ main(void) {
 
 	tree1 = search(tree, n);
 	if (!tree1) {
-			printf("failed, lookup null\n");
-			return 0;
+		printf("failed, lookup null\n");
+		return 0;
 	}
 
-	if (tree1->data == n)
-			printf("succeess\n");
-	else
-			printf("failed\n");
+	if (tree1->data == n) {
+		printf("succeess\n");
+	} else {
+		printf("failed\n");
+  }
 
 	return 0;
 }

@@ -28,8 +28,7 @@ union un {
 } un;
 
 inline 
-int funcMax(int a, int b) 
-{
+int funcMax(int a, int b) {
     return ((a) < (b) ? (b) : (a)); 
 }
 
