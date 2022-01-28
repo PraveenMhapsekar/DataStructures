@@ -94,10 +94,10 @@ int findEdge(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColS
 int
 main() {
   // 0->1->2 3->4 5 
-  int graph[NUM][NUM] = {{0, 1, 0, 0},  // 0 -->0 1
-											   {0, 0, 1, 0},  // 1 -->1 2
-											   {0, 0, 0, 1},  // 2 -->2
-											   {0, 1, 0, 0}}; // 3 -->0 1 3
+  int graph[NUM][NUM] = {{0, 1, 0, 0},  // 0 --> 1
+											   {0, 0, 1, 0},  // 1 --> 2
+											   {0, 0, 0, 1},  // 2 --> 3
+											   {0, 1, 0, 0}}; // 3 --> 1 
   printf("Number of edges %d\n", findEdge(graph, NUM, NUM));
   return 0;
 }
