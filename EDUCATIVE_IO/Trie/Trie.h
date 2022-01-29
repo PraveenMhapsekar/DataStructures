@@ -53,8 +53,22 @@ class Trie {
 
     
     bool searchNode(string key) {
-      return true;
-    }
+      // return false if Trie is empty
+			if (this == nullptr) {
+				return false;
+			}
+	 
+			Trie* curr = this;
+			for (int i = 0; i < key.length(); i++) {
+				// next node
+				curr = curr->children[key[i]];
+				if (curr == nullptr) {
+					return false;
+				}
+			}
+	 
+			return curr->isEndWord; 
+		}
 
     bool hasNoChildren(Trie * currentNode);
     bool deleteHelper(string key, Trie * currentNode, int length, int level);
