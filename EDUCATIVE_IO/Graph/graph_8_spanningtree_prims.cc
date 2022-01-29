@@ -1,243 +1,104 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <queue>
-#include <string>
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
-class vertex {
-private:
-  int id;
-  bool visited;
+#define NUM 5
 
-public:
-  vertex(int id, bool visited) {
-    this->id = id;
-    this->visited = visited;
-  }
+typedef struct resultSet {
+ int src;
+ int dst;
+ int weight;
+} result_set_t;
 
-  int getId() {
-    return id;
-  }
-  void setId(int id) {
-    this->id = id;
-  }
-  bool isVisited() {
-    return visited;
-  }
-  void setVisited(bool visited) {
-    this->visited = visited;
-  }
-};
+// Get the vertex with min key and not included in MST
+int
+getMinimumVertex(bool *mst, int *key, int size) {
+  int minKey = INT_MAX;
+  int vertex = -1;
 
-class edge {
-private:
-  int weight;
-  bool visited;
-  vertex* src;
-  vertex* dest;
-
-public:
-  edge(int weight, bool visited, vertex* src, vertex* dest){
-    this->weight = weight;
-    this->visited = visited;
-    this->src = src;
-    this->dest = dest;
-  }
-
-  int getWeight() const {
-    return weight;
-  }
-
-  void setWeight(int weight) {
-    this->weight = weight;
-  }
-
-  bool isVisited() const {
-    return visited;
-  }
-
-  void setVisited(bool visited) {
-    this->visited = visited;
-  }
-
-  vertex* getSrc() const {
-    return src;
-  }
-
-  void setSrc(vertex* src) {
-    this->src = src;
-  }
-
-  vertex* getDest() const {
-    return dest;
-  }
-
-  void setDest(vertex* dest) {
-    this->dest = dest;
-  }
-};
-
-class graph {
-private:
-  vector<vertex*> g;    //vertices
-  vector<edge*> e;      //edges
-
-public:
-  const vector<vertex*>& getG() const {
-    return g;
-  }
-
-  void setG(const vector<vertex*>& g) {
-    this->g = g;
-  }
-
-  const vector<edge*>& getE() const {
-    return e;
-  }
-
-  void setE(const vector<edge*>& e) {
-    this->e = e;
-  }
-
-  // This method returns the vertex with a given id if it
-  // already exists in the graph, returns NULL otherwise
-  vertex* vertex_exists(int id) {
-    for (int i = 0; i < this->g.size(); i++) {
-      if (g[i]->getId() == id) {
-        return g[i];
-      }
-    }
-    return nullptr;
-  }
-
-	// This method generates the graph with v vertices
-	// and e edges
-	void
-	generate_graph(int vertices, vector< vector<int> > edges) {
-    // create vertices
-    for (int i = 0; i < vertices; i++) {
-      vertex* v = new vertex(i + 1, false);
-      this->g.push_back(v);
-    }
-
-    // create edges
-    for (int i = 0; i < edges.size(); i++) {
-      vertex* src = vertex_exists(edges[i][1]);
-      vertex* dest = vertex_exists(edges[i][2]);
-      edge* e = new edge(edges[i][0], false, src, dest);
-      this->e.push_back(e);
-    }
-  }
-
-	// This method finds the MST of a graph using
-	// Prim's Algorithm
-	// returns the weight of the MST
-	int find_min_spanning_tree(){
-    int vertex_count = 0;
-    int weight = 0;
-
-    // Add first vertex to the MST
-    vertex* current = g[0];
-    current->setVisited(true);
-    vertex_count++;
-
-    // Construct the remaining MST using the
-    // smallest weight edge
-    while (vertex_count < g.size()) {
-      edge* smallest = NULL;
-
-      for(int i = 0; i < e.size(); i++){
-        if(e[i]->isVisited() == false) {
-          if ((e[i]->getSrc()->isVisited() == true) && 
-              (e[i]->getDest()->isVisited() == false)) {
-            if (smallest == NULL ||
-                e[i]->getWeight() < smallest->getWeight()) {
-               smallest = e[i];
-            }
-          }
-        }
-      }
-
-      smallest->setVisited(true);
-      smallest->getDest()->setVisited(true);
-      weight += smallest->getWeight();
-      vertex_count++;
-    }
-    return weight;
-  }
-
-  string print_graph() {
-    string result = "";
-    cout << "visited" << endl;
-    for (int i = 0; i < g.size(); i++) {
-       cout<<g[i]->getId()<< ' ' <<g[i]->isVisited()<< endl;
-    }
-    cout << endl << "Graph" << endl;
-    cout << "src->dst[wht, vsted]" << endl;
-	for (int i = 0; i < e.size(); i++) {
-      result += "[" + std::to_string(e[i]->getSrc()->getId()) + "->" + std::to_string(e[i]->getDest()->getId()) + "],";
-       cout << e[i]->getSrc()->getId() << "->"
-           << e[i]->getDest()->getId() << "["
-           << e[i]->getWeight() << ", "
-           << e[i]->isVisited() << "]  " << endl;
-    }
-    return result;
-  }
-
-  void print_mst(int w){
-    cout << "MST\n";
-    for(int i=0; i<e.size(); i++){
-      if(e[i]->isVisited() == true){
-        cout << e[i]->getSrc()->getId() << "->"
-          << e[i]->getDest()->getId() << endl;
-      }
-    }
-    cout << "weight: " << w << endl;
-    cout << endl;
-  }
-};
-
-void test_graph1() {
-  graph g;
-  int v = 5;
-
-  // each edge contains the following: weight, src, dest
-  vector<vector<int> > e = {{ 1, 1, 2 }, { 1, 1, 3 }, 
-                            { 2, 2, 3 }, { 3, 2, 4 }, 
-                            { 3, 3, 5 }, { 2, 4, 5 }};
-
-  g.generate_graph(v, e);
-  g.print_graph();
-  cout << "Testing graph 1...\n";
-  //g.print_graph();
-  int w = g.find_min_spanning_tree();
-  g.print_mst(w);
+  for (int i = 0; i < size; i++) {
+	  if (mst[i] == false && minKey > key[i]) {
+			minKey = key[i];
+			vertex = i;
+	  }
+	}
+  return vertex;
 }
 
-void test_graph2() {
-  graph g;
-  int v = 7;
+int 
+find_min_spanning_tree(int graph[NUM][NUM], int size) {
+  result_set_t result[size];
+  bool mst[size];
+  int key[size];
 
-  // each edge contains the following: weight, src, dest
-  vector<vector<int> > e = { { 2, 1, 4 }, 
-                        { 1, 1, 3 }, { 2, 1, 2 }, 
-                        { 1, 3, 4 }, { 3, 2, 4 }, 
-                        { 2, 3, 5 }, { 2, 4, 7 },
-                        { 1, 5, 6 }, { 2, 5, 7 } };
+  // init
+	for (int i = 0; i < size; i++) {
+    mst[i] = false;
+    key[i] = INT_MAX;
+    result[i].src = -1;
+    result[i].weight = 0;
+  }
 
-  g.generate_graph(v, e);
+  key[0] = 0;
+  int weight = 0;
 
-  cout << "Testing graph 2...\n";
-  g.print_graph();
-  int w = g.find_min_spanning_tree();
-  g.print_mst(w);
+	for (int i = 0; i < size; i++) {
+		// Get the vertex with the min key
+		int vertex = getMinimumVertex(mst, key, size);
+
+		// Include vertex in MST
+		mst[vertex] = true;
+
+		// Iterate through all the adj vertices of above vertex and update the keys
+		for (int j = 0; j < size; j++) {
+		  if (graph[vertex][j] > 0) {
+				// Check if 'j' not in MST and
+				// if key needs an update or not
+			  if (mst[j] == false && graph[vertex][j] < key[j]) {
+					// update the key
+					key[j] = graph[vertex][j];
+					// update the result set
+					result[j].src = vertex;
+					result[j].dst = j;
+					result[j].weight = key[j];
+			  }
+		  }
+	  }
+  }
+
+  // Done. Print result
+  for (int i = 0; i < size; i++) {
+    if (result[i].src != -1) {
+			cout << "vertex " << result[i].src << "->" << result[i].dst << " weight " << result[i].weight << endl;
+      weight+= result[i].weight;
+    }
+  }
+
+	return weight;// result;
 }
 
-int main() {
-  test_graph1();
-  test_graph2();
+int
+main() {
+  // 0->1->2 3->4 5 
+  int graph[NUM][NUM] = {{0, 1, 1, 0, 0},  // 0 --> 1
+											   {0, 0, 2, 3, 0},  // 1 --> 2
+											   {0, 0, 0, 0, 3},  // 2 --> 3
+											   {0, 0, 0, 0, 2},  // 3 --> 4
+											   {0, 0, 0, 0, 0}}; // 4
+  int size = 5;
+
+/*
+  int graph[NUM][NUM] = {{1, 1, 0, 1},  // 0 -->0 1
+											   {1, 1, 1, 1},  // 1 -->0 1 2
+											   {0, 1, 1, 0},  // 2 -->1 2
+											   {1, 1, 0, 1}}; // 3 -->0 1 3
+
+*/
+
+  printf("min spanning tree %d\n", find_min_spanning_tree(graph, size));
   return 0;
 }
