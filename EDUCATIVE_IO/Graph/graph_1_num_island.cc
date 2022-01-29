@@ -13,7 +13,6 @@ dfs(int isConnected[NUM][NUM], int size, int *visited, int i) {
   visited[i] = 1;
   for (int j = 0; j < size; j++) {
     if (isConnected[i][j] == 1 && visited[j] == 0) {
-   
       // go to corrosponding row and traverse recursively
       dfs(isConnected, size, visited, j );
     }
@@ -40,6 +39,7 @@ findCircleNum(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedCol
       count++;
     }
   }
+
   return count;
 }
 

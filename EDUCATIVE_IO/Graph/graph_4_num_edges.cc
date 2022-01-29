@@ -34,8 +34,6 @@ findEdge(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize)
     visited[i] = 0;
   }
 
-  int last_i; 
-
   // traverse graph in DFS, row by row
   for (int i = 0; i < isConnectedSize; i++) {
     if (visited[i] == 0) {
@@ -46,51 +44,6 @@ findEdge(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize)
   return count;
 }
 
-/*
-  int count = 0; 
-/// Set Solution
-int find(int *parent, int x) {
-  if (parent[x] == x)  {
-    return x;
-  } 
-  return find(parent, parent[x]);
-}
-
-void myUnion(int *parent,  int i, int j) {
-  int x = find(parent, i);
-  int y = find(parent, j);
-  if (x != y) {
-    parent[x] = y;
-    // when joining cities reduce provice count
-    count--;
-  }
-}
-
-int findEdge(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize){
-  if (isConnectedSize != isConnectedColSize) return count;
-  /// init all cities are assumed to be province
-  count = isConnectedSize;
-  int parent[isConnectedSize];
-  for (int i = 0; i < isConnectedSize; i++) {
-    parent[i] = i;
-  }
-  
-  for (int i = 0; i < isConnectedSize; i++) {
-    for (int j = 0; j < isConnectedColSize; j++) {
-      if ((isConnected[i][j] == 1) && (i != j)) {
-        myUnion(parent, i, j);
-      }
-    }
-  }
-  
-  return count; 
-}
-*/
-/*
-              0 --> 1 --> 2
-              
-
-*/
 int
 main() {
   // 0->1->2 3->4 5 

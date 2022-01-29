@@ -1,3 +1,10 @@
+/*
+Mother vertex:
+A mother vertex in a Graph G = (V, E) is a vertex v such that all other vertices in G can be reached by a path from v.
+There can be zero, one, or more than one mother vertices in a graph. 
+We need to find all the mother vertices in the given graph.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -19,8 +26,8 @@ dfs(int isConnected[NUM][NUM], int size, int *visited, int i) {
   }
 }
 
-int
-findCircleNum(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
+bool
+findMotherVertex(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
   int count = 0; 
   int visited[isConnectedSize];
   
@@ -51,69 +58,17 @@ findCircleNum(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedCol
   // DFS from last vertex
   dfs(isConnected, isConnectedSize, visited, last_i);
 
-  // verify if all nodes are visited, if yes last vertext is mother vertex
+  // Verify if all nodes are visited, if yes last vertext is mother vertex
   bool flag = true;
   for (int i = 0; i < isConnectedSize; i++) {
-		printf(" V[%d] count is %d\n", i, visited[i]);
 		if (visited[i] != 1) {
 		  flag = false;
 		}
   } 
 
-  if (flag == true) {
-		printf("mother is %d\n", last_i);
-  } else {
-    printf("mother vertices not found \n");
-  }
-
-  return count;
+  return flag;
 }
 
-/*
-  int count = 0; 
-/// Set Solution
-int find(int *parent, int x) {
-  if (parent[x] == x)  {
-    return x;
-  } 
-  return find(parent, parent[x]);
-}
-
-void myUnion(int *parent,  int i, int j) {
-  int x = find(parent, i);
-  int y = find(parent, j);
-  if (x != y) {
-    parent[x] = y;
-    // when joining cities reduce provice count
-    count--;
-  }
-}
-
-int findCircleNum(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize){
-  if (isConnectedSize != isConnectedColSize) return count;
-  /// init all cities are assumed to be province
-  count = isConnectedSize;
-  int parent[isConnectedSize];
-  for (int i = 0; i < isConnectedSize; i++) {
-    parent[i] = i;
-  }
-  
-  for (int i = 0; i < isConnectedSize; i++) {
-    for (int j = 0; j < isConnectedColSize; j++) {
-      if ((isConnected[i][j] == 1) && (i != j)) {
-        myUnion(parent, i, j);
-      }
-    }
-  }
-  
-  return count; 
-}
-*/
-/*
-              0 --> 1 --> 2
-              
-
-*/
 int
 main() {
   // 0->1->2 3->4 5 
@@ -121,6 +76,6 @@ main() {
 											   {0, 1, 1, 0},  // 1 -->1 2
 											   {0, 0, 1, 0},  // 2 -->2
 											   {1, 1, 0, 1}}; // 3 -->0 1 3
-  printf("Number of islands %d\n", findCircleNum(graph, NUM, NUM));
+  printf("Mother Vertex? %s\n", findMotherVertex(graph, NUM, NUM) == true ? "yes" : "no");
   return 0;
 }

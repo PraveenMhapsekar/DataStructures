@@ -1,4 +1,9 @@
 // is unidirected find min distance between two vertices
+// Algo
+//  - do bfs traverse from src
+//  - increment distance at every level
+//  - continue till dst is reached.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -12,26 +17,22 @@ findMin(int graph[NUM][NUM], int size, int src, int dst) {
 		return 0;
 	}
 
-	//Bool Array to hold the history of visited nodes (by default-false)
-	//Make a node visited whenever you enqueue it into queue
 	bool *visited = new bool[size];
-
-	//For keeping track of distance of current_node from src
 	int *distance = new int[size];
-
-	//Create Queue for Breadth First Traversal and enqueue src in it
 	queue<int> q;
 	int i;
+
+  // push src and mark it visited
 	q.push(src);
 	visited[src] = true;
 
 	// BFS Traverse while queue is not empty
 	while (!q.empty()) {
-		//Dequeue a vertex/node from queue and add it to result
+		//Dequeue a vertex from queue
 		i = q.front(); q.pop();
-		//Get adjacent vertices to the current_node from the array,
-		//and if they are not already visited then enqueue them in the Queue
-		//and also update their distance from src by adding 1 in current_nodes's distance
+		// Get adjacent vertices to the vertex
+		// if vertex is not visited then enqueue it in the Queue
+		// Increment distance from the src
     int j = 0;
 		while (j < size) {
       if (graph[i][j] == 1) {
@@ -41,6 +42,7 @@ findMin(int graph[NUM][NUM], int size, int src, int dst) {
 					distance[j] = distance[i] + 1;
 				}
 				if (j == dst) {
+          // dst is reached, return distance
 					return distance[dst];
 				}
       }
@@ -58,16 +60,23 @@ findMin(int graph[NUM][NUM], int size, int src, int dst) {
      0
     / \
    1   2
-        \
+        \     =>  
          3
+     1
+      \
+       0
+        \
+         2
+          \
+           3
 */
 int
 main() {
   int graph[NUM][NUM] = {{0, 1, 1, 0},  // 0 -->1, 2
-											   {0, 0, 0, 0},  // 1 --> 
+											   {1, 0, 0, 0},  // 1 --> 
 											   {0, 0, 0, 1},  // 2 -->3
 											   {0, 0, 0, 0}}; // 3 -->
 
-  printf("graph min betwen 0, 3 is %d\n", findMin(graph, NUM, 0, 3));
+  printf("graph min betwen 1, 3 is %d\n", findMin(graph, NUM, 1, 3));
   return 0;
 }

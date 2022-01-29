@@ -1,4 +1,7 @@
 // is unidirected graph is tree or not?
+// Graph is tree if,
+// #1 there is no loop
+// #2 there is all nodes are connected (there is no forest or islands!)
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -10,16 +13,14 @@ using namespace std;
 
 bool
 dfs(int isConnected[NUM][NUM], int size, int *visited, int i) {
-
-  // traverse each column
   visited[i] = 1;
   for (int j = 0; j < size; j++) {
     if (isConnected[i][j]) {
       if (visited[j] == 1) {
-        printf("returning false i %d j %d\n", i, j);
+        // loop detected, not a tree. return false
         return false;
-      }
-      if (visited[j] == 0) {
+      } else {      
+        // if subsequent traverse detected loop, return false
 			  if (dfs(isConnected, size, visited, j ) == false) {
            return false;
         }
@@ -50,9 +51,9 @@ isTree(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
   }
 
   // after DFS if any vertx is not visited, its not tree
+  // this means there are more than one disjoined graphs (aka forest or islands)
   for (int i = 0; i < isConnectedSize; i++) {
     if (visited[i] == 0) {
-      printf("returning false for not visited %d\n", i);
       return false;
     }
   }
@@ -70,9 +71,9 @@ isTree(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
 */
 int
 main() {
-  int graph[NUM][NUM] = {{0, 0, 0, 0},  // 0 -->1, 2
+  int graph[NUM][NUM] = {{0, 1, 1, 0},  // 0 -->1, 2
 											   {0, 0, 0, 0},  // 1 --> 
-											   {0, 0, 0, 0},  // 2 -->3
+											   {0, 0, 0, 1},  // 2 -->3
 											   {0, 0, 0, 0}}; // 3 -->
   printf("graph is %s\n", isTree(graph, NUM, NUM) == true? "tree" : "not a tree");
   return 0;

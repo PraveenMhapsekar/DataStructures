@@ -1,3 +1,6 @@
+/*
+if there exist path between src and dst in given bidirectional graph
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -14,7 +17,7 @@ dfs(int isConnected[NUM][NUM], int size, int *visited, int i) {
   for (int j = 0; j < size; j++) {
     if (isConnected[i][j] == 1 && visited[j] == 0) {
       // go to corrosponding row and traverse recursively
-      dfs(isConnected, size, visited, j );
+      dfs(isConnected, size, visited, j);
     }
   }
 }
@@ -47,7 +50,7 @@ main() {
   int graph[NUM][NUM] = {{1, 1, 0, 0},  // 0 -->0 1
 											   {0, 1, 0, 0},  // 1 -->1 
 											   {0, 0, 1, 1},  // 2 -->2 3
-											   {1, 1, 0, 1}}; // 3 -->0 1 3
+											   {1, 1, 1, 1}}; // 3 -->0 1 3
   int src = 3;
   int dst = 2;
   printf("Src %d to dst %d path %s\n", src, dst, findPathSrcDst(graph, NUM, NUM, src, dst) == true? "exit" : "doesnt exit");
