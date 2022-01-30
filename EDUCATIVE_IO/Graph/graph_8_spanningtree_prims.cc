@@ -73,7 +73,7 @@ find_min_spanning_tree(int graph[NUM][NUM], int size) {
   // Done. Print result
   for (int i = 0; i < size; i++) {
     if (result[i].src != -1) {
-			cout << "vertex " << result[i].src << "->" << result[i].dst << " weight " << result[i].weight << endl;
+			cout << "src[" << result[i].src << "]->dst[" << result[i].dst << "] Weight: " << result[i].weight << endl;
       weight+= result[i].weight;
     }
   }
@@ -81,24 +81,25 @@ find_min_spanning_tree(int graph[NUM][NUM], int size) {
 	return weight;// result;
 }
 
-int
-main() {
-  // 0->1->2 3->4 5 
-  int graph[NUM][NUM] = {{0, 1, 1, 0, 0},  // 0 --> 1
-											   {0, 0, 2, 3, 0},  // 1 --> 2
-											   {0, 0, 0, 0, 3},  // 2 --> 3
-											   {0, 0, 0, 0, 2},  // 3 --> 4
-											   {0, 0, 0, 0, 0}}; // 4
-  int size = 5;
 
 /*
-  int graph[NUM][NUM] = {{1, 1, 0, 1},  // 0 -->0 1
-											   {1, 1, 1, 1},  // 1 -->0 1 2
-											   {0, 1, 1, 0},  // 2 -->1 2
-											   {1, 1, 0, 1}}; // 3 -->0 1 3
-
+      0-----1
+      |   / |
+      |  /  |
+      | /   |
+      2     3-----4
+      |           |
+      |-----------|
 */
+int
+main() {
+  int graph[NUM][NUM] = {{0, 1, 1, 0, 0},  // 0 --> 1, 2
+											   {0, 0, 2, 3, 0},  // 1 --> 2
+											   {0, 0, 0, 0, 3},  // 2 --> 4
+											   {0, 0, 0, 0, 2},  // 3 --> 4
+											   {0, 0, 0, 0, 0}}; // 
+  int size = 5;
 
-  printf("min spanning tree %d\n", find_min_spanning_tree(graph, size));
+  printf("min spanning tree weight : %d\n", find_min_spanning_tree(graph, size));
   return 0;
 }
