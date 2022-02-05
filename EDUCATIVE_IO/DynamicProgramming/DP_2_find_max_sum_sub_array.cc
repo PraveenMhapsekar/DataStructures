@@ -1,3 +1,4 @@
+// Given an array, find the contiguous subarray with the largest sum.
 // use kadane's algorithm
 
 #include <stdio.h>
@@ -12,6 +13,7 @@ find_max_sum_sub_array(int *A, int n) {
   int end;
   int tmpSum = INT_MIN;
   int maxSum = INT_MIN;
+
 	for (int i = 0; i < n; i++) {
      if (A[i] > A[i] + tmpSum) {
        beg = i;
