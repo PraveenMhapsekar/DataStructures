@@ -10,17 +10,19 @@ int
 solve (int *coins, int N, int T) {
   T =  T + 1; // number of solutions excluding 0th i and j row
 	int dp[N][T];
-	// init dp
 
+	// init dp
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < T; j++) {
 			dp[i][j] = INT_MAX;
     }
 	}
 
+  // First column
 	for (int i = 0; i < N; i++) {
 		dp[i][0] = 0;
   }
+
   cout << endl;
 	for (int i = 0; i < N; i++) {
     cout << "coin["<< setw(2) << coins[i] << "] ";
@@ -31,7 +33,10 @@ solve (int *coins, int N, int T) {
 
 		  if (j >= coins[i]) {
         if (dp[i][j - coins[i]] != INT_MAX) {
+          // min of current cell value (i.e above cell copied at line #30) and current_row[prev multiple of j] plus one
 					dp[i][j] = min(dp[i][j], (dp[i][j - coins[i]] + 1));
+          // below line form min coins
+					//dp[i][j] = dp[i-1][j] + dp[i][(j - coins[i])];
         }
 			}
 			cout << setw(2) << dp[i][j] << " ";
