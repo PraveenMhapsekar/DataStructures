@@ -22,56 +22,55 @@ const char *BASE[] = {"", "", "hundred ", "thousand ",  "", "", "million ", "", 
 int carry = 0;
 
 void 
-printnum(int n, int power) 
-{
+printnum(int n, int power) {
     int tempNum;
     power++;
     if (n <= 0) {
         return;
     } else {
-        printnum(n/10, power);
-        tempNum = n % 10;
-        switch (power) {
-            case 1:  // tens
-            case 4:  // ten thousand  
-            case 7:  // ten million
-            case 10: // ten billion
-                switch (tempNum) {
-                    case 0:
-                        carry = 0;
-                        break;
-                    case 1:
-                        carry = 10;
-                        break;
-                    default:      
-                        printf("%s ", TENS[tempNum]);
-                        break;
-                }
-                break;
-            case 5:    // hundred thousand
-            case 8:    // hundred million
-            case 11:   // hundred Billion 
-                power = 2;  // hundred
-            default:    // case 0 [0-19], case 2 [hundred], 3 [thousand], 6 [million], 9 [billion], 
-                if ((tempNum + carry )!= 0) {
-                    printf("%s %s", ZEROTOTEEN[tempNum + carry], BASE[power]);
-                    carry = 0;
-                }
-                break;
-        }
+			printnum(n/10, power);
+			tempNum = n % 10;
+			switch (power) {
+				case 1:  // ten
+				case 4:  // ten thousand  
+				case 7:  // ten million
+				case 10: // ten billion
+						switch (tempNum) {
+								case 0:
+										carry = 0;
+										break;
+								case 1:
+										carry = 10; /// 11 to 19, 11-19 thousand, 11-19 million or 11-19 billion
+										break;
+								default: // 2 - 9 count twnty, thirty , forty... thousand, milliion, billion
+										printf("%s ", TENS[tempNum]);
+										break;
+						}
+						break;
+				case 5:    // hundred thousand
+				case 8:    // hundred million
+				case 11:   // hundred Billion 
+						power = power % 3;  // hundred
+				default:    // case 0 [0-19], case 2 [hundred], 3 [thousand], 6 [million], 9 [billion], 
+						if ((tempNum + carry )!= 0) {
+								printf("%s %s", ZEROTOTEEN[tempNum + carry], BASE[power]);
+								carry = 0;
+						}
+						break;
+			}
    }
 }
 
 #define MAX_NUM 21
-
 int main () 
 {
     // Test data
-    int n[MAX_NUM] = {0, 1, 10, 11, 99, 100, 101, 110, 113, 123, 190, 999, 1000, 1245, 9999, 10000, 10200, 913913, 999999, 1000000, 1234567890};
-    int i;
-
+    int n[MAX_NUM] = {0, 1, 10, 11, 99, 100, 101, \
+                      110, 113, 123, 190, 999, 1000, \
+                      1245, 9999, 10000, 10200, 913913, \
+                      999999, 1000000, 1234567890};
     // Test loop
-    for (i = 0; i < MAX_NUM; i++) {
+    for (int i = 0; i < MAX_NUM; i++) {
        printf("\n%13d\t", n[i]);
        if (n[i] == 0) {
            printf("zero");       // Handle special case of zero

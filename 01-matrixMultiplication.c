@@ -43,49 +43,46 @@ printArray(int A[SIZE][SIZE], int rowSumFlag, int colSumFlag, int d)
     printf("\n");
 }
 
-magicSquare(int A[SIZE][SIZE])
-{
-    int i, j, row, col;
-    int count = 0;
+magicSquare(int A[SIZE][SIZE]) {
+	int i, j, row, col;
+	int count = 0;
 
-    i = 0;
-    j = (N - 1)/2;
+	i = 0;
+	j = (N - 1)/2;
 
-    A[i][j] = 1;   // start with first row and mid column
+	A[i][j] = 1;   // start with first row and mid column
 
-    for (count = 2; count <= N*N; count++) {
-       row = (i - 1) < 0 ? N - 1 : i - 1;  // Decrease row
-       col = (j - 1) < 0 ? N - 1 : j - 1;  // decrease column
+	for (count = 2; count <= N*N; count++) {
+		 row = (i - 1) < 0 ? N - 1 : i - 1;  // Decrease row
+		 col = (j - 1) < 0 ? N - 1 : j - 1;  // decrease column
 
-        if (A[row][col]) {   // If it is already occupied
-            i = (++i) % N;   // Move to next down row
-        } else {
-            i = row;
-            j = col;
-        }
-        A[i][j] = count;   // Store count
-    }
+			if (A[row][col]) {   // If it is already occupied
+					i = (++i) % N;   // Move to next down row
+			} else {
+					i = row;
+					j = col;
+			}
+			A[i][j] = count;   // Store count
+	}
 }
 
 void
-clearMatrix(int A[SIZE][SIZE])
-{
-    int i, j;
-    for (i = 0; i < N; i++)  // Print an array
-        for(j = 0; j < N; j++) 
-            A[i][j] = 0;
+clearMatrix(int A[SIZE][SIZE]) {
+	int i, j;
+	for (i = 0; i < N; i++)  // Print an array
+			for(j = 0; j < N; j++) 
+					A[i][j] = 0;
 }
 
-matrixMultiplication(int A[SIZE][SIZE], int B[SIZE][SIZE], int C[SIZE][SIZE])
-{
-    int i, j, k;
+matrixMultiplication(int A[SIZE][SIZE], int B[SIZE][SIZE], int C[SIZE][SIZE]) {
+	int i, j, k;
 
-    for (i = 0; i < N; i++)  // Print an array
-        for(j = 0; j < N; j++) { 
-            C[i][j] = 0;
-            for(k = 0; k < N; k++) 
-                C[i][j] += A[i][k] * B[k][j];
-        }
+	for (i = 0; i < N; i++)  // Print an array
+			for(j = 0; j < N; j++) { 
+					C[i][j] = 0;
+					for(k = 0; k < N; k++) 
+							C[i][j] += A[i][k] * B[k][j];
+			}
 }
 
 int
