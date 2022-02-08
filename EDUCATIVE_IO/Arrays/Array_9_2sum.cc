@@ -11,7 +11,6 @@ search(int *A, int start, int end, int comp) {
   return false;
 }
 
-/*
 bool 
 twoSum(int *A, int size, int target) {
 	for (int i = 0; i < size; i++) {
@@ -22,8 +21,8 @@ twoSum(int *A, int size, int target) {
 	} 
 	return false;
 }
-*/
 
+/*
 bool
 twoSum(int *A, int size, int val) {
   int i = 0;
@@ -41,10 +40,9 @@ twoSum(int *A, int size, int val) {
       --j;
     }
   }
-
   return false;
 }
-
+*/
 
 int 
 main() {

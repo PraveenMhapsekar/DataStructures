@@ -1,3 +1,5 @@
+// Given a list of daily stock prices (integers for simplicity), return the buy and sell prices for making the maximum profit.
+
 #include <tuple>
 #include <iostream>
 #include <climits>
@@ -9,20 +11,20 @@ find_buy_sell_stock_prices(int *A, int size) {
   int gblSell = A[1];
   int curProfit = 0;
   int gblProfit = gblSell - curMin;
+
   // note :
   // wrt min number so far, what is the curret profit?
   // if current profit is optimal profit? if yes capture it and sell price
-
   for (int i = 1; i < size; i++) {
     curProfit = A[i] - curMin; // Current profit is current rate minus current buy;
+
+    if (curMin > A[i]) { // capture minimum price as buy price
+      curMin = A[i];
+    }
 
     if (curProfit > gblProfit) { // save maximun current profit as global profit
       gblProfit = curProfit;
       gblSell   = A[i];
-    }
-
-    if (curMin > A[i]) { // capture minimum price as buy price
-      curMin = A[i];
     }
   }
   
