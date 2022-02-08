@@ -20,7 +20,7 @@ class Trie {
 
     Trie *children[CHAR_SIZE];
     bool isEndWord;
-   // TrieNode();
+    // TrieNode();
     void markAsLeaf();
     void unMarkAsLeaf();
 

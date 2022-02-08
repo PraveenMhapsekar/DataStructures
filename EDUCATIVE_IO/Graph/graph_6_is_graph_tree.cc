@@ -1,7 +1,8 @@
 // is unidirected graph is tree or not?
 // Graph is tree if,
-// #1 there is no loop
-// #2 there is all nodes are connected (there is no forest or islands!)
+//   #1 there is no loop
+//   #2 there is all nodes are connected (there is no forest or islands!)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -50,7 +51,7 @@ isTree(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
     return false;
   }
 
-  // after DFS if any vertx is not visited, its not tree
+  // After DFS traverse if any vertex is not visited, its not tree
   // this means there are more than one disjoined graphs (aka forest or islands)
   for (int i = 0; i < isConnectedSize; i++) {
     if (visited[i] == 0) {

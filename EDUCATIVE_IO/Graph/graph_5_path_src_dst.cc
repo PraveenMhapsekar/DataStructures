@@ -1,6 +1,7 @@
 /*
-if there exist path between src and dst in given bidirectional graph
+  if there exist path between src and dst in given bidirectional graph
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>

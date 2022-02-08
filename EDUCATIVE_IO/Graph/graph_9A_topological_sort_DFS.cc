@@ -1,13 +1,21 @@
 /*
-Topological Sort: A topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering. A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a directed acyclic graph (DAG). 
+Topological Sort:
+	 A topological sort or topological ordering of a directed graph is a linear ordering of its vertices such 
+  that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering.
+  A topological ordering is possible if and only if the graph has no directed cycles, that is,
+  if it is a directed acyclic graph (DAG). 
 
 Modified DFS:
 	Use temporary stack to store the vertex.
 	Maintain a visited [] to keep track of already visited vertices.
-	In DFS we print the vertex and make recursive call to the adjacent vertices but here we will make the recursive call to the adjacent vertices and then push the vertex to stack.
-	Observe closely the previous step, it will ensure that vertex will be pushed to stack only when all of its adjacent vertices (descendants) are pushed into stack.
+	In DFS we print the vertex and make recursive call to the adjacent vertices,
+  but here we will make the recursive call to the adjacent vertices and then push the vertex to stack.
+	Observe closely the previous step, it will ensure that vertex will be pushed to stack only when 
+  all of its adjacent vertices (descendants) are pushed into stack.
 	Finally print the stack.
-	For disconnected graph, Iterate through all the vertices, during iteration, at a time consider each vertex as source (if not already visited).
+
+	For disconnected graph, Iterate through all the vertices, during iteration, 
+  at a time consider each vertex as source (if not already visited).
 
 Time Complexity:
 	 O(V+E)
