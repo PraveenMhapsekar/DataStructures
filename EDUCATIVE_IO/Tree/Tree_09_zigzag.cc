@@ -240,15 +240,19 @@ void
 bfs_lvl_avg(node_t* tree) {
   queue<node *> q;  // create q for node pointer
   if (!tree) return; // if null , return
-  int levelSum = 0;
-  int levelCnt = 0;
+  bool levelDir = true;
   q.push(tree);  // push root
   q.push(NULL);  // push level marker
+  stack<int> s;
 
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
-    levelSum += tmp->data;
-    levelCnt++;
+    if (levelDir == false) {
+       cout << tmp->data << " ";
+    } else {
+       s.push(tmp->data);
+    }
+
 		if (tmp->left) q.push(tmp->left);  // push left child
 		if (tmp->right) q.push(tmp->right); // push right child
 
@@ -256,10 +260,18 @@ bfs_lvl_avg(node_t* tree) {
 		tmp = q.front(); 
 		if (tmp == NULL) { // if level marker
 		  q.pop(); // pop level marker (NULL ptr)
-      levelSum = levelSum / levelCnt;
-		  cout << levelSum << endl; // print new line indicating new level
-      levelSum = 0;
-      levelCnt = 0;
+      if (levelDir == true) {
+        // Empty thy stack
+        int ssize = s.size();;
+        for (int i = 0; i < ssize; i++) {
+          cout << s.top() << " ";
+          s.pop();
+        }
+      }
+
+		  cout <<  endl; // print new line indicating new level
+      // Change direction
+      levelDir = levelDir == true ? false : true;
 		  if (!q.empty()) {
 			  q.push(NULL); // push new marker
 		  }

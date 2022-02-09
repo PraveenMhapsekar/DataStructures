@@ -212,37 +212,54 @@ tree_identical(node_t *r1, node_t *r2) {
 void
 bfs(node_t* tree) {
   queue<node *> q;  // create q for node pointer
-  int lsum = 0;
-  int lnum = 0;
   if (!tree) return; // if null , return
 
   q.push(tree);  // push root
   q.push(NULL);  // push level marker
- // cout << tree->data << endl;
+
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
-	 //	cout << tmp->data << " ";
+		cout << tmp->data << " ";
+		if (tmp->left) q.push(tmp->left);  // push left child
+		if (tmp->right) q.push(tmp->right); // push right child
 
-		lsum += tmp->data;
-    lnum++;
-		if (tmp->left) { 
-      q.push(tmp->left);  // push left child
-    }
-
-		if (tmp->right) {
-      q.push(tmp->right); // push right child
-    }
-
-		  cout << (lsum/lnum) << endl; // print new line indicating new level
-      lsum = 0;
-      lnum = 0;
 		// Level marker processing
 		tmp = q.front(); 
 		if (tmp == NULL) { // if level marker
 		  q.pop(); // pop level marker (NULL ptr)
-      
-      lsum = 0;
-      lnum = 0;
+		  cout << endl; // print new line indicating new level
+		  if (!q.empty()) {
+			  q.push(NULL); // push new marker
+		  }
+		}
+  }
+  cout << endl;
+}
+
+void
+bfs_lvl_avg(node_t* tree) {
+  queue<node *> q;  // create q for node pointer
+  if (!tree) return; // if null , return
+  int levelSum = 0;
+  int levelCnt = 0;
+  q.push(tree);  // push root
+  q.push(NULL);  // push level marker
+
+  while (!q.empty()) { // iterate over q
+		node_t *tmp = q.front(); q.pop(); // pop and print
+    levelSum += tmp->data;
+    levelCnt++;
+		if (tmp->left) q.push(tmp->left);  // push left child
+		if (tmp->right) q.push(tmp->right); // push right child
+
+		// Level marker processing
+		tmp = q.front(); 
+		if (tmp == NULL) { // if level marker
+		  q.pop(); // pop level marker (NULL ptr)
+      levelSum = levelSum / levelCnt;
+		  cout << levelSum << endl; // print new line indicating new level
+      levelSum = 0;
+      levelCnt = 0;
 		  if (!q.empty()) {
 			  q.push(NULL); // push new marker
 		  }
@@ -254,15 +271,17 @@ bfs(node_t* tree) {
 int main() {
 	nodePtr tree1 = NULL;
 
-	insert(&tree1, 12);
-	insert(&tree1, 7);
-	insert(&tree1, 1);
-	insert(&tree1, 9);
-	insert(&tree1, 2);
-	insert(&tree1, 10);
-	insert(&tree1, 5);
+	insert(&tree1, 100);
+	insert(&tree1, 50);
+	insert(&tree1, 200);
+	insert(&tree1, 25);
+	insert(&tree1, 75);
+	insert(&tree1, 350);
 
   printf("\nTree BFS:\n");
   bfs(tree1);
+
+  printf("level Avg: \n");
+  bfs_lvl_avg(tree1);
   return 0;
 }

@@ -252,37 +252,37 @@ bfs(node_t* tree) {
   cout << endl;
 }
 
-node_t *first;
-node_t *last;
+node_t *first = NULL;
+node_t *last = NULL;
 
 void 
-inorder_join(node_t *node) {
+inorder_dll(node_t *node) {
 	if (node) {
 		// left
-		inorder_join(node->left);
-		// node 
+		inorder_dll(node->left);
+
+		// process node 
 		if (last) {
 			// link the previous node (last)
 			// with the current one (node)
 			last->right = node;
 			node->left = last;
-		}
-		else {
+		} else {
 			// keep the smallest node
 			// to close DLL later on
 			first = node;
 		}
 		last = node;
+
 		// right
-		inorder_join(node->right);
+		inorder_dll(node->right);
 	}
 }
 
 node_t * 
 treeToDoublyList(node_t *root) {
 	if (!root) return NULL;
-
-	inorder_join(root);
+	inorder_dll(root);
 	// close DLL
 	last->right = first;
 	first->left = last;
@@ -315,7 +315,7 @@ main() {
   printf("Doubly LL:\n"); 
 	printf("%d ", llptr->data);
 	llptr = llptr->right;
-  while (llptr!=mptr) {
+  while (llptr != mptr) {
     printf("%d ", llptr->data);
     llptr = llptr->right;
   }  

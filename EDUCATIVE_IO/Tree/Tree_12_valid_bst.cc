@@ -292,7 +292,7 @@ isValidBST(node_t* root){
   if (!root) return true;
   
   if (((root->left) && (root->data <= getMax(root->left))) ||
-     ((root->right) &&  (root->data >= getMin(root->right)))) {
+     ((root->right) && (root->data >= getMin(root->right)))) {
     return false;
   }
     

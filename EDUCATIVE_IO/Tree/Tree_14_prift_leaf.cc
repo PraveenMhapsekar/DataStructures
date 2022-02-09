@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <climits>
 
 using namespace std;
 
@@ -140,6 +141,17 @@ preorder_iterative(node_t *root) {
   }
 }
 
+void printLeaf(nodePtr tree) {
+   if (!tree) return;
+   if ((tree->left == NULL) && (tree->right == NULL)) {
+      printf(" %d ", tree->data);
+    } else {
+      printLeaf(tree->left);
+      printLeaf(tree->right);
+    }
+  return;
+}
+
 void 
 inorder(nodePtr tree) {
 	if (NULL == tree) 
@@ -148,7 +160,7 @@ inorder(nodePtr tree) {
 	if (tree->left)
 		inorder(tree->left);    // Visit left subtree
 
-	printf("%3d ", tree->data);  // Visit node
+	printf("%d ", tree->data);  // Visit node
 
 	if (tree->right)
 		inorder(tree->right);    // Visit right subtree
@@ -212,22 +224,28 @@ tree_identical(node_t *r1, node_t *r2) {
 void
 bfs(node_t* tree) {
   queue<node *> q;  // create q for node pointer
+  int lsum = 0;
+  int lnum = 0;
   if (!tree) return; // if null , return
 
   q.push(tree);  // push root
   q.push(NULL);  // push level marker
-
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
-		cout << tmp->data << " ";
-		if (tmp->left) q.push(tmp->left);  // push left child
-		if (tmp->right) q.push(tmp->right); // push right child
+	 	cout << tmp->data << " ";
+		if (tmp->left) { 
+      q.push(tmp->left);  // push left child
+    }
 
+		if (tmp->right) {
+      q.push(tmp->right); // push right child
+    }
+    
 		// Level marker processing
 		tmp = q.front(); 
 		if (tmp == NULL) { // if level marker
 		  q.pop(); // pop level marker (NULL ptr)
-		  cout << endl; // print new line indicating new level
+      cout << endl;
 		  if (!q.empty()) {
 			  q.push(NULL); // push new marker
 		  }
@@ -236,36 +254,41 @@ bfs(node_t* tree) {
   cout << endl;
 }
 
-void
-bfs_lvl_avg(node_t* tree) {
-  queue<node *> q;  // create q for node pointer
-  if (!tree) return; // if null , return
-  int levelSum = 0;
-  int levelCnt = 0;
-  q.push(tree);  // push root
-  q.push(NULL);  // push level marker
+node_t *first = NULL;
+node_t *last = NULL;
 
-  while (!q.empty()) { // iterate over q
-		node_t *tmp = q.front(); q.pop(); // pop and print
-    levelSum += tmp->data;
-    levelCnt++;
-		if (tmp->left) q.push(tmp->left);  // push left child
-		if (tmp->right) q.push(tmp->right); // push right child
+void 
+inorder_dll(node_t *node) {
+	if (node) {
+		// left
+		inorder_dll(node->left);
 
-		// Level marker processing
-		tmp = q.front(); 
-		if (tmp == NULL) { // if level marker
-		  q.pop(); // pop level marker (NULL ptr)
-      levelSum = levelSum / levelCnt;
-		  cout << levelSum << endl; // print new line indicating new level
-      levelSum = 0;
-      levelCnt = 0;
-		  if (!q.empty()) {
-			  q.push(NULL); // push new marker
-		  }
+		// process node 
+		if (last) {
+			// link the previous node (last)
+			// with the current one (node)
+			last->right = node;
+			node->left = last;
+		} else {
+			// keep the smallest node
+			// to close DLL later on
+			first = node;
 		}
-  }
-  cout << endl;
+		last = node;
+
+		// right
+		inorder_dll(node->right);
+	}
+}
+
+node_t * 
+treeToDoublyList(node_t *root) {
+	if (!root) return NULL;
+	inorder_dll(root);
+	// close DLL
+	last->right = first;
+	first->left = last;
+	return first;
 }
 
 int main() {
@@ -281,7 +304,8 @@ int main() {
   printf("\nTree BFS:\n");
   bfs(tree1);
 
-  printf("level Avg: \n");
-  bfs_lvl_avg(tree1);
+  printf("Print Leaf\n");
+  printLeaf(tree1);
+  printf("\n");
   return 0;
 }

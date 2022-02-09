@@ -281,7 +281,7 @@ tree_mindepth(node_t *tree) {
 	minright = (tree_mindepth(tree->right));
 
   if (minleft < minright)
-     return  minleft + 1;
+     return minleft + 1;
   else
      return minright + 1;
 }
