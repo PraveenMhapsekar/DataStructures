@@ -41,8 +41,12 @@ findMin(int graph[NUM][NUM], int size, int src, int dst) {
 					visited[j] = true;
 					distance[j] = distance[i] + 1;
 				}
+
 				if (j == dst) {
           // dst is reached, return distance
+          // distance[j] is guaranteed to be minimum. 
+          // Visited vertex will not be visited again ad it is marked.
+          // since this is level order traversal shortest path dest will be visited first.
 					return distance[dst];
 				}
       }

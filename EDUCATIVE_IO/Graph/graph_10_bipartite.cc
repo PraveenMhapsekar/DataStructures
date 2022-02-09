@@ -1,4 +1,5 @@
 // Check if Graph is Bipartite – Adjacency Matrix using Depth-First Search(DFS)
+// In the mathematical field of graph theory, a bipartite graph (or bigraph) is a graph whose vertices can be divided into two disjoint and independent sets
 // https://algorithms.tutorialhorizon.com/check-if-graph-is-bipartite-adjacency-matrix-using-depth-first-searchdfs/
 
 #include <stdio.h>

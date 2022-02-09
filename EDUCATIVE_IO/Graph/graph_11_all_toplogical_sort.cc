@@ -35,35 +35,35 @@ allTopoSortUtil(int graph[SIZE][SIZE], int size, int *visited, vector<int> &s) {
       s.push_back(i);
 
       for (int j = 0; j < size; j++) {
-         if (graph[i][j] == 1) {
-           if (indegree[j]) {
-						 indegree[j]--;
-           }
-         }
-       }
+        if (graph[i][j] == 1) {
+          if (indegree[j]) {
+			      indegree[j]--;
+          }
+        }
+      }
 
-       allTopoSortUtil(graph, size, visited, s);
+      allTopoSortUtil(graph, size, visited, s);
   
-       visited[i] = 0;
-       s.erase(s.end() - 1);
+      visited[i] = 0;
+      s.erase(s.end() - 1);
         
-       for (int j = 0; j < size; j ++) {
-         if (graph[i][j] == 1) {
-				  	indegree[j]++;
-         }
-       }
-       flag = true;
+      for (int j = 0; j < size; j ++) {
+        if (graph[i][j] == 1) {
+			  	indegree[j]++;
+        }
+      }
+      flag = true;
     }
   }  // end of outr for loop
 
-		if (!flag) {
-			int s_size = s.size();
-			cout << "size " << s_size << " : ";
-			for (int i = 0; i < s_size; i++) {
-				cout << s[i] << " ";
-			}
-			cout << endl;
+	if (!flag) {
+		int s_size = s.size();
+		cout << "size " << s_size << " : ";
+		for (int i = 0; i < s_size; i++) {
+			cout << s[i] << " ";
 		}
+		cout << endl;
+	}
 }
 
 void

@@ -3,6 +3,11 @@
 #include <limits.h>
 #include <iostream>
 #include <queue>
+// Prims Algorithm
+// 1. Initialize the MST with an arbitrary vertex from the graph
+// 2. Find the minimum weight edge from the constructed graph to the vertices not yet added in the graph
+// 3. Add that edge and vertex to the MST
+// 4. Repeat steps 2-3 until all the vertices have been added to the MST
 
 using namespace std;
 
@@ -20,10 +25,10 @@ getMinimumVertex(bool *mst, int *key, int size) {
   int minKey = INT_MAX;
   int vertex = -1;
 
-  for (int i = 0; i < size; i++) {
-	  if (mst[i] == false && minKey > key[i]) {
-			minKey = key[i];
-			vertex = i;
+  for (int j  = 0; j < size; j++) {
+	  if (mst[j] == false && minKey > key[j]) {
+			minKey = key[j];
+			vertex = j;
 	  }
 	}
   return vertex;
@@ -61,7 +66,7 @@ find_min_spanning_tree(int graph[NUM][NUM], int size) {
 			  if (mst[j] == false && graph[vertex][j] < key[j]) {
 					// update the key
 					key[j] = graph[vertex][j];
-					// update the result set
+					// add this edge to MST result
 					result[j].src = vertex;
 					result[j].dst = j;
 					result[j].weight = key[j];
