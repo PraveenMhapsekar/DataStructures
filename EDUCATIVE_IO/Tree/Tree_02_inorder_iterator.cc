@@ -124,12 +124,13 @@ preorder_iterative(node_t *root) {
   // 	
   s.push(curr);
   while (!s.empty()) {
-		curr = s.top(); 
-		s.pop(); 
+		curr = s.top(); s.pop();
 		std::cout << curr->data << " ";
+
     if (curr->right) {
 			s.push(curr->right);
     }
+
 		if (curr->left) {
 			s.push(curr->left);
 		}
@@ -165,7 +166,9 @@ inorder_iterative(node_t *root) {
 			curr = curr->left;
     } else { // current node is NULL
       // pop and print
-			curr = s.top(); s.pop(); std::cout << curr->data << " ";
+			curr = s.top(); s.pop(); 
+      std::cout << curr->data << " ";
+
 			curr = curr->right;
     }
   }
@@ -232,27 +235,13 @@ int main() {
 	insert(&tree1, 17);
 	insert(&tree1, 113);
 
-	nodePtr tree2 = NULL;
-	insert(&tree2, 10);
-	insert(&tree2, 20);
-	insert(&tree2, 15);
-	insert(&tree2, 13);
-	insert(&tree2, 3);
-	insert(&tree2, 5);
-	insert(&tree2, 17);
-	insert(&tree2, 113);
-
-	printf("preorder tree1\n");
-	preorder(tree1);
+	printf("inorder tree1\n");
+  inorder(tree1);
 	printf("\n");
 
-	printf("preorder iterative tree2\n");
-	preorder_iterative(tree2);
+	printf("inorder iterative tree2\n");
+	inorder_iterative(tree1);
 	printf("\n");
 
-  if (tree_identical(tree1, tree2))
-    printf("tree identical\n");
-  else
-    printf("tree not identical\n");
   return 0;
 }
