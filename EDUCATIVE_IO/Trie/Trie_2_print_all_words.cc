@@ -10,8 +10,8 @@ getWords(Trie *root, vector<string>&result, int level, string &word) {
 	if (root->isEndWord) {
 		//current word is stored till the 'level' in the word string
 		string temp = "";
-		for (int x = 0; x < level; x++) {
-			temp += word[x];
+		for (int i = 0; i < level; i++) {
+			temp += word[i];
 		}
 		result.push_back(temp);
 	}

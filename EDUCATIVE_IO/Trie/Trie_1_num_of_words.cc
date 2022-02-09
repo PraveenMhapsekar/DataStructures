@@ -1,12 +1,15 @@
 #include "Trie.h"
 
-int totalWords(Trie *root){
+int
+totalWords(Trie *root){
   int result = 0;
 
+  // Base case
   // Leaf denotes end of a word
   // Basically count the number of leaf in recursibe manner
-  if (root->isEndWord)
-    result++;
+  if (root->isEndWord) {
+     result++;
+  }
 
   for (int i = 0; i < CHAR_SIZE; i++) {
     if (root->children[i] != nullptr)
@@ -20,7 +23,6 @@ int totalWords(Trie *root){
 int
 main() {
   string keys[9] = {"the", "a", "there", "answer", "any", "by", "bye", "their","abc"};
-
   Trie *t = new Trie();
 
   // Construct trie       

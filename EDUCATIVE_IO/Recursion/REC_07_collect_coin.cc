@@ -13,8 +13,9 @@ int min2(int a, int b){
 */
 int minimumStepsUtil(int l, int r, int h, int height[]) { 
 	// base condition: all coins already collected 
-	if (l >= r) 
+	if (l >= r) {
 		return 0; 
+  }
 
 	// find minimum height index
 	int m = l; 
@@ -29,7 +30,7 @@ int minimumStepsUtil(int l, int r, int h, int height[]) {
 		b) collecting all lower horizontal line coins
        recursively on left and right segments 
   */
-	return min2(r - l, 
+	return min2(r - l,  // Vertical
 			minimumStepsUtil(l, m, height[m], height) + 
 			minimumStepsUtil(m + 1, r, height[m], height) + 
 			height[m] - h); 

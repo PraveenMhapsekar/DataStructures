@@ -6,14 +6,17 @@ using namespace std;
 void
 sort(int *A, int size,  int idx) {
   if (idx == size) return;
+
   for (int i = 0; i < idx; i++) { 
 		if (A[idx] > A[i]) {
+      // swap
 			int tmp = A[idx];
 			A[idx] = A[i];
 			A[i] = tmp;
 		}
   }
-  sort(A, size, idx+1); 
+
+  sort(A, size, idx + 1); 
 }
 
 int 

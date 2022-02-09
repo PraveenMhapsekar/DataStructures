@@ -66,7 +66,6 @@ class Trie {
 					return false;
 				}
 			}
-	 
 			return curr->isEndWord; 
 		}
 

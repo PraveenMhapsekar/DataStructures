@@ -2,17 +2,21 @@
 #include <string>
 using namespace std; 
 
-int totalVowels(string text, int len, int index) 
-{ 
+int totalVowels(string text, int len, int index) {
   //Write your code here
-  int count=0;
-  if (len==0){return 0;}
-  char single=toupper(text[index]);
-  if(single=='A' || single=='E' || single=='I' || single=='O' || single=='U')  
-  {  
+  int count = 0;
+
+  if (len == 0) {
+    return 0;
+  }
+
+  char single = toupper(text[index]);
+
+  if (single == 'A' || single == 'E' || single == 'I' || single == 'O' || single == 'U') {
     count++;
   }
-    return count + totalVowels(text,len-1,index+1);
+
+  return count + totalVowels(text, len - 1, index + 1);
 } 
 
 //Function to test your code
