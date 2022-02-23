@@ -1,0 +1,99 @@
+.
+├── Arrays
+│   ├── Array_01_max_sliding_window.cc
+│   ├── Array_02_search_roatated_array.cc
+│   ├── Array_03_smallest_common_number.cc
+│   ├── Array_04_Rotate_Array_by_n.cc
+│   ├── Array_05_low_hi_idx_in_sorted_array.cc
+│   ├── Array_06_Move_All_Zeroes.cc
+│   ├── Array_07_Stock_Buy_Sell.cc
+│   ├── Array_08_overlap.cc
+│   ├── Array_09_2sum.cc
+│   ├── Array_10_quick_sort.cc
+│   ├── Array_11_cyclic_sort.cc
+│   ├── Array_12_find_missing_number.cc
+│   ├── Array_13_max_sum_subarray.cc
+│   ├── Array_14_smallest_subarray_with_greatest_sum.cc
+│   ├── Array_15_squaring_sorted_array.cc
+│   ├── Array_16_subsets_with_duplicates.cc
+│   ├── Array_17_Bitonic_Array_Max.cc
+│   ├── Array_18_permutations.cc
+│   ├── Array_19_tripplet_sum_to_zero.cc
+│   ├── Array_20_tripplet_sum_close_to_target.cc
+│   ├── Array_21_insert_interval.cc
+│   ├── Array_21_tripplet_with_smaller_sum.cc
+│   ├── Array_22_dutch_national_flag.cc
+│   ├── Array_22_interval_intersection.cc
+│   ├── Array_23_conflicting_appoinments.cc
+│   ├── Array_24_Ceiling_of_number.cc
+│   ├── Array_25_Next_letter.cc
+│   ├── Array_26_number_range.cc
+│   └── Array_27_Search_infinite_array.cc
+├── DynamicProgramming
+│   ├── DP_10_subset_sum.cc
+│   ├── DP_11_subset_sum_difference.cc
+│   ├── DP_12_unbound_knapsack.cc
+│   ├── DP_13_rod_cutting.cc
+│   ├── DP_14_house_thief.cc
+│   ├── DP_1_fibonacci.cc
+│   ├── DP_2_find_max_sum_sub_array.cc
+│   ├── DP_3_find_max_sum_nonadj.cc
+│   ├── DP_4_Longest_Increasing_Subsequence.cc
+│   ├── DP_5_longest_common_subsequence.cc
+│   ├── DP_6A_coin_change.cc
+│   ├── DP_6_coin_change.cc
+│   ├── DP_7_min_coin_change.cc
+│   ├── DP_8_Levnshtein_Distance.cc
+│   ├── DP_9_Equal_Subset_Sum.cc
+│   └── LongestCommonSubstring
+│       ├── a.out
+│       ├── DP_51_longest_common_substring.cc
+│       └── DP_52_longestCommonSubSequence.cc
+├── Graph
+│   ├── graph_00.cc
+│   ├── graph_01_num_island.cc
+│   ├── graph_02_detect_circle.cc
+│   ├── graph_03_mother_vertex.cc
+│   ├── graph_04_num_edges.cc
+│   ├── graph_05_path_src_dst.cc
+│   ├── graph_06_is_graph_tree.cc
+│   ├── graph_07_shortest_path.cc
+│   ├── graph_08_spanningtree_prims.cc
+│   ├── graph_09A_topological_sort_DFS.cc
+│   ├── graph_09_topological_sort.cc
+│   ├── graph_10_bipartite.cc
+│   └── graph_11_all_toplogical_sort.cc
+├── LinkedList
+│   ├── LL_01_Reverse.cc
+│   ├── LL_02_remove_duplicates.cc
+│   └── LL_03_Delete_All_Occurances.cc
+├── README
+├── Recursion
+│   ├── REC_01_GCD.cc
+│   ├── REC_02_isPrime.cc
+│   ├── REC_03_total_num_vowels.cc
+│   ├── REC_04_is_palindrome.cc
+│   ├── REC_05_sort.cc
+│   ├── REC_06_shuffle.cc
+│   └── REC_07_collect_coin.cc
+├── Tree
+│   ├── Tree_00.c
+│   ├── Tree_01_iddentical_trees.c
+│   ├── Tree_02_inorder_iterator.cc
+│   ├── Tree_06_bfs.cc
+│   ├── Tree_07_reverse_bfs.cc
+│   ├── Tree_08_level_avg.cc
+│   ├── Tree_09_zigzag.cc
+│   ├── Tree_12_valid_bst.cc
+│   ├── Tree_13_bst_2_doubly_ll.cc
+│   ├── Tree_14_prift_leaf.cc
+│   ├── Tree_18_BST_mirror.cc
+│   └── Tree_21_min_depth.cc
+└── Trie
+    ├── Trie_1_num_of_words.cc
+    ├── Trie_2_print_all_words.cc
+    ├── Trie_3_list_sort.cc
+    ├── Trie_4_word_formation.cc
+    └── Trie.h
+
+8 directories, 88 files
