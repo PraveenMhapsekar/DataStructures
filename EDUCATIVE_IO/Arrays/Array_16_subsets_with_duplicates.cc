@@ -1,6 +1,7 @@
 /*
 	Given a set of numbers that might contain duplicates, find all of its distinct subsets.
 */
+
 using namespace std;
 
 #include <algorithm>
@@ -8,12 +9,12 @@ using namespace std;
 #include <vector>
 
 class SubsetWithDuplicates {
- public:
-  static vector<vector<int>> findSubsets(vector<int>& nums) {
-
+public:
+  static vector<vector<int>>
+  findSubsets(vector<int> &nums) {
+    vector<vector<int>> subsets;
     sort(nums.begin(), nums.end());  // sort the numbers to handle duplicates
 
-    vector<vector<int>> subsets;
     subsets.push_back(vector<int>());
 
     int startIndex = 0, endIndex = 0;
@@ -39,7 +40,8 @@ class SubsetWithDuplicates {
   }
 };
 
-int main(int argc, char* argv[]) {
+int 
+main(int argc, char* argv[]) {
   vector<int> vec = {1, 3, 3};
   vector<vector<int>> result = SubsetWithDuplicates::findSubsets(vec);
   cout << "Here is the list of subsets: " << endl;
@@ -60,4 +62,3 @@ int main(int argc, char* argv[]) {
     cout << endl;
   }
 }
-

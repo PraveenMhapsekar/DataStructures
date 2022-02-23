@@ -8,8 +8,8 @@
 using namespace std;
 
 class SortedArraySquares {
- public:
-  static vector<int> makeSquares(const vector<int>& arr) {
+public:
+  static vector<int> makeSquares(const vector<int> &arr) {
     int n = arr.size();
     vector<int> squares(n);
     int highestSquareIdx = n - 1;
@@ -32,7 +32,8 @@ class SortedArraySquares {
   }
 };
 
-int main(int argc, char* argv[]) {
+int 
+main(int argc, char* argv[]) {
   vector<int> result = SortedArraySquares::makeSquares(vector<int>{-2, -1, 0, 2, 3});
   for (auto num : result) {
     cout << num << " ";

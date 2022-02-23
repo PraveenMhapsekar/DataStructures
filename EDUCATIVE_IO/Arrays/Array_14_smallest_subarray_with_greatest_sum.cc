@@ -6,7 +6,8 @@ using namespace std;
 
 class MinSizeSubArraySum {
  public:
-  static int findMinSubArray(int S, const vector<int>& arr) {
+  static int 
+  findMinSubArray(int S, const vector<int> &arr) {
     int windowSum = 0, minLength = numeric_limits<int>::max();
     int windowStart = 0;
     for (int windowEnd = 0; windowEnd < arr.size(); windowEnd++) {

@@ -6,12 +6,10 @@ using namespace std;
 
 class TripletSumToZero {
 public:
-  static vector<vector<int>> searchTriplets(vector<int> &arr) {
-
+  static vector<vector<int>> 
+  searchTriplets(vector<int> &arr) {
     sort(arr.begin(), arr.end());
-
     vector<vector<int>> triplets;
-
     for (int i = 0; i < arr.size() - 2; i++) {
       if (i > 0 && arr[i] == arr[i - 1]) { // skip same element to avoid duplicate triplets
         continue;
@@ -23,8 +21,9 @@ public:
   }
 
 private:
-  static void searchPair(const vector<int> &arr, int targetSum, int left,
-                         vector<vector<int>> &triplets) {
+  static void 
+  searchPair(const vector<int> &arr, int targetSum, int left,
+             vector<vector<int>> &triplets) {
     int right = arr.size() - 1;
     while (left < right) {
       int currentSum = arr[left] + arr[right];
@@ -36,7 +35,6 @@ private:
         while (left < right && arr[left] == arr[left - 1]) {
           left++; // skip same element to avoid duplicate triplets
         }
-
         while (left < right && arr[right] == arr[right + 1]) {
           right--; // skip same element to avoid duplicate triplets
         }

@@ -10,7 +10,8 @@ using namespace std;
 
 class Permutations {
  public:
-  static vector<vector<int>> findPermutations(const vector<int>& nums) {
+  static vector<vector<int>> 
+  findPermutations(const vector<int> &nums) {
     vector<vector<int>> result;
 
     queue<vector<int>> permutations;
@@ -50,4 +51,3 @@ int main(int argc, char* argv[]) {
     cout << endl;
   }
 }
-
