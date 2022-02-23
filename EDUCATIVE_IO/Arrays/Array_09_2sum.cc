@@ -1,10 +1,16 @@
+/*
+ Given an array of integers and a value, determine if there are any two integers in the array whose sum is equal to the given value.
+ Return true if the sum exists and return false if it does not.
+*/
+
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 bool
-search(int *A, int start, int end, int comp) {
+search(vector<int> &A, int start, int end, int comp) {
   for (int i = start; i <= end; i++) {
      if (A[i] == comp) return true;
   }
@@ -12,10 +18,10 @@ search(int *A, int start, int end, int comp) {
 }
 
 bool 
-twoSum(int *A, int size, int target) {
-	for (int i = 0; i < size; i++) {
+twoSum(vector<int> &A, int target) {
+	for (int i = 0; i < A.size(); i++) {
 	  int complement = target - A[i];
-	  if (search(A, i+1, (size-1), complement) == true) {
+	  if (search(A, i+1, (A.size() - 1), complement) == true) {
 		  return true;
 	  }
 	} 
@@ -46,11 +52,11 @@ twoSum(int *A, int size, int val) {
 
 int 
 main() {
-  int v[7] = {5, 7, 1, 2, 8, 4, 3};
+  vector <int> v = {5, 7, 1, 2, 8, 4, 3};
   int test[5] = {3, 20, 1, 2, 7};
 
   for (int i = 0; i < 5; i++) {
-    bool output = twoSum(v, 7, test[i]);
+    bool output = twoSum(v, test[i]);
     cout << "find_sum_of_two(v, " << test[i] << ") = " << (output ? "true" : "false") << endl;
   }
   return 0;

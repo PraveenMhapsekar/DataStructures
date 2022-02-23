@@ -5,11 +5,17 @@
 */
 
 #include <stdio.h>
+#include <iostream>
+#include <limits.h>
+#include <vector>
+#include <vector>
 
+using namespace std;
 // basically push call non zero elements to the rightmost
 void
-pushZeros2End(int *A, int size) {
-  if (!A) return;
+pushZeros2End(vector<int> &A) {
+  int size = A.size();
+
   if (size < 2) return;
 
   int write = size - 1;
@@ -34,15 +40,16 @@ pushZeros2End(int *A, int size) {
   return; 
 }
 
-void 
+int
 main () {
-	int v[] = {1, 10, 20, 0, 59, 63, 0, 88, 0};
+	vector<int> v = {1, 10, 20, 0, 59, 63, 0, 88, 0};
 	int n = sizeof(v) / sizeof(v[0]);
-	pushZeros2End(v, n);
+	pushZeros2End(v);
 
 	for (int i = 0; i < n; i++) {
 		printf("%d ", v[i]);
 	}
 
 	printf("\n");
+  return 0;
 }

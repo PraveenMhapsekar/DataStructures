@@ -1,12 +1,13 @@
 // Given a list of daily stock prices (integers for simplicity), return the buy and sell prices for making the maximum profit.
-
 #include <tuple>
 #include <iostream>
 #include <climits>
+#include <vector>
 using namespace std;
 
 tuple <int, int>
-find_buy_sell_stock_prices(int *A, int size) {
+find_buy_sell_stock_prices(vector<int> &A) {
+  int size = A.size();
   int curMin = A[0];
   int gblSell = A[1];
   int curProfit = 0;
@@ -34,15 +35,15 @@ find_buy_sell_stock_prices(int *A, int size) {
 }
 
 int main() {
-  int array[] = {1, 2, 3, 4, 3, 2, 1, 2, 5};
+  vector<int> array = {1, 2, 3, 4, 3, 2, 1, 2, 5};
   tuple <int, int> result;
-  result = find_buy_sell_stock_prices(array, 9);
+  result = find_buy_sell_stock_prices(array);
   cout << "Buy Price: " << get<0>(result) << ", Sell Price: " << get<1>(result) << endl;
-  int array2[] = {6, 7, 8, 4, 7, 2, 1};
-  result = find_buy_sell_stock_prices(array2, 7);
+  vector<int> array2 = {6, 7, 8, 4, 7, 2, 1};
+  result = find_buy_sell_stock_prices(array2);
   cout << "Buy Price: " << get<0>(result) << ", Sell Price: " << get<1>(result) << endl;
 
-  int array3[] = {8, 6, 85, -14, 3, 71, 1};
-  result = find_buy_sell_stock_prices(array3, 7);
+  vector<int> array3 = {8, 6, 85, -14, 3, 71, 1};
+  result = find_buy_sell_stock_prices(array3);
   cout << "Buy Price: " << get<0>(result) << ", Sell Price: " << get<1>(result) << endl;
 }
