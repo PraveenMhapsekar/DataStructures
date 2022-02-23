@@ -65,10 +65,15 @@ levenshtein_distance(char *s1, char *s2) {
         cost = 0;
       }
 
-      // pick min of left, top and let-top-diagonal cell 
       dp[i][j] = mini(dp[i-1][j] + 1,  // Deletion
-                      dp[i][j-1] + 1,  // Insertion
+                     dp[i][j-1] + 1,  // Insertion
                       dp[i-1][j-1] + cost); // Substitution
+#if 0
+      // pick min of left, top and let-top-diagonal cell 
+      dp[i][j] = min(dp[i-1][j] + 1,  // Deletion
+                      min(dp[i][j-1] + 1,  // Insertion
+                      dp[i-1][j-1] + cost)); // Substitution
+#endif
       cout << dp[i][j] << " " ;
     }
     cout << endl;
