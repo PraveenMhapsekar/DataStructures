@@ -1,25 +1,23 @@
-// Check if Graph is Bipartite – Adjacency Matrix using Depth-First Search(DFS)
-// In the mathematical field of graph theory, a bipartite graph (or bigraph) is a graph whose vertices can be divided into two disjoint and independent sets
+// Check if Graph is Bipartite – Adjacency Matrix using Depth-First Search (DFS)
+// A bipartite graph : A graph whose vertices can be divided into two disjoint & independent sets
 // https://algorithms.tutorialhorizon.com/check-if-graph-is-bipartite-adjacency-matrix-using-depth-first-searchdfs/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
+#include <vector>
 #include <iostream>
 
 using namespace std;
-
-#define SIZE 4
 
 #define WHITE 0
 #define RED   1
 #define GREEN 2
 
 bool
-isBipartiteUtil(int u, int size, int *colors, int graph[SIZE][SIZE]){
+isBipartiteUtil(int u, int *colors, vector<vector<int>> graph) {
+  int size = graph[0].size();
 	// If is it first vertex, mark it RED
-	if (u == 0)
+	if (u == 0) {
 		colors[u] = RED;
+  }
 
 	// Travel all adjacent vertices
 	for (int v = 0; v < size; v++) {
@@ -32,7 +30,7 @@ isBipartiteUtil(int u, int size, int *colors, int graph[SIZE][SIZE]){
 				colors[v] = RED;
 			}
 			// Recursive call
-			return isBipartiteUtil(v, size, colors, graph);
+			return isBipartiteUtil(v, colors, graph);
 		} else if (graph[u][v] == 1 && colors[u] == colors[v]) {
 			return false;
 		}
@@ -44,10 +42,9 @@ isBipartiteUtil(int u, int size, int *colors, int graph[SIZE][SIZE]){
 }
 
 bool 
-isBipartite(int graph[SIZE][SIZE], int size) {
+isBipartite(vector<vector<int>> graph) {
 	// Check if graph is empty
-	if (size == 0)
-		return true;
+	int size = graph[0].size();
 
 	// Initialize colors for all vertices
   int	 colors[size];
@@ -62,7 +59,7 @@ isBipartite(int graph[SIZE][SIZE], int size) {
 	// Color the first vertex with RED
 	for (int i = 0; i < size; i++) {
 		if (colors[i]== WHITE) {
-			bool result = isBipartiteUtil(i, size, colors, graph);
+			bool result = isBipartiteUtil(i, colors, graph);
 			if (result == false)
 				return false;
 		}
@@ -72,33 +69,29 @@ isBipartite(int graph[SIZE][SIZE], int size) {
 }
 
 /*
-      0-----1
-      |   / |
-      |  /  |
-      | /   |
-      2     3-----4
-      |           |
-      |-----------|
+		0-----1
+		|   / |
+		|  /  |
+		| /   |
+		2     3-----4
+		|           |
+		|-----------|
 */
 int
 main() {
-  /*
-  int graph[SIZE][SIZE] = {{0, 1, 1, 0, 0},  // 0 --> 1, 2
-											   {0, 0, 2, 3, 0},  // 1 --> 2
-											   {0, 0, 0, 0, 3},  // 2 --> 4
-											   {0, 0, 0, 0, 2},  // 3 --> 4
-											   {0, 0, 0, 0, 0}}; // 
-  int size = 5;
-  printf("Is bipartite: %s\n", isBipartite(graph, size) == true? "yes" : "no");
-  */
+  vector<vector<int>> 
+  graph = {{0, 1, 1, 0, 0},  // 0 --> 1, 2
+					 {0, 0, 2, 3, 0},  // 1 --> 2
+					 {0, 0, 0, 0, 3},  // 2 --> 4
+					 {0, 0, 0, 0, 2},  // 3 --> 4
+					 {0, 0, 0, 0, 0}}; // 
+  printf("Is bipartite: %s\n", isBipartite(graph) == true ? "yes" : "no");
 
-  int size = SIZE;
-  int graph[SIZE][SIZE] =  { {0, 1, 1, 1},
-                            {1, 0, 0, 1},
-                            {0, 0, 0, 1},
-                            {1, 1, 1, 0}
-                          };
+	graph = {{0, 1, 1, 1},
+					 {1, 0, 0, 1},
+					 {0, 0, 0, 1},
+					 {1, 1, 1, 0}};
+  printf("Is bipartite: %s\n", isBipartite(graph) == true ? "yes" : "no");
 
-  printf("Is bipartite: %s\n", isBipartite(graph, size) == true? "yes" : "no");
   return 0;
 }

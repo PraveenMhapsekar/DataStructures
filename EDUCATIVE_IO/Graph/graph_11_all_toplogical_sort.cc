@@ -13,24 +13,22 @@ Time Complexity:
 	 O(V+E)
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <queue>
 #include <vector>
 #include <iostream>
 using namespace std;
 
-#define SIZE 8
 int indegree[8];
 
 void
-allTopoSortUtil(int graph[SIZE][SIZE], int size, int *visited, vector<int> &s) {
+allTopoSortUtil(vector<vector<int>> &graph,
+                bool *visited, 
+                vector<int> &s) {
   // traverse each column
+  int size = graph[0].size();
   bool flag = false;
 
   for (int i = 0; i < size; i++) {
-    if (indegree[i] == 0 && visited[i] == 0) {
+    if (indegree[i] == 0 && visited[i] == false) {
       visited[i] = 1;
       s.push_back(i);
 
@@ -42,9 +40,9 @@ allTopoSortUtil(int graph[SIZE][SIZE], int size, int *visited, vector<int> &s) {
         }
       }
 
-      allTopoSortUtil(graph, size, visited, s);
+      allTopoSortUtil(graph, visited, s);
   
-      visited[i] = 0;
+      visited[i] = false;
       s.erase(s.end() - 1);
         
       for (int j = 0; j < size; j ++) {
@@ -67,31 +65,32 @@ allTopoSortUtil(int graph[SIZE][SIZE], int size, int *visited, vector<int> &s) {
 }
 
 void
-allTopoSort(int graph[SIZE][SIZE], int size) {
-  int visited[size];
+allTopoSort(vector<vector<int>> &graph) {
+  int size = graph[0].size();
+  bool visited[size];
   vector<int> s;
   
   // init visited array
   for (int i = 0; i < size; i++) {
-    visited[i] = 0;
+    visited[i] = false;
   }
  
-  allTopoSortUtil(graph, size, visited, s);
+  allTopoSortUtil(graph, visited, s);
 }
 
 int
 main() 
 {
-  int graph[SIZE][SIZE] = {{0, 0, 0, 0, 0, 0, 0, 0},  // 0 --> 
-													 {1, 0, 0, 0, 0, 0, 0, 0},  // 1 --> 0
-													 {0, 1, 0, 0, 0, 0, 0, 0},  // 2 --> 1
-													 {0, 1, 0, 0, 0, 0, 0, 0},  // 3 --> 1
-													 {0, 0, 0, 0, 0, 0, 0, 0},  // 4 --> 
-													 {0, 0, 1, 0, 1, 0, 0, 0},  // 5 --> 2, 4
-													 {0, 0, 0, 1, 1, 0, 0, 0},  // 6 --> 3, 4
-													 {0, 0, 0, 0, 0, 1, 1, 0}}; // 7 --> 5, 6
-  int size = SIZE;
+  vector<vector<int>> graph = {{0, 0, 0, 0, 0, 0, 0, 0},  // 0 --> 
+															 {1, 0, 0, 0, 0, 0, 0, 0},  // 1 --> 0
+															 {0, 1, 0, 0, 0, 0, 0, 0},  // 2 --> 1
+															 {0, 1, 0, 0, 0, 0, 0, 0},  // 3 --> 1
+															 {0, 0, 0, 0, 0, 0, 0, 0},  // 4 --> 
+															 {0, 0, 1, 0, 1, 0, 0, 0},  // 5 --> 2, 4
+															 {0, 0, 0, 1, 1, 0, 0, 0},  // 6 --> 3, 4
+															 {0, 0, 0, 0, 0, 1, 1, 0}}; // 7 --> 5, 6
 
+  int size = graph[0].size();
   for (int i = 0; i < size; i++) {
     int cnt = 0;
     for (int j = 0; j < size; j++) {
@@ -107,7 +106,7 @@ main()
   }
   cout << endl;
 
-  allTopoSort(graph, size);
+  allTopoSort(graph);
 
   return 0;
 }
