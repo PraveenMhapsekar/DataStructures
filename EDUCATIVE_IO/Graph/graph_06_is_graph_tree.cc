@@ -5,55 +5,50 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
-#include <queue>
+#include <vector>
 
 using namespace std;
 
-#define NUM 4
-
 bool
-dfs(int isConnected[NUM][NUM], int size, int *visited, int i) {
-  visited[i] = 1;
+dfs(vector<vector<int>> graph, int size, bool *visited, int i) {
+  visited[i] = true;
+
   for (int j = 0; j < size; j++) {
-    if (isConnected[i][j]) {
-      if (visited[j] == 1) {
+    if (graph[i][j]) {
+      if (visited[j] == true) {
         // loop detected, not a tree. return false
         return false;
       } else {      
         // if subsequent traverse detected loop, return false
-			  if (dfs(isConnected, size, visited, j ) == false) {
+			  if (dfs(graph, size, visited, j) == false) {
            return false;
         }
 			}
     }
 	}
- 
   return true;
 }
 
 bool
-isTree(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
+isTree(vector<vector<int>> graph) {
   int count = 0; 
-  int visited[isConnectedSize];
-  
-  if (isConnectedSize != isConnectedColSize) 
-    return count;
+  int size = graph[0].size();
+  bool visited[size];
   
   // init visited array
-  for (int i = 0; i < isConnectedSize; i++) {
+  for (int i = 0; i < size; i++) {
     visited[i] = 0;
   }
 
 	// traverse graph in DFS, starting at vertex 0
   // if dfs finds any vertx already visited it is not a tree
-  if (dfs(isConnected, isConnectedSize, visited, 0) == false) {
+  if (dfs(graph, size, visited, 0) == false) {
     return false;
   }
 
   // After DFS traverse if any vertex is not visited, its not tree
   // this means there are more than one disjoined graphs (aka forest or islands)
-  for (int i = 0; i < isConnectedSize; i++) {
+  for (int i = 0; i < size; i++) {
     if (visited[i] == 0) {
       return false;
     }
@@ -72,10 +67,11 @@ isTree(int isConnected[NUM][NUM], int isConnectedSize, int isConnectedColSize) {
 */
 int
 main() {
-  int graph[NUM][NUM] = {{0, 1, 1, 0},  // 0 -->1, 2
-											   {0, 0, 0, 0},  // 1 --> 
-											   {0, 0, 0, 1},  // 2 -->3
-											   {0, 0, 0, 0}}; // 3 -->
-  printf("graph is %s\n", isTree(graph, NUM, NUM) == true? "tree" : "not a tree");
+  vector<vector<int>> graph = {{0, 1, 1, 0},  // 0 -->1, 2
+															 {0, 0, 0, 0},  // 1 --> 
+															 {0, 0, 0, 1},  // 2 -->3
+															 {0, 0, 0, 0}}; // 3 -->
+
+  printf("graph is %s\n", isTree(graph) == true ? "a tree" : "not a tree");
   return 0;
 }

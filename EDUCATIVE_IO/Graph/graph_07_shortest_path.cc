@@ -7,16 +7,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <vector>
 #include <queue>
 
 using namespace std;
 #define NUM 4
 int 
-findMin(int graph[NUM][NUM], int size, int src, int dst) {
+findMin(vector<vector<int>> graph, int src, int dst) {
 	if (src == dst){
 		return 0;
 	}
 
+  int size = graph[0].size();
 	bool *visited = new bool[size];
 	int *distance = new int[size];
 	queue<int> q;
@@ -76,11 +78,11 @@ findMin(int graph[NUM][NUM], int size, int src, int dst) {
 */
 int
 main() {
-  int graph[NUM][NUM] = {{0, 1, 1, 0},  // 0 -->1, 2
-											   {1, 0, 0, 0},  // 1 --> 
-											   {0, 0, 0, 1},  // 2 -->3
-											   {0, 0, 0, 0}}; // 3 -->
+  vector<vector<int>> graph = {{0, 1, 1, 0},  // 0 -->1, 2
+															 {1, 0, 0, 0},  // 1 --> 
+															 {0, 0, 0, 1},  // 2 -->3
+															 {0, 0, 0, 0}}; // 3 -->
 
-  printf("graph min betwen 1, 3 is %d\n", findMin(graph, NUM, 1, 3));
+  printf("graph min between 1, 3 is %d\n", findMin(graph, 1, 3));
   return 0;
 }

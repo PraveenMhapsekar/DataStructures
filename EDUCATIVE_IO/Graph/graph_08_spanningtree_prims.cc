@@ -10,6 +10,7 @@
 // 4. Repeat steps 2-3 until all the vertices have been added to the MST
 
 using namespace std;
+#define PATH_NONE -1
 
 typedef struct resultSet {
  int src;
@@ -58,7 +59,7 @@ find_min_spanning_tree(vector<vector<int>> graph) {
 
 		// Iterate through all the adj vertices of above vertex and update the keys
 		for (int j = 0; j < size; j++) {
-		  if (graph[vertex][j] > 0) {
+		  if (graph[vertex][j] > PATH_NONE) {
 				// Check if 'j' not in MST and
 				// if key needs an update or not
 			  if (mst[j] == false && 
@@ -72,7 +73,7 @@ find_min_spanning_tree(vector<vector<int>> graph) {
 		  }
 	  }
   }
-  cout << "done" << endl;
+
   // Done. Print result
   for (int i = 0; i < result.size(); i++) {
     if (result[i].src != -1) {
@@ -94,11 +95,11 @@ find_min_spanning_tree(vector<vector<int>> graph) {
 */
 int
 main() {
-  vector<vector<int>> graph = {{0, 1, 1, 0, 0},  // 0 --> 1, 2
-															 {0, 0, 2, 3, 0},  // 1 --> 2, 3
-															 {0, 0, 0, 0, 3},  // 2 --> 4
-															 {0, 0, 0, 0, 2},  // 3 --> 4
-															 {0, 0, 0, 0, 0}}; // 
+  vector<vector<int>> graph = {{-1,  1,  1, -1, -1},  // 0 --> 1, 2
+															 {-1, -1,  2,  3, -1},  // 1 --> 2, 3
+															 {-1, -1, -1, -1,  3},  // 2 --> 4
+															 {-1, -1, -1, -1,  2},  // 3 --> 4
+															 {-1, -1, -1, -1, -1}}; // 
   printf("min spanning tree wght: %d\n", find_min_spanning_tree(graph));
   return 0;
 }
