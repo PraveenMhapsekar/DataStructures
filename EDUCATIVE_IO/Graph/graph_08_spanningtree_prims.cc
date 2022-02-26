@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <iostream>
-#include <queue>
+#include <vector>
 // Prims Algorithm
 // 1. Initialize the MST with an arbitrary vertex from the graph
 // 2. Find the minimum weight edge from the constructed graph to the vertices not yet added in the graph
@@ -10,8 +10,6 @@
 // 4. Repeat steps 2-3 until all the vertices have been added to the MST
 
 using namespace std;
-
-#define NUM 5
 
 typedef struct resultSet {
  int src;
@@ -35,26 +33,26 @@ getMinimumVertex(bool *mst, int *key, int size) {
 }
 
 int 
-find_min_spanning_tree(int graph[NUM][NUM], int size) {
-  result_set_t result[size];
+find_min_spanning_tree(vector<vector<int>> graph) {
+  int size = graph[0].size();
+  vector<resultSet> result;
   bool mst[size];
   int key[size];
 
-  // init
+  // init mst and key array
 	for (int i = 0; i < size; i++) {
     mst[i] = false;
     key[i] = INT_MAX;
-    result[i].src = -1;
-    result[i].weight = 0;
+    result.push_back({-1, -1, 0});
   }
 
   key[0] = 0;
-  int weight = 0;
+  int weightSum = 0;
 
+  // For each vertex
 	for (int i = 0; i < size; i++) {
-		// Get the vertex with the min key
+		// Get the vertex, which is not part of the MST AND with the min key
 		int vertex = getMinimumVertex(mst, key, size);
-
 		// Include vertex in MST
 		mst[vertex] = true;
 
@@ -63,10 +61,10 @@ find_min_spanning_tree(int graph[NUM][NUM], int size) {
 		  if (graph[vertex][j] > 0) {
 				// Check if 'j' not in MST and
 				// if key needs an update or not
-			  if (mst[j] == false && graph[vertex][j] < key[j]) {
+			  if (mst[j] == false && 
+            graph[vertex][j] < key[j]) {
 					// update the key
 					key[j] = graph[vertex][j];
-					// add this edge to MST result
 					result[j].src = vertex;
 					result[j].dst = j;
 					result[j].weight = key[j];
@@ -74,18 +72,16 @@ find_min_spanning_tree(int graph[NUM][NUM], int size) {
 		  }
 	  }
   }
-
+  cout << "done" << endl;
   // Done. Print result
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < result.size(); i++) {
     if (result[i].src != -1) {
 			cout << "src[" << result[i].src << "]->dst[" << result[i].dst << "] Weight: " << result[i].weight << endl;
-      weight+= result[i].weight;
+			weightSum += result[i].weight;
     }
   }
-
-	return weight;// result;
+	return weightSum; // result;
 }
-
 
 /*
       0-----1
@@ -98,13 +94,11 @@ find_min_spanning_tree(int graph[NUM][NUM], int size) {
 */
 int
 main() {
-  int graph[NUM][NUM] = {{0, 1, 1, 0, 0},  // 0 --> 1, 2
-											   {0, 0, 2, 3, 0},  // 1 --> 2
-											   {0, 0, 0, 0, 3},  // 2 --> 4
-											   {0, 0, 0, 0, 2},  // 3 --> 4
-											   {0, 0, 0, 0, 0}}; // 
-  int size = 5;
-
-  printf("min spanning tree weight : %d\n", find_min_spanning_tree(graph, size));
+  vector<vector<int>> graph = {{0, 1, 1, 0, 0},  // 0 --> 1, 2
+															 {0, 0, 2, 3, 0},  // 1 --> 2, 3
+															 {0, 0, 0, 0, 3},  // 2 --> 4
+															 {0, 0, 0, 0, 2},  // 3 --> 4
+															 {0, 0, 0, 0, 0}}; // 
+  printf("min spanning tree wght: %d\n", find_min_spanning_tree(graph));
   return 0;
 }
