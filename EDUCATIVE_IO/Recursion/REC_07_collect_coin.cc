@@ -1,56 +1,54 @@
 #include <iostream>
+#include <vector>
 using namespace std; 
-
-// returns minimum of two numbers
-int min2(int a, int b){
-  return a < b ? a : b;
-}
 
 /* 
    Utility method, called recursively to collect
    coins from `l` to `r` using the height array
    assuming that h height has already been collected
 */
-int minimumStepsUtil(int l, int r, int h, int height[]) { 
+int 
+minimumStepsUtil(vector<int> &height, int l, int r, int h) { 
 	// base condition: all coins already collected 
 	if (l >= r) {
 		return 0; 
-  }
+	}
 
 	// find minimum height index
 	int m = l; 
-	for (int i = l; i < r; i++) 
-		if (height[i] < height[m]) 
-			m = i; 
+	for (int i = l; i < r; i++) {
+		if (height[i] < height[m]) {
+			m = i;
+		}
+	}
 
 	/* 
     Calculate min steps by: 
 		a) collecting all vertical line coins 
-       (total r - l) 
+				 (total r - l) 
 		b) collecting all lower horizontal line coins
-       recursively on left and right segments 
+				 recursively on left and right segments 
   */
-	return min2(r - l,  // Vertical
-			minimumStepsUtil(l, m, height[m], height) + 
-			minimumStepsUtil(m + 1, r, height[m], height) + 
-			height[m] - h); 
+	return min(r - l,  // Vertical
+					  	minimumStepsUtil(height, l, m, height[m]) + 
+							minimumStepsUtil(height, m + 1, r, height[m]) + 
+							height[m] - h); 
 } 
 
 /*
-    calls the recursive utility function
-    and returns the minimum number of steps
-    using height array
+  Calls the recursive utility function
+  and returns the minimum number of steps
+  using height array
 */
-int minimumSteps(int height[], int N) { 
-	return minimumStepsUtil(0, N, 0, height); 
+int 
+minimumSteps(vector<int> height, int N) { 
+	return minimumStepsUtil(height, 0, N, 0); 
 } 
 
 // Testing minimumSteps() method
-int main() { 
-	int height[] = { 2, 1, 2, 5, 1 }; 
-	int N = sizeof(height) / sizeof(int); 
-
-	cout << minimumSteps(height, N) << endl; 
+int 
+main() { 
+  vector<int> height = { 2, 1, 2, 5, 1 }; 
+	cout << minimumSteps(height, height.size()) << endl; 
 	return 0; 
 } 
-

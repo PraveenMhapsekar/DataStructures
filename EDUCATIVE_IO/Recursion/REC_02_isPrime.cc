@@ -3,24 +3,37 @@
 
 using namespace std;
 
+// Iterative
+bool
+primeHelper1(int x) {
+  if (x <= 1) return false;
+
+  for (int i = x/2; i > 1; i = i / 2) {
+    if ((x % i) == 0)
+      return false;
+  }
+
+  return true;
+} 
+
 // recursive
 bool
 primeHelper(int x, int i) {
-  bool ret;
-	if (x <= 1) return false;;
+	if (x <= 1) return false;
+
 	if (i == 1) return true;
   
-  if ((x % i) == 0) 
-     return false;   
-   else 
-		 ret = primeHelper(x, i/2);
-
-   return ret;
+  if ((x % i) == 0) {
+    return false;   
+  } else {
+		return  primeHelper(x, i/2);
+  }
 }
 
 bool
 prime(int x) {
   return primeHelper(x, x/2);
+  // return primeHelper1(x);
 }
 
 int
