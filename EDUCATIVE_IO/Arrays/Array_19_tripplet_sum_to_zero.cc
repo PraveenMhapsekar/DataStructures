@@ -8,8 +8,11 @@ class TripletSumToZero {
 public:
   static vector<vector<int>> 
   searchTriplets(vector<int> &arr) {
-    sort(arr.begin(), arr.end());
     vector<vector<int>> triplets;
+    if (arr.size() < 3) {
+      return triplets;
+    }
+    sort(arr.begin(), arr.end());
     for (int i = 0; i < arr.size() - 2; i++) {
       if (i > 0 && arr[i] == arr[i - 1]) { // skip same element to avoid duplicate triplets
         continue;
@@ -22,16 +25,19 @@ public:
 
 private:
   static void 
-  searchPair(const vector<int> &arr, int targetSum, int left,
+  searchPair(const vector<int> &arr,
+             int targetSum, 
+             int left,
              vector<vector<int>> &triplets) {
+
     int right = arr.size() - 1;
+
     while (left < right) {
       int currentSum = arr[left] + arr[right];
       if (currentSum == targetSum) { // found the pair
         triplets.push_back({-targetSum, arr[left], arr[right]});
         left++;
         right--;
-
         while (left < right && arr[left] == arr[left - 1]) {
           left++; // skip same element to avoid duplicate triplets
         }
@@ -48,7 +54,9 @@ private:
 };
 
 int main(int argc, char *argv[]) {
-  vector<int> vec = {-3, 0, 1, 2, -1, 1, -2};
+//  vector<int> vec = {-3, 0, 1, 2, -1, 1, -2};
+//  vector<int> vec = {-9, -5, -3, 5, 8, 10, 16};
+  vector<int> vec = {-9, 5};
   auto result = TripletSumToZero::searchTriplets(vec);
   for (auto vec : result) {
     cout << "[";
@@ -58,7 +66,7 @@ int main(int argc, char *argv[]) {
     cout << "]";
   }
   cout << endl;
-
+#if 0
   vec = {-5, 2, -1, -2, 3};
   result = TripletSumToZero::searchTriplets(vec);
   for (auto vec : result) {
@@ -68,5 +76,6 @@ int main(int argc, char *argv[]) {
     }
     cout << "]";
   }
+#endif
 }
 
