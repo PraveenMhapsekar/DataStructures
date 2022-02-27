@@ -19,7 +19,6 @@ totalWords(Trie *root){
   return result;
 }
 
-
 int
 main() {
   string keys[9] = {"the", "a", "there", "answer", "any", "by", "bye", "their","abc"};

@@ -1,28 +1,17 @@
-#include <iostream>
+#include<iostream>
 #include<bits/stdc++.h>
 
 using namespace std;
 
 #define CHAR_SIZE 256
-#if 0
-class TrieNode {
-  public:
-    TrieNode *children[CHAR_SIZE];
-    bool isEndWord;
-    TrieNode();
-    void markAsLeaf();
-    void unMarkAsLeaf();
-};
-#endif
+
 class Trie {
   public:
-    //TrieNode *root;
-
     Trie *children[CHAR_SIZE];
     bool isEndWord;
     // TrieNode();
-    void markAsLeaf();
-    void unMarkAsLeaf();
+    void markLeaf();
+    void unMarkLeaf();
 
   public:
     Trie() {
@@ -32,7 +21,7 @@ class Trie {
 			}
     }
 
-    Trie *getRoot() {
+    Trie* getRoot() {
       Trie *root;
       root = this;
       return root;
@@ -40,36 +29,35 @@ class Trie {
 
     int getIndex(char t);
 
-    void insertNode(string key) {
-      Trie *curr = this;
+    void insertNode(string &key) {
+      Trie *cur = this;
       for (int i = 0; i < key.length(); i++) {
-        if (curr->children[key[i]] == nullptr) {
-          curr->children[key[i]] = new Trie();
+        if (cur->children[key[i]] == nullptr) {
+          cur->children[key[i]] = new Trie();
         }
-        curr = curr->children[key[i]];
+        cur = cur->children[key[i]];
       }
-      curr->isEndWord = true;
+      cur->isEndWord = true;
     }
 
-    
     bool searchNode(string key) {
       // return false if Trie is empty
 			if (this == nullptr) {
 				return false;
 			}
 	 
-			Trie* curr = this;
+			Trie *cur = this;
 			for (int i = 0; i < key.length(); i++) {
 				// next node
-				curr = curr->children[key[i]];
-				if (curr == nullptr) {
+				cur = cur->children[key[i]];
+				if (cur == nullptr) {
 					return false;
 				}
 			}
-			return curr->isEndWord; 
+			return cur->isEndWord; 
 		}
 
-    bool hasNoChildren(Trie * currentNode);
-    bool deleteHelper(string key, Trie * currentNode, int length, int level);
+    bool hasNoChildren(Trie *curentNode);
+    bool deleteHelper(string key, Trie *curentNode, int length, int level);
     void deleteNode(string key);
 };

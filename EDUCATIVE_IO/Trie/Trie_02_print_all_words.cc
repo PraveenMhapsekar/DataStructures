@@ -5,7 +5,7 @@
 using namespace std;
 
 void
-getWords(Trie *root, vector<string>&result, int level, string &word) {
+getWords(Trie *root, vector<string> &result, int level, string &word) {
 	//Leaf denotes end of a word
 	if (root->isEndWord) {
 		//current word is stored till the 'level' in the word string
