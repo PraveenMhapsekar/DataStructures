@@ -39,10 +39,24 @@ class MissingNumber {
   }
 };
 
-int main(int argc, char *argv[]) {
-  vector<int> v1 = {4, 0, 3, 1};
-  cout << MissingNumber::findMissingNumber(v1) << endl;
-  v1 = {8, 3, 5, 2, 4, 6, 0, 1};
-  cout << MissingNumber::findMissingNumber(v1) << endl;
+void
+missingNum(vector<int> v) {
+  int size = v.size();
+  int actual_sum = 0;
+  int expected_sum = (size * (size + 1)) / 2; 
+  for (int i = 0; i < size; i++) {
+    actual_sum += v[i];
+  }
+  cout << "missing number " << (expected_sum - actual_sum) << endl;
 }
 
+int 
+main(int argc, char *argv[]) {
+  vector<int> v1 = {4, 0, 3, 1};
+  cout << MissingNumber::findMissingNumber(v1) << endl;
+  missingNum(v1);
+
+  v1 = {8, 3, 5, 2, 4, 6, 0, 1};
+  cout << MissingNumber::findMissingNumber(v1) << endl;
+  missingNum(v1);
+}

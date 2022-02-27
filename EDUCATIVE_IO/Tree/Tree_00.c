@@ -9,66 +9,63 @@ typedef struct node {
     struct node *right;
 } node_t;
 
-nodePtr findMinTree (nodePtr root);
-nodePtr findMaxTree (nodePtr root);
+node_t * findMinTree (node_t * root);
+node_t * findMaxTree (node_t * root);
 
-void
-insert(node_t **tree, int n) {
-	nodePtr temp;
+node_t *
+insert(node_t *tree, int n) {
+	node_t *temp;
 
-	if (*tree == NULL) {
+	if (tree == NULL) {
 		fprintf(stderr, "Insert %3d\n", n);
-		temp = (nodePtr )malloc(sizeof(node_t));
+		temp = (node_t * )malloc(sizeof(node_t));
 		temp->data = n;
 		temp->left = NULL;
 		temp->right = NULL;
-		*tree = temp;
+		return temp;
 	} else {
-		if (n < (*tree)->data) {
-			insert(&(*tree)->left, n);
+		if (n < tree->data) {
+	   tree->left =	insert(tree->left, n);
 		} else { 
-			insert(&(*tree)->right, n);
+		tree->right =	insert(tree->right, n);
     }
 	}
 }
 
-void
-delete(node_t **root, int n) {
-	nodePtr temp;
+node_t *
+delete(node_t *root, int n) {
+	node_t *temp;
 
 	if (root == NULL)
 	  printf("Data not found\n");
-	else if (n < (*root)->data)
-		delete(&((*root)->left), n);
-	else if (n > (*root)->data)
-		delete((&(*root)->right), n);
-	else { /// current node is node tobe deleted
-		if ((*root)->left && (*root)->right) {
-      // both left and right child exit
+	else if (n < root->data)
+		delete(root->left, n);
+	else if (n > root->data)
+		delete(root->right, n);
+	else { // current node is node tobe deleted
+		if (root->left && root->right) { // both left and right child exit
       // Delete from Left  subtree
       //   find max of left subtree and swap it
       //   call delete in left subtree
-			temp = findMaxTree((*root)->left);
-			(*root)->data = temp->data;
-			delete((&(*root)->left), (*root)->data);
-		} else {
-      // either only left subtree or right subtree exist
-			temp = *root;
-			if ((*root)->left) {
-				*root = (*root)->left;
-			} else if ((*root)->right) {
-				*root = (*root)->right;
+			temp = findMaxTree(root->left);
+			root->data = temp->data;
+			delete(root->left, root->data);
+		} else { // either only left subtree or right subtree exist
+			temp = root;
+			if (root->left) {
+				root = root->left;
+			} else if (root->right) {
+				root = root->right;
 			} else {
-				*root = NULL;
+				root = NULL;
       }
-
 			free(temp);
 		}
 	}
 }
 
 // Find leftmost child
-nodePtr
+node_t *
 findMinTree (node_t *root) {
   while (root->left)
     root = root->left;
@@ -77,7 +74,7 @@ findMinTree (node_t *root) {
 }
 
 // find rightmost child
-nodePtr
+node_t *
 findMaxTree (node_t *root) {
 	while (root->right)
 		root = root->right;
@@ -86,7 +83,7 @@ findMaxTree (node_t *root) {
 }
 
 void 
-inorder(nodePtr tree) {
+inorder(node_t *tree) {
 	if (NULL == tree) 
 		return;        // Base case
 
@@ -102,7 +99,7 @@ inorder(nodePtr tree) {
 }
 
 void 
-postorder(nodePtr tree) {
+postorder(node_t *tree) {
 	if (NULL == tree) 
 		return; //basecase
 
@@ -116,7 +113,7 @@ postorder(nodePtr tree) {
 }
 
 void
-preorder(nodePtr tree) {
+preorder(node_t *tree) {
 	if (NULL == tree)
 	  return;  //basecase
 
@@ -152,8 +149,8 @@ void inorder_iterative(BinaryTree *root) {
 }
 #endif
 
-nodePtr
-LCA (nodePtr tree, nodePtr A, nodePtr B) {
+node_t *
+LCA (node_t *tree, node_t *A, node_t *B) {
 	if (!tree)
 		return NULL;
 	if ((tree->left) && (tree->right))
@@ -169,7 +166,7 @@ LCA (nodePtr tree, nodePtr A, nodePtr B) {
 
 //This is inorder traversal with count
 void
-kthSmallest(nodePtr tree, int *count, nodePtr *ret) {
+kthSmallest(node_t *tree, int *count, node_t **ret) {
 	if (!tree) 
 		return;
 
@@ -187,21 +184,20 @@ kthSmallest(nodePtr tree, int *count, nodePtr *ret) {
 }
 
 int main() {
-	nodePtr tree = NULL;
+	node_t *tree = NULL;
 
-	nodePtr tree1 = NULL;
-	nodePtr node, node1, lcm;
+	node_t *tree1 = NULL;
+	node_t *node, *node1, *lcm;
 	int count = 0;
 	int n;
-
-	insert(&tree, 10);
-	insert(&tree, 20);
-	insert(&tree, 15);
-	insert(&tree, 13);
-	insert(&tree, 3);
-	insert(&tree, 5);
-	insert(&tree, 17);
-	insert(&tree, 113);
+	tree = insert(tree, 10);
+	tree = insert(tree, 20);
+	tree = insert(tree, 15);
+	tree = insert(tree, 13);
+	tree = insert(tree, 3);
+	tree = insert(tree, 5);
+	tree = insert(tree, 17);
+	tree = insert(tree, 113);
 
 	node = findMaxTree(tree);
 	printf("Max number %d\n", node->data);
@@ -217,7 +213,7 @@ int main() {
 	printf("LCA of %d and %d is %d\n", node->data, node1->data, lcm->data);
 	n = 20;
 	printf("Delete %d from tree\n", n);
-	delete(&tree, n);
+	delete(tree, n);
 
 	printf("Postorder\n");
 	postorder(tree);
