@@ -141,6 +141,7 @@ selectionSort() {
  *    Take the element immediately following the sorted data, scan through the sorted data to find the place to put it. 
  *    Repeat until finished.
  */
+#if 0
 void
 insertionSort() {
   int i, j;
@@ -155,7 +156,22 @@ insertionSort() {
     printArray();
   }
 }
-
+#endif
+void
+insertionSort() {
+  int i, j;
+  for (i = 1; i < N; i++) {
+    /* Scan through sorted data (i through 0) */
+    int key = A[i];
+    j = i - 1;
+    while ((j >= 0) && (key < A[j])) {
+      A[j + 1] = A[j];
+      j--;
+    }
+    A[j + 1] = key;
+  }
+  printArray();
+}
 /* 4. Quick Sort ************************************************************************************************************/
 int
 partition (int left, int right) {
