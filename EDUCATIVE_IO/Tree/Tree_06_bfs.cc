@@ -17,16 +17,16 @@ insert(node_t *tree, int n) {
 
 	if (tree == NULL) {
 		fprintf(stderr, "Insert %3d\n", n);
-		temp = (node_t * )malloc(sizeof(node_t));
+		temp = (node_t *)malloc(sizeof(node_t));
 		temp->data = n;
 		temp->left = NULL;
 		temp->right = NULL;
 		return temp;
 	} else {
 		if (n < tree->data) {
-      tree->left =	insert(tree->left, n);
+      tree->left = insert(tree->left, n);
 	 	} else { 
-		 tree->right =	insert(tree->right, n);
+			tree->right =	insert(tree->right, n);
     }
 	}
   return tree;
@@ -34,11 +34,11 @@ insert(node_t *tree, int n) {
 
 void
 bfs(node_t* tree) {
-  queue<node *> q;  // create q for node pointer
+  queue<node *> q; // create q for node pointer
   if (!tree) return; // if null , return
 
-  q.push(tree);  // push root
-  q.push(NULL);  // push level marker
+  q.push(tree); // push root
+  q.push(NULL); // push level marker
 
   while (!q.empty()) { // iterate over q
 		node_t *tmp = q.front(); q.pop(); // pop and print
@@ -92,12 +92,14 @@ bfs_lvl_avg(node_t* tree) {
 }
 
 /*
+            |
            100
           /   \
         50    200
         / \     \
       25  75    350
 */
+
 int 
 main() {
 	node_t *tree1 = NULL;

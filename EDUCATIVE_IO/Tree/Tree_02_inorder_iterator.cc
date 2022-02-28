@@ -51,19 +51,20 @@ inorder(node_t *tree) {
 void 
 inorder_iterative(node_t *root) {
   // create empty stack
-  std::stack<node_t*> s;
+  stack<node_t*> stk;
   // start from the root
-  node_t *curr = root;
+  node_t *cur = root;
 
-  while (!s.empty() || curr != NULL) {
-    if (curr != NULL) {
-			s.push(curr);
-			curr = curr->left;
-    } else { // current node is NULL
+  while (!stk.empty() || cur != NULL) {
+    if (cur != NULL) {
+      // traverse left till bottom
+			stk.push(cur);
+			cur = cur->left;
+    } else { // curent node is NULL
       // pop and print
-			curr = s.top(); s.pop(); 
-      std::cout << curr->data << " ";
-			curr = curr->right;
+			cur = stk.top(); stk.pop(); 
+      cout << cur->data << " ";
+			cur = cur->right;
     }
   }
 }
@@ -71,21 +72,22 @@ inorder_iterative(node_t *root) {
 void 
 preorder_iterative(node_t *root) {
   // create empty stack
-  std::stack<node_t*> s;
-  // start from the root
-  node_t *curr = root;
-  // 	
-  s.push(curr);
-  while (!s.empty()) {
-		curr = s.top(); s.pop();
-		std::cout << curr->data << " ";
+  stack<node_t*> stk;
 
-    if (curr->right) {
-			s.push(curr->right);
+  // start from the root
+  node_t *cur = root;
+  stk.push(cur);
+
+  while (!stk.empty()) {
+		cur = stk.top(); stk.pop();
+		cout << cur->data << " ";
+
+    if (cur->right) {
+			stk.push(cur->right);
     }
 
-		if (curr->left) {
-			s.push(curr->left);
+		if (cur->left) {
+			stk.push(cur->left);
 		}
   }
 }
