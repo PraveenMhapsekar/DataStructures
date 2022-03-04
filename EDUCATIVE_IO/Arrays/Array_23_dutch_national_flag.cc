@@ -32,7 +32,8 @@ class DutchFlag {
   }
 };
 
-int main(int argc, char *argv[]) {
+int 
+main(int argc, char *argv[]) {
   vector<int> arr = {1, 0, 2, 1, 0};
   DutchFlag::sort(arr);
   for (auto num : arr) {
