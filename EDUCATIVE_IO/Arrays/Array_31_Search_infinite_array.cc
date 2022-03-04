@@ -1,65 +1,59 @@
 /*
-An efficient way to find the proper bounds is to start at the beginning of the array with the bound’s size as ‘1’ and exponentially increase the bound’s size (i.e., double it) until we find the bounds that can have the key.
-
+	An efficient way to find the proper bounds is to start at the beginning of the array with 
+  the bound’s size as ‘1’ and exponentially increase the bound’s size (i.e., double it) until
+  we find the bounds that can have the key.
 */
-using namespace std;
 
 #include <iostream>
 #include <limits>
 #include <vector>
 
-class ArrayReader {
- public:
-  vector<int> arr;
+using namespace std;
 
-  ArrayReader(const vector<int> &arr) { this->arr = arr; }
+int 
+get(vector<int> &reader, int index) {
+	if (index >= reader.size()) {
+		return numeric_limits<int>::max();
+	}
+	return reader[index];
+}
 
-  virtual int get(int index) {
-    if (index >= arr.size()) {
-      return numeric_limits<int>::max();
-    }
-    return arr[index];
-  }
-};
+static int 
+binarySearch(vector<int> &reader, int key, int start, int end) {
+	while (start <= end) {
+		int mid = start + (end - start) / 2;
+		if (key < get(reader, mid)) {
+			end = mid - 1;
+		} else if (key > get(reader, mid)) {
+			start = mid + 1;
+		} else { // found the key
+			return mid;
+		}
+	}
 
-class SearchInfiniteSortedArray {
- public:
-  static int search(ArrayReader *reader, int key) {
-    // find the proper bounds first
-    int start = 0, end = 1;
-    while (reader->get(end) < key) {
-      int newStart = end + 1;
-      end += (end - start + 1) * 2;  // increase to double the bounds size
-      start = newStart;
-    }
-    return binarySearch(reader, key, start, end);
-  }
+	return -1;
+}
 
- private:
-  static int binarySearch(ArrayReader *reader, int key, int start, int end) {
-    while (start <= end) {
-      int mid = start + (end - start) / 2;
-      if (key < reader->get(mid)) {
-        end = mid - 1;
-      } else if (key > reader->get(mid)) {
-        start = mid + 1;
-      } else {  // found the key
-        return mid;
-      }
-    }
+static int 
+search(vector<int> &reader, int key) {
+	// find the proper bounds first
+	int start = 0, end = 1;
+	while (get(reader, end) < key) {
+		int newStart = end + 1;
+		end += (end - start + 1) * 2; // increase to double the bounds size
+		start = newStart;
+	}
 
-    return -1;
-  }
-};
+	return binarySearch(reader, key, start, end);
+}
 
-int main(int argc, char *argv[]) {
-  ArrayReader *reader =
-      new ArrayReader(vector<int>{4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30});
-  cout << SearchInfiniteSortedArray::search(reader, 16) << endl;
-  cout << SearchInfiniteSortedArray::search(reader, 11) << endl;
-  reader = new ArrayReader(vector<int>{1, 3, 8, 10, 15});
-  cout << SearchInfiniteSortedArray::search(reader, 15) << endl;
-  cout << SearchInfiniteSortedArray::search(reader, 200) << endl;
-  delete reader;
+int 
+main(int argc, char *argv[]) {
+  vector<int> reader = {4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30};
+  cout << search(reader, 16) << endl;
+  cout << search(reader, 11) << endl;
+  reader = {1, 3, 8, 10, 15};
+  cout << search(reader, 15) << endl;
+  cout << search(reader, 200) << endl;
 }
 
