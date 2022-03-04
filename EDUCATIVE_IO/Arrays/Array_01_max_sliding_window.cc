@@ -20,14 +20,16 @@ findMaxSldingWindow(vector<int> &A, int windowSize) {
       max = A[i];
   	}
 	}
+
   result.push_back(i);
   q.push(max);
   cout << "I am here " <<  max << endl;
+
 	for (int i = windowSize; i < A.size(); i++) {
     int tmp = q.front(); q.pop();
 		int diff = A[i] - tmp;
     
-     cout << "diff " << diff << endl;
+    cout << "diff " << diff << endl;
     if (diff > 0) { 
 	    result.push_back(result[k] + diff);
     } else {
