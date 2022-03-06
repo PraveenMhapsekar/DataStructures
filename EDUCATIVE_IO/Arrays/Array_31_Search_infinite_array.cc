@@ -20,14 +20,15 @@ get(vector<int> &reader, int index) {
 
 static int 
 binarySearch(vector<int> &reader, int key, int start, int end) {
+  // cout << __func__ << ": start, end <" << start << " " << end << ">" << endl;
 	while (start <= end) {
 		int mid = start + (end - start) / 2;
-		if (key < get(reader, mid)) {
+    if (reader[mid] == key) {
+			return mid;
+		} else if (key < get(reader, mid)) {
 			end = mid - 1;
 		} else if (key > get(reader, mid)) {
 			start = mid + 1;
-		} else { // found the key
-			return mid;
 		}
 	}
 
@@ -39,9 +40,8 @@ search(vector<int> &reader, int key) {
 	// find the proper bounds first
 	int start = 0, end = 1;
 	while (get(reader, end) < key) {
-		int newStart = end + 1;
-		end += (end - start + 1) * 2; // increase to double the bounds size
-		start = newStart;
+		start = end + 1;
+		end = end * 2; // increase to double the bounds size
 	}
 
 	return binarySearch(reader, key, start, end);
@@ -56,4 +56,3 @@ main(int argc, char *argv[]) {
   cout << search(reader, 15) << endl;
   cout << search(reader, 200) << endl;
 }
-

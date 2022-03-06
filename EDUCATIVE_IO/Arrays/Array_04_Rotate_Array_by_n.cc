@@ -57,9 +57,14 @@ main() {
   
   int n = 2; 
   cout<<"Array After Rotation by "<< n << endl;
-  
   rotate_array(arr, n);
-  
+  for(int x = 0; x < arr.size(); x++)
+    cout<<std::to_string(arr[x])+", ";
+  cout<<endl;
+
+  n = -2; 
+  cout<<"Array After Rotation by "<< n << endl;
+  rotate_array(arr, n);
   for(int x = 0; x < arr.size(); x++)
     cout<<std::to_string(arr[x])+", ";
   cout<<endl;

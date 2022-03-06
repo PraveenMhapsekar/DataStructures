@@ -1,11 +1,16 @@
 /*
-	Given an array of positive numbers and a positive number ‘k,’
-	find the maximum sum of any contiguous subarray of size ‘k’.
+	Given an array of positive numbers and a positive number ‘K’
+	find the maximum sum of any contiguous subarray of size ‘K’.
+
+	Time Complexity
+		The time complexity of the above algorithm will be O(N)
+
+	Space Complexity
+		The algorithm runs in constant space O(1)
 */
 
-#include <stdio.h>
+#include <climits>
 #include <iostream>
-#include <limits.h>
 #include <vector>
 
 using namespace std;
@@ -28,7 +33,7 @@ class MaxSumSubArrayOfSizeK {
  
   // better approach 
   static int 
-  findMaxSumSubArray1(int k, const vector<int>& arr) {
+  findMaxSumSubArray1(int k, const vector<int> &arr) {
     int windowSum = 0, maxSum = INT_MIN;
     int windowStart = 0;
     for (int windowEnd = 0; windowEnd < arr.size(); windowEnd++) {
@@ -45,7 +50,8 @@ class MaxSumSubArrayOfSizeK {
   }
 };
 
-int main(int argc, char* argv[]) {
+int 
+main(int argc, char* argv[]) {
   cout << "Maximum sum of a subarray of size K: "
        << MaxSumSubArrayOfSizeK::findMaxSumSubArray1(3, vector<int>{2, 1, 5, 1, 3, 2}) << endl;
   cout << "Maximum sum of a subarray of size K: "

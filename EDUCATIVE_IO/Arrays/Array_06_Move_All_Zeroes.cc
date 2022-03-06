@@ -43,10 +43,15 @@ pushZeros2End(vector<int> &A) {
 int
 main () {
 	vector<int> v = {1, 10, 20, 0, 59, 63, 0, 88, 0};
-	int n = sizeof(v) / sizeof(v[0]);
+
+	for (int i = 0; i < v.size(); i++) {
+		printf("%d ", v[i]);
+	}
+  cout << endl;
+
 	pushZeros2End(v);
 
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < v.size(); i++) {
 		printf("%d ", v[i]);
 	}
 

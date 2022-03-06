@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -28,6 +29,33 @@ twoSum(vector<int> &A, int target) {
 	return false;
 }
 
+bool
+twoSumHelper(vector<int> &A, int target) {
+  int len = A.size();
+  int lo = 0;
+  int hi = len - 1;
+  int mid;
+  
+  while(lo <= hi) {
+    int sum = A[lo] + A[hi];
+    if (target == sum) {
+      return true;
+    }
+   
+   if (sum < target) {
+     lo++;
+   } else {
+     hi--;
+   }
+  }
+  return false;
+}
+
+bool   
+twoSum1(vector<int> &A, int target) {
+  sort(A.begin(), A.end());
+  return twoSumHelper(A, target);
+}
 /*
 bool
 twoSum(int *A, int size, int val) {
@@ -55,6 +83,16 @@ main() {
   vector <int> v = {5, 7, 1, 2, 8, 4, 3};
   int test[5] = {3, 20, 1, 2, 7};
 
+  for (int i = 0; i < v.size(); i++) {
+    cout << " " << v[i] ;
+  }
+  cout << endl;
+
+  for (int i = 0; i < 5; i++) {
+    bool output = twoSum(v, test[i]);
+    cout << "find_sum_of_two(v, " << test[i] << ") = " << (output ? "true" : "false") << endl;
+  }
+  cout << endl << " second algo " << endl;
   for (int i = 0; i < 5; i++) {
     bool output = twoSum(v, test[i]);
     cout << "find_sum_of_two(v, " << test[i] << ") = " << (output ? "true" : "false") << endl;

@@ -7,8 +7,10 @@
   Intervals (1, 5), (3, 7), (4, 6), (6, 8) are overlapping so they should be merged to one big interval (1, 8). 
   Similarly, intervals (10, 12) and (12, 15) are also overlapping and should be merged to (10, 15).
 */
-
+#include <vector>
 #include <stdio.h>
+
+using namespace std;
 
 typedef struct point {
   int x;  // DONOT confuse x, y with graph coordinates, its just linear start end values
@@ -27,11 +29,13 @@ int min(int x, int y) {
 
 point_t overlap[100];
 
-int overlapFunc(point_t *PA, int size) {
-  int k = 0;
+vector<pair<int, int>>
+overlapFunc(point_t *PA, int size) {
+  vector<pair<int, int>> result;
   point_t res;
   res.x = PA[0].x;
   res.y = PA[0].y;
+
 	for (int i = 1; i < size; i++) {
     point_t pt;
     pt.x = PA[i].x;
@@ -42,19 +46,24 @@ int overlapFunc(point_t *PA, int size) {
       res.x = min(res.x, pt.x);
     } else {
       // no overlap
-      overlap[k].x = res.x;
-      overlap[k].y = res.y;
-      k++;
+      // push accumulated overlap to the result
+			pair<int, int> tmpPair;
+			tmpPair.first = res.x;
+			tmpPair.second = res.y;
+			result.push_back(tmpPair);
+
+      // Start new overlap if exist
       res.x = pt.x;
       res.y = pt.y;
     }
 	}
 
   // return last result
-	overlap[k].x = res.x;
-	overlap[k].y = res.y;
-  k++;
-  return k;
+  pair<int, int> tmpPair;
+  tmpPair.first = res.x;
+  tmpPair.second = res.y;
+  result.push_back(tmpPair);
+  return result;
 }
 
 int
@@ -85,9 +94,10 @@ main () {
    input[i].y = 15;
    i++;
 
-   int k = overlapFunc(input, i);
-   for (int j = 0; j < k; j++) {
-     printf("%d : x=%2d y=%2d\n", j, overlap[j].x, overlap[j].y);
+   vector<pair<int, int>> k = overlapFunc(input, i);
+   for (int j = 0; j < k.size(); j++) {
+     pair<int, int> tPair = k[j];
+     printf("%d : x=%2d y=%2d\n", j, tPair.first, tPair.second);
    }
 
    return 0;

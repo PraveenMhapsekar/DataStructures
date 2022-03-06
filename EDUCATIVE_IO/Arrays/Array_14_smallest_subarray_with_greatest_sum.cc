@@ -11,19 +11,20 @@ class MinSizeSubArraySum {
     int windowSum = 0, minLength = numeric_limits<int>::max();
     int windowStart = 0;
     for (int windowEnd = 0; windowEnd < arr.size(); windowEnd++) {
-      windowSum += arr[windowEnd];  // add the next element
+      windowSum += arr[windowEnd]; // add the next element
       // shrink the window as small as possible until the 'windowSum' is smaller than 'S'
       while (windowSum >= S) {
         minLength = min(minLength, windowEnd - windowStart + 1);
-        windowSum -= arr[windowStart];  // subtract the element going out
-        windowStart++;                  // slide the window ahead
+        windowSum -= arr[windowStart]; // subtract the element going out
+        windowStart++; // slide the window ahead
       }
     }
     return minLength == numeric_limits<int>::max() ? 0 : minLength;
   }
 };
 
-int main(int argc, char* argv[]) {
+int 
+main(int argc, char* argv[]) {
   int result = MinSizeSubArraySum::findMinSubArray(7, vector<int>{2, 1, 5, 2, 3, 2});
   cout << "Smallest subarray length: " << result << endl;
   result = MinSizeSubArraySum::findMinSubArray(7, vector<int>{2, 1, 5, 2, 8});
