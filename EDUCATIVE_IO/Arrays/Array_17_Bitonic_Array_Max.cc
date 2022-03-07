@@ -30,7 +30,8 @@ class MaxInBitonicArray {
   }
 };
 
-int main(int argc, char* argv[]) {
+int 
+main(int argc, char* argv[]) {
   cout << MaxInBitonicArray::findMax(vector<int>{1, 3, 8, 12, 4, 2}) << endl;
   cout << MaxInBitonicArray::findMax(vector<int>{3, 8, 3, 1}) << endl;
   cout << MaxInBitonicArray::findMax(vector<int>{1, 3, 8, 12}) << endl;

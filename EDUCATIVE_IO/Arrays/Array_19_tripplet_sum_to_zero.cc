@@ -9,10 +9,13 @@ public:
   static vector<vector<int>> 
   searchTriplets(vector<int> &arr) {
     vector<vector<int>> triplets;
+
     if (arr.size() < 3) {
       return triplets;
     }
+
     sort(arr.begin(), arr.end());
+
     for (int i = 0; i < arr.size() - 2; i++) {
       if (i > 0 && arr[i] == arr[i - 1]) { // skip same element to avoid duplicate triplets
         continue;
@@ -55,8 +58,8 @@ private:
 
 int main(int argc, char *argv[]) {
 //  vector<int> vec = {-3, 0, 1, 2, -1, 1, -2};
-//  vector<int> vec = {-9, -5, -3, 5, 8, 10, 16};
-  vector<int> vec = {-9, 5};
+  vector<int> vec = {-9, -5, -3, 5, 8, 10, 16};
+//  vector<int> vec = {-9, 5};
   auto result = TripletSumToZero::searchTriplets(vec);
   for (auto vec : result) {
     cout << "[";

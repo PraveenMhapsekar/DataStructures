@@ -20,13 +20,13 @@ class TripletWithSmallerSum {
     int count = 0;
     int left = first + 1, right = arr.size() - 1;
     while (left < right) {
-      if (arr[left] + arr[right] < targetSum) {  // found the triplet
+      if (arr[left] + arr[right] < targetSum) { // found the triplet
         // since arr[right] >= arr[left], therefore, we can replace arr[right] by any number between
         // left and right to get a sum less than the target sum
         count += right - left;
         left++;
       } else {
-        right--;  // we need a pair with a smaller sum
+        right--; // we need a pair with a smaller sum
       }
     }
     return count;

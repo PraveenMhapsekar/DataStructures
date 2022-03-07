@@ -20,12 +20,13 @@ public:
       int rightSquare = arr[right] * arr[right];
 
       if (leftSquare > rightSquare) {
-        squares[highestSquareIdx--] = leftSquare;
+        squares[highestSquareIdx] = leftSquare;
         left++;
       } else {
-        squares[highestSquareIdx--] = rightSquare;
+        squares[highestSquareIdx] = rightSquare;
         right--;
       }
+      highestSquareIdx--;
     }
 
     return squares;
