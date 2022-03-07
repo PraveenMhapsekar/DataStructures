@@ -6,8 +6,8 @@ typedef struct node {
   struct node *nxt;
 } node_t;
 
-void
-insert (node_t **head, int data) {
+node_t *
+insert (node_t *head, int data) {
 	node_t *tmp;
 
 	tmp = (node_t *)malloc(sizeof(node_t));
@@ -16,10 +16,9 @@ insert (node_t **head, int data) {
 	}
 
 	tmp->data = data; 
-	tmp->nxt  = *head;
+	tmp->nxt  = head;
 
-	*head = tmp;
-	return;
+  return tmp;
 }
 
 int 
@@ -94,15 +93,15 @@ print(node_t *head) {
 	return;
 }
 
-void
-reverse(node_t **head) {
+node_t *
+reverse(node_t *head) {
   node_t *cur;
   node_t *nxt;
   node_t *pre;
 
-  if (*head == NULL) return;
+  if (head == NULL) return head;
 
-  cur = *head;
+  cur = head;
   nxt = cur->nxt;
   pre = NULL;
 
@@ -114,8 +113,8 @@ reverse(node_t **head) {
   }
 
   cur->nxt = pre;
-  *head = cur;
-  return;
+  
+  return cur;
 }
 
 #if 0
@@ -225,17 +224,17 @@ oddeven(node_t *head) {
 int
 main() {
 	node_t *list = NULL;
-	insert(&list, 1);
-	insert(&list, 2);
-	insert(&list, 3);
-	insert(&list, 4);
-	insert(&list, 5);
-	insert(&list, 6);
-	insert(&list, 7);
-	insert(&list, 8);
+	list = insert(list, 1);
+	list = insert(list, 2);
+	list = insert(list, 3);
+	list = insert(list, 4);
+	list = insert(list, 5);
+	list = insert(list, 6);
+	list = insert(list, 7);
+	list = insert(list, 8);
 	print(list);
 
-	reverse(&list);
+	list = reverse(list);
 	print(list);
 
 	return 0;
