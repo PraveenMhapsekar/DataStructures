@@ -14,16 +14,16 @@ insert(node_t *tree, int n) {
 
 	if (tree == NULL) {
 		fprintf(stderr, "Insert %3d\n", n);
-		temp = (node_t * )malloc(sizeof(node_t));
+		temp = (node_t *)malloc(sizeof(node_t));
 		temp->data = n;
 		temp->left = NULL;
 		temp->right = NULL;
 		return temp;
 	} else {
 		if (n < tree->data) {
-      tree->left =	insert(tree->left, n);
+      tree->left = insert(tree->left, n);
 	 	} else { 
-		 tree->right =	insert(tree->right, n);
+		  tree->right = insert(tree->right, n);
     }
 	}
   return tree;
@@ -32,15 +32,15 @@ insert(node_t *tree, int n) {
 void 
 inorder(node_t *tree) {
 	if (NULL == tree) 
-		return;        // Base case
+		return; // Base case
 
 	if (tree->left)
-		inorder(tree->left);    // Visit left subtree
+		inorder(tree->left); // Visit left subtree
 
-	printf("%3d ", tree->data);  // Visit node
+	printf("%3d ", tree->data); // Visit node
 
 	if (tree->right)
-		inorder(tree->right);    // Visit right subtree
+		inorder(tree->right); // Visit right subtree
 
 	return; 
 }
@@ -49,7 +49,8 @@ int
 getMin(node_t *root) {
   int lmin;
   int rmin;
-  int res; 
+  int res;
+
   if (!root) return INT_MAX;
   
   lmin = (getMin(root->left));
@@ -68,6 +69,7 @@ getMax(node_t *root) {
   int lmax;
   int rmax;
   int res;
+
   if (!root) return INT_MIN;
   
   lmax = (getMax(root->left));

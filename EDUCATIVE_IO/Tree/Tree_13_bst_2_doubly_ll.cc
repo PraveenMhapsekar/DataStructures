@@ -54,17 +54,19 @@ inorder_dll(node_t *node) {
 		inorder_dll(node->left);
 
 		// process node 
-		if (last) {
+		if (!last) {
+			// keep the smallest node
+			// to close DLL later on
+			first = node;
+		  last = node;
+		} else {
 			// link the previous node (last)
 			// with the current one (node)
 			last->right = node;
 			node->left = last;
-		} else {
-			// keep the smallest node
-			// to close DLL later on
-			first = node;
+		  last = node;
 		}
-		last = node;
+
 
 		// right
 		inorder_dll(node->right);

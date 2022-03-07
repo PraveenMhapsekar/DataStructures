@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<algorithm>
+
+using namespace std;
 
 typedef struct node {
 	int data;
@@ -54,11 +57,14 @@ tree_maxdepth(node_t *tree) {
 
   maxleft = (tree_maxdepth(tree->left));
   maxright = (tree_maxdepth(tree->right));
-
-  if (maxleft > maxright) 
+#if 0
+  if (maxleft > maxright) {
     return maxleft + 1;
-  else 
+  } else {
 		return maxright + 1;
+  }
+#endif
+  return max(maxleft, maxright) + 1;
 }
 
 int

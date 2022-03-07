@@ -68,10 +68,12 @@ tree_mirror(node_t *tree) {
   if (tree->left) tree_mirror(tree->left);
   if (tree->right) tree_mirror(tree->right);
 
+  // swap
   node_t *tmp;
   tmp = tree->left;
   tree->left = tree->right;
   tree->right = tmp;
+
   return;
 }
 
