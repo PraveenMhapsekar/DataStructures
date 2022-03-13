@@ -4,9 +4,9 @@
 typedef struct node *nodePtr;
 
 typedef struct node {
-    int data;
-    struct node *left;
-    struct node *right;
+	int data;
+	struct node *left;
+	struct node *right;
 } node_t;
 
 node_t * findMinTree (node_t * root);
@@ -25,9 +25,9 @@ insert(node_t *tree, int n) {
 		return temp;
 	} else {
 		if (n < tree->data) {
-	   tree->left =	insert(tree->left, n);
+  	  tree->left =	insert(tree->left, n);
 		} else { 
-		tree->right =	insert(tree->right, n);
+  		tree->right =	insert(tree->right, n);
     }
 	}
 }
@@ -153,13 +153,16 @@ node_t *
 LCA (node_t *tree, node_t *A, node_t *B) {
 	if (!tree)
 		return NULL;
+
 	if ((tree->left) && (tree->right))
 		return tree;
+
 	if ((tree == A) || (tree == B))
 		return tree;
 
 	if (tree->left)
 		LCA(tree->left, A, B);
+
 	if (tree->right)
 		LCA(tree->right, A, B);        
 }

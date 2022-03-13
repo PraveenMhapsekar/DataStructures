@@ -34,7 +34,7 @@ find_logest_increasing_subseq(int *A, int n) {
 int
 main () {
   int v[] = {10, 9, 8, 7, 6, 5, 4, 4, 4};
- // int v[] = {10, 22, 9, 33, 21, 50, 41, 60};
+  // int v[] = {10, 22, 9, 33, 21, 50, 41, 60};
   int n = sizeof(v) / sizeof(v[0]);
 	for (int i = 0; i < n; i++) {
     printf("%3d ", v[i]);

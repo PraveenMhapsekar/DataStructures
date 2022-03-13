@@ -14,7 +14,7 @@ dfs(int isConnected[NUM][NUM], int size, int *visited, int i) {
   for (int j = 0; j < size; j++) {
     if (isConnected[i][j] == 1 && visited[j] == 0) {
       // go to corrosponding row and traverse recursively
-      dfs(isConnected, size, visited, j );
+      dfs(isConnected, size, visited, j);
     }
   }
 }

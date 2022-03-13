@@ -29,7 +29,10 @@ isFormationPossible(Trie *t, string word) {
 
 int
 main() {
-  string keys[9] = {"the", "a", "there", "answer", "any", "by", "bye", "their","abc"};
+  //string keys[9] = {"the", "a", "there", "answer", "any", "by", "bye", "their","abc"};
+
+  string keys[9] = {"apple", "pear", "pier", "pie"};
+  //string keys[9] = {"the", "a", "there", "answer", "any", "by", "bye", "their","abc"};
 
   Trie *t = new Trie();
   // Construct trie       
@@ -37,7 +40,7 @@ main() {
     t->insertNode(keys[i]);
   }
 
-  string word = "thereby";
+  string word = "applepie";
   string result = " ";
   if (isFormationPossible(t, word) == true) {
     result = "true";

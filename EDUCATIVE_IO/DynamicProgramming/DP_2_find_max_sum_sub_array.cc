@@ -15,25 +15,25 @@ find_max_sum_sub_array(int *A, int n) {
   int maxSum = INT_MIN;
 
 	for (int i = 0; i < n; i++) {
-     if (A[i] > A[i] + tmpSum) {
-       beg = i;
-       tmpSum = A[i];
-     } else {
-       tmpSum = tmpSum + A[i];
-       end = i;
-     }
+    if (A[i] > A[i] + tmpSum) {
+      beg = i;
+      tmpSum = A[i];
+    } else {
+      tmpSum = tmpSum + A[i];
+      end = i;
+    }
 
-     if (maxSum < tmpSum) {
-       maxSum = tmpSum;
-     }
-   }
+    if (maxSum < tmpSum) {
+      maxSum = tmpSum;
+    }
+  }
 
-   for (int i = beg; i < end; i++) {
-     printf("%d ", A[i]);
-   }
+  for (int i = beg; i < end; i++) {
+	  printf("%d ", A[i]);
+  }
 
-   printf("\n");
-   return maxSum;
+  printf("\n");
+  return maxSum;
 }
 
 int

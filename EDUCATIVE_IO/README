@@ -20,15 +20,15 @@
 │   ├── Array_18_permutations.cc
 │   ├── Array_19_tripplet_sum_to_zero.cc
 │   ├── Array_20_tripplet_sum_close_to_target.cc
-│   ├── Array_21_insert_interval.cc
 │   ├── Array_21_tripplet_with_smaller_sum.cc
-│   ├── Array_22_dutch_national_flag.cc
-│   ├── Array_22_interval_intersection.cc
-│   ├── Array_23_conflicting_appoinments.cc
-│   ├── Array_24_Ceiling_of_number.cc
-│   ├── Array_25_Next_letter.cc
-│   ├── Array_26_number_range.cc
-│   └── Array_27_Search_infinite_array.cc
+│   ├── Array_23_dutch_national_flag.cc
+│   ├── Array_25_insert_interval.cc
+│   ├── Array_26_interval_intersection.cc
+│   ├── Array_27_conflicting_appointments.cc
+│   ├── Array_28_Ceiling_of_number.cc
+│   ├── Array_29_Next_letter.cc
+│   ├── Array_30_number_range.cc
+│   └── Array_31_Search_infinite_array.cc
 ├── DynamicProgramming
 │   ├── DP_10_subset_sum.cc
 │   ├── DP_11_subset_sum_difference.cc
@@ -59,14 +59,20 @@
 │   ├── graph_06_is_graph_tree.cc
 │   ├── graph_07_shortest_path.cc
 │   ├── graph_08_spanningtree_prims.cc
-│   ├── graph_09A_topological_sort_DFS.cc
 │   ├── graph_09_topological_sort.cc
 │   ├── graph_10_bipartite.cc
 │   └── graph_11_all_toplogical_sort.cc
 ├── LinkedList
 │   ├── LL_01_Reverse.cc
 │   ├── LL_02_remove_duplicates.cc
-│   └── LL_03_Delete_All_Occurances.cc
+│   ├── LL_03_Delete_All_Occurances.cc
+│   ├── LL_04_insertion_sort.cc
+│   ├── LL_08_middle_node.cc
+│   ├── LL_09_intersection.cc
+│   ├── LL_10_nth_node.cc
+│   ├── LL_11_merge_two_sorted_lists.cc
+│   ├── LL_14_reverse_even.cc
+│   └── LL_15_rotate_lst.cc
 ├── README
 ├── Recursion
 │   ├── REC_01_GCD.cc
@@ -90,10 +96,10 @@
 │   ├── Tree_18_BST_mirror.cc
 │   └── Tree_21_min_depth.cc
 └── Trie
-    ├── Trie_1_num_of_words.cc
-    ├── Trie_2_print_all_words.cc
-    ├── Trie_3_list_sort.cc
-    ├── Trie_4_word_formation.cc
+    ├── Trie_01_num_of_words.cc
+    ├── Trie_02_print_all_words.cc
+    ├── Trie_03_list_sort.cc
+    ├── Trie_04_word_formation.cc
     └── Trie.h
 
-8 directories, 88 files
+8 directories, 94 files

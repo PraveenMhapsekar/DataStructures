@@ -51,7 +51,8 @@ inorder(node_t *tree) {
 void 
 inorder_iterative(node_t *root) {
   // create empty stack
-  stack<node_t*> stk;
+  stack<node_t *> stk;
+
   // start from the root
   node_t *cur = root;
 
