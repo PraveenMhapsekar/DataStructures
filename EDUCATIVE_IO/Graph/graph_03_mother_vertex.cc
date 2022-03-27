@@ -1,8 +1,8 @@
 /*
-Mother vertex:
-A mother vertex in a Graph G = (V, E) is a vertex v such that all other vertices in G can be reached by a path from v.
-There can be zero, one, or more than one mother vertices in a graph. 
-We need to find all the mother vertices in the given graph.
+	Mother vertex:
+	A mother vertex in a Graph G = (V, E) is a vertex v such that all other vertices in G can be reached by a path from v.
+	There can be zero, one, or more than one mother vertices in a graph. 
+	We need to find all the mother vertices in the given graph.
 */
 
 #include <stdio.h>

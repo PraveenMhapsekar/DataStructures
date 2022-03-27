@@ -11,9 +11,10 @@
 #include <queue>
 
 using namespace std;
-#define NUM 4
+
 int 
 findMin(vector<vector<int>> graph, int src, int dst) {
+
 	if (src == dst){
 		return 0;
 	}
@@ -53,7 +54,7 @@ findMin(vector<vector<int>> graph, int src, int dst) {
 				}
       }
 			j++;
-		}
+		} // end of while loop
 	}
 
   // Cleanup

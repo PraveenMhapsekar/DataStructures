@@ -22,19 +22,22 @@ isBipartiteUtil(int u, int *colors, vector<vector<int>> graph) {
 	// Travel all adjacent vertices
 	for (int v = 0; v < size; v++) {
 		// If u-v exist and v is color with white
-		if (graph[u][v] == 1 && colors[v] == WHITE) {
-			// Color is with the alternate color of vertex v
-			if (colors[u] == RED) {
-				colors[v] = GREEN;
-			} else if (colors[u] == GREEN) {
-				colors[v] = RED;
-			}
-			// Recursive call
-			return isBipartiteUtil(v, colors, graph);
-		} else if (graph[u][v] == 1 && colors[u] == colors[v]) {
-			return false;
-		}
-	}
+		if (graph[u][v] == 1) {
+      if (colors[v] == WHITE) {
+				// Color is with the alternate color of vertex v
+				if (colors[u] == RED) {
+					colors[v] = GREEN;
+				} else if (colors[u] == GREEN) {
+					colors[v] = RED;
+				}
+				// Recursive call
+				return isBipartiteUtil(v, colors, graph);
+		  } else if (colors[u] == colors[v]) {
+        // src and dst same color, return false
+				return false;
+		  }
+    } // if graph[u][v] == 1
+	} // for loop
 
 	// Graph is successfully colored in 2 color, red and green
 	// Graph is bipartite
