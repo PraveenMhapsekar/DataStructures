@@ -6,11 +6,11 @@
 using namespace std;
 
 void
-dfs(vector<vector<int>> &graph, int size, int *visited, int i) {
+dfs(vector<vector<int>> &graph, int size, bool *visited, int i) {
   // traverse each column
-  visited[i] = 1;
+  visited[i] = true;
   for (int j = 0; j < size; j++) {
-    if (graph[i][j] == 1 && visited[j] == 0) {
+    if (graph[i][j] == 1 && visited[j] == false) {
       // go to corrosponding row and traverse recursively
       dfs(graph, size, visited, j);
     }
@@ -20,17 +20,16 @@ dfs(vector<vector<int>> &graph, int size, int *visited, int i) {
 int
 findCircleNum(vector<vector<int>> &graph, int isConnectedSize) {
   int count = 0; 
-  int visited[isConnectedSize];
-  
+  bool visited[isConnectedSize];
   
   // init visited array
   for (int i = 0; i < isConnectedSize; i++) {
-    visited[i] = 0;
+    visited[i] = false;
   }
  
   // traverse graph in DFS, row by row
   for (int i = 0; i < isConnectedSize; i++) {
-    if (visited[i] == 0) {
+    if (visited[i] == false) {
       dfs(graph, isConnectedSize, visited, i);
       count++;
     }
@@ -49,15 +48,18 @@ main() {
 											   {0, 0, 0, 0, 0, 1},  // 4
 											   {0, 0, 0, 0, 0, 0}}; // 5
 */
-  /*
-      0 -- 3
-       \  /
-        1 -- 2
-  */
+/*
+		0 -- 3
+		 \  /
+			1 -- 2
+*/
+
   vector<vector<int>> graph = {{1, 1, 0, 1},  // 0 -->0 1
 															 {1, 1, 1, 1},  // 1 -->0 1 2
 															 {0, 1, 1, 0},  // 2 -->1 2
 															 {1, 1, 0, 1}}; // 3 -->0 1 3
+
   printf("Number of islands %d\n", findCircleNum(graph, graph.size()));
+
   return 0;
 }

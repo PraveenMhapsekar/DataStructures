@@ -39,11 +39,9 @@ class TaskScheduling {
     // d. For each source, add it to the sortedOrder and subtract one from all of its children's
     // in-degrees if a child's in-degree becomes zero, add it to the sources queue
     while (!sources.empty()) {
-      int vertex = sources.front();
-      sources.pop();
+      int vertex = sources.front(); sources.pop();
       sortedOrder.push_back(vertex);
-      vector<int> children =
-          graph[vertex];  // get the node's children to decrement their in-degrees
+      vector<int> children = graph[vertex]; // get the node's children to decrement their in-degrees
       for (auto child : children) {
         inDegree[child]--;
         if (inDegree[child] == 0) {

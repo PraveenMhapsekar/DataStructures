@@ -31,7 +31,7 @@ findLoop(vector<vector<int>> &graph) {
     visited[i] = false;
   }
  
-   // traverse graph in DFS, row by row
+  // traverse graph in DFS, row by row
   for (int i = 0; i < graphSize; i++) {
     if (visited[i] == false) {
       if (dfs(graph, graphSize, visited, i) == true) {
